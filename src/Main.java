@@ -31,8 +31,31 @@ public class Main {
 
         return teamName;
     }
+
+    static int getSeasonLength() {
+        boolean valid = false;
+
+        int seasonLength = 0;
+
+        while (!valid) {
+            System.out.println("How many weeks would you like the season to last?");
+            seasonLength = inputScanner.nextInt();  // Read user input
+
+            if (seasonLength < 5) {
+                System.out.println("Season must be at least 5 weeks long");
+            } else if (seasonLength > 15) {
+                System.out.println("Season must be at most 15 weeks long");
+            } else {
+                valid = true;
+            }
+        }
+
+        return seasonLength;
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello world! Its me dalieosplif the legendary programmer!");
         String teamName = getTeamName();
+        int seasonLength = getSeasonLength();
     }
 }
