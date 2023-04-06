@@ -5,6 +5,15 @@ public class Athlete {
     private int defence;
     private int current_health;
 
+
+    public static enum StatType {
+        STAMINA,
+        OFFENCE,
+        DEFENCE,
+        CURRENT_HEALTH
+    }
+
+
     public Athlete(String name, int stamina, int offence, int defence, int current_health) {
         this.name = name;
         this.stamina = stamina;
