@@ -57,5 +57,7 @@ public class Main {
         System.out.println("Hello world! Its me dalieosplif the legendary programmer!");
         String teamName = getTeamName();
         int seasonLength = getSeasonLength();
+
+        GameManager manager = new GameManager(teamName, seasonLength);
     }
 }
