@@ -8,7 +8,7 @@ public class Athlete implements Purchasable {
     private int sellBackPrice;
 
 
-    public static enum StatType {
+    public enum StatType {
         STAMINA,
         OFFENCE,
         DEFENCE,
