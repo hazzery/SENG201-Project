@@ -16,12 +16,12 @@ public class Athlete implements Purchasable {
     }
 
 
-    public Athlete(String name, int stamina, int offence, int defence, int current_health, int contractPrice, int sellBackPrice) {
+    public Athlete(String name, int stamina, int offence, int defence, int contractPrice, int sellBackPrice) {
         this.name = name;
         this.stamina = stamina;
         this.offence = offence;
         this.defence = defence;
-        this.current_health = current_health;
+        this.current_health = 100;
         this.contractPrice = contractPrice;
         this.sellBackPrice = sellBackPrice;
     }
