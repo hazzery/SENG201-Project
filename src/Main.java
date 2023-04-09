@@ -39,7 +39,14 @@ public class Main {
 
         while (!valid) {
             System.out.println("How many weeks would you like the season to last?");
-            seasonLength = inputScanner.nextInt();  // Read user input
+
+            try {
+                seasonLength = inputScanner.nextInt();  // Read user input
+            } catch (InputMismatchException e) {
+                System.out.println("Season length must be an number integer");
+                inputScanner.nextLine(); // Prevent infinite loop
+                continue;
+            }
 
             if (seasonLength < 5) {
                 System.out.println("Season must be at least 5 weeks long");
