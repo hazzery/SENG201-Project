@@ -6,7 +6,6 @@ public class Athlete implements Purchasable {
     private int current_health;
     private int contractPrice;
     private int sellBackPrice;
-    private String description;
 
 
     public static enum StatType {
@@ -17,7 +16,7 @@ public class Athlete implements Purchasable {
     }
 
 
-    public Athlete(String name, int stamina, int offence, int defence, int current_health, int contractPrice, int sellBackPrice, String description) {
+    public Athlete(String name, int stamina, int offence, int defence, int current_health, int contractPrice, int sellBackPrice) {
         this.name = name;
         this.stamina = stamina;
         this.offence = offence;
@@ -25,7 +24,6 @@ public class Athlete implements Purchasable {
         this.current_health = current_health;
         this.contractPrice = contractPrice;
         this.sellBackPrice = sellBackPrice;
-        this.description = description;
     }
 
     public String getName() {
@@ -57,6 +55,6 @@ public class Athlete implements Purchasable {
     }
 
     public String getDescription() {
-        return this.description;
+        return "Stamina: " + this.stamina + "  Offence: " + this.offence + "  Defence: " + this.defence;
     }
 }
