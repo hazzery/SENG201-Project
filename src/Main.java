@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -61,10 +62,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello world! Its me dalieosplif the legendary programmer!");
         String teamName = getTeamName();
         int seasonLength = getSeasonLength();
 
         GameManager manager = new GameManager(teamName, seasonLength);
+
+        manager.selectInitialTeam();
     }
 }
