@@ -1,5 +1,6 @@
 public class Athlete implements Purchasable {
     private String name;
+    private String nickName;
     private int stamina;
     private int offence;
     private int defence;
@@ -18,6 +19,7 @@ public class Athlete implements Purchasable {
 
     public Athlete(String name, int stamina, int offence, int defence, int contractPrice, int sellBackPrice) {
         this.name = name;
+        this.nickName = name;
         this.stamina = stamina;
         this.offence = offence;
         this.defence = defence;
@@ -28,6 +30,10 @@ public class Athlete implements Purchasable {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getNickname() {
+        return this.nickName;
     }
 
     public int getStamina() {
