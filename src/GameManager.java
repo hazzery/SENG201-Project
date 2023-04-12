@@ -55,7 +55,7 @@ public class GameManager {
                     System.out.println("Team must have at least 4 athletes");
                     continue;
                 }
-                break;
+                break;  // End loop if user enters negative number
             }
 
             try {
