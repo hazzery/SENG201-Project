@@ -1,13 +1,10 @@
-import java.util.InputMismatchException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GameManager {
+    static UserInterface ui = new CommandLineInterface();
+    private int seasonLength;
+    static Team team;
 
-    static Scanner inputScanner = new Scanner(System.in);
-
-    private final int seasonLength;
-    private final String teamName;
 
     ArrayList<Athlete> athletes = new ArrayList<>(4);
     Athlete cyclistOne =    new Athlete("Cyclist One"   , 1, 4, 1, 1, 1);
@@ -15,55 +12,121 @@ public class GameManager {
     Athlete cyclistThree =  new Athlete("Cyclist Three" , 3, 2, 3, 1, 1);
     Athlete cyclistFour =   new Athlete("Cyclist Four"  , 4, 1, 4, 1, 1);
 
-    ArrayList<Athlete> team = new ArrayList<>(4);
-
-    public GameManager(String teamName, int seasonLength) {
-        this.seasonLength = seasonLength;
-        this.teamName = teamName;
-
+    public GameManager() {
         athletes.add(cyclistOne);
         athletes.add(cyclistTwo);
         athletes.add(cyclistThree);
         athletes.add(cyclistFour);
     }
 
-    public void selectInitialTeam() {
-        System.out.println("Select your initial team of at least 4 athletes");
-        System.out.println("Enter the number to the left of the athlete's name and press enter");
-        System.out.println("Enter -1 to finish selecting athletes");
+    static String getValidName(String prompt) {
+        boolean valid = false;
 
-        int counter = 1;
-        for (Athlete athlete : athletes) {
-            System.out.println(counter + ": " + athlete.getName());
-            System.out.println("   " + athlete.getDescription());
-            counter++;
-        }
+        String name = null;
 
-        int selection = 0;
+        while (!valid) {
+            ui.showOutput(prompt);
+            name = ui.getString();  // Read user input
+            System.out.println(name);
 
-        while (true) {  // Loop until user enters negative number
-            try {
-                selection = inputScanner.nextInt();  // Read user input
-            } catch (InputMismatchException e) {
-                System.out.println("Season length must be an number integer");
-                inputScanner.nextLine();  // Prevent infinite loop
+            if (name.isBlank())
+                name = ui.getString();
+
+            if (name.length() < 3) {
+                ui.showOutput("Name must be at least 3 characters long");
+                continue;
+            } else if (name.length() > 15) {
+                ui.showOutput("Name must be at most 15 characters long");
                 continue;
             }
 
-            if (selection < 0) {
-                if (team.size() < 4) {
-                    System.out.println("Team must have at least 4 athletes");
+            if (name.matches("[A-Za-z0-9]+")) {
+                valid = true;
+            } else {
+                ui.showOutput("Name must contain only letters and numbers");
+            }
+        }
+
+        return name;
+    }
+
+    static int getSeasonLength() {
+        boolean valid = false;
+
+        int seasonLength = 0;
+
+        while (!valid) {
+            ui.showOutput("How many weeks would you like the season to last?");
+
+            seasonLength = ui.getInt();
+
+            if (seasonLength < 5) {
+                ui.showOutput("Season must be at least 5 weeks long");
+            } else if (seasonLength > 15) {
+                ui.showOutput("Season must be at most 15 weeks long");
+            } else {
+                valid = true;
+            }
+        }
+
+        return seasonLength;
+    }
+
+    public void showAllAthletes() {
+        int counter = 1;
+        for (Athlete athlete : athletes) {
+            ui.showOutput(counter + ": " + athlete.getName());
+            ui.showOutput("   " + athlete.getDescription());
+            counter++;
+        }
+    }
+
+    public void selectInitialTeam() {
+        ui.showOutput("Select your initial team of at least 4 athletes");
+        ui.showOutput("Enter the number to the left of the athlete's name and press enter");
+        ui.showOutput("Enter -1 to finish selecting athletes");
+
+        showAllAthletes();
+
+        int athlete;
+        while (true) {  // Loop until user enters negative number
+            athlete = ui.getInt();
+
+            if (athlete < 0) {
+                if (team.size() < Team.MIN_SIZE) {
+                    ui.showOutput("Team must have at least 4 athletes");
                     continue;
                 }
                 break;  // End loop if user enters negative number
             }
 
-            try {
-                team.add(athletes.get(selection - 1));
-                System.out.println("Added " + athletes.get(selection - 1).getName() + " to team");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Please enter one of the above numbers");
+            if (athlete == 0 || athlete > athletes.size()) {
+                ui.showOutput("Please enter a valid athlete number, or -1 to finish");
+                ui.showOutput("Valid athlete numbers are 1 to " + athletes.size());
+                continue;
             }
+
+            if (team.contains(athletes.get(athlete - 1))) {
+                ui.showOutput("Athlete already in team");
+                continue;
+            }
+
+            String nickname = getValidName("Enter a nickname for " + athletes.get(athlete - 1).getName());
+
+            team.addAthlete(athletes.get(athlete - 1), nickname);
+            ui.showOutput("Added " + athletes.get(athlete - 1).getName() + " to team as " + nickname);
+
         }
+
+        team.displayAthletes(ui);
+    }
+
+    public void setUpSeason() {
+        String teamName = getValidName("Enter a name for your team");
+        this.seasonLength = getSeasonLength();
+
+        team = new Team(teamName);
+
+        selectInitialTeam();
     }
 }
