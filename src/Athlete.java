@@ -63,4 +63,8 @@ public class Athlete implements Purchasable {
     public String getDescription() {
         return "Stamina: " + this.stamina + "  Offence: " + this.offence + "  Defence: " + this.defence;
     }
+
+    public void setNickname(String nickName) {
+        this.nickName = nickName;
+    }
 }
