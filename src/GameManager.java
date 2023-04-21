@@ -59,7 +59,7 @@ public class GameManager {
             ui.showOutput("How many weeks would you like the season to last?");
 
             seasonLength = ui.getInt();
-
+        
             if (seasonLength < 5) {
                 ui.showOutput("Season must be at least 5 weeks long");
             } else if (seasonLength > 15) {
@@ -120,6 +120,30 @@ public class GameManager {
 
         team.displayAthletes(ui);
     }
+
+    /*
+     * Untested Code, 
+     */
+
+    public void selectDifficulty(){
+        ui.showOutput("Select your difficulty");
+        ui.showOutput("1: Easy");
+        ui.showOutput("2: Medium");
+        ui.showOutput("3: Hard");
+        ui.showOutput("4: Impossible");
+
+        int difficulty;
+
+        while (true) {
+            difficulty = ui.getInt(); //Gets user input and completes Integer Check
+            if (difficulty < 1 || difficulty > 4) { //Checks if difficulty is between 1 and 4 by checking if input is outside of 1 and 4.
+                ui.showOutput("Please enter a valid difficulty");
+                continue;
+            }
+            break;
+        }
+    }
+
 
     public void setUpSeason() {
         String teamName = getValidName("Enter a name for your team");
