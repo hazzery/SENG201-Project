@@ -31,7 +31,7 @@ public class Team {
     public void displayAthletes(UserInterface ui) {
         ui.showOutput("Athletes in " + this.name + ":");
         for (Athlete athlete : this.athletes) {
-            ui.showOutput(athlete.getName());
+            ui.showOutput(athlete.getName() + ": " + athlete.getNickname());
         }
     }
 }
