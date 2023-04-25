@@ -1,22 +1,16 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.Dialog.ModalExclusionType;
-import java.awt.Window.Type;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
-import java.awt.Button;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
-public class InterfaceTest {
+public class MainScreen {
 
 	private JFrame frmHello;
 
@@ -27,7 +21,7 @@ public class InterfaceTest {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceTest window = new InterfaceTest();
+					MainScreen window = new MainScreen(manager);
 					window.frmHello.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,8 +33,21 @@ public class InterfaceTest {
 	/**
 	 * Create the application.
 	 */
-	public InterfaceTest() {
+	private JFrame window;
+	private static InterfaceManager manager;
+
+	public MainScreen(InterfaceManager incomingManager) {
+		manager = incomingManager;
 		initialize();
+		
+	}
+	
+	public void closeWindow() {
+		window.dispose();
+	}
+	
+	public void finishedWindow() {
+		manager.closeMainScreen(this);
 	}
 
 	/**
