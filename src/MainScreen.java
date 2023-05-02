@@ -1,3 +1,4 @@
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Dialog.ModalExclusionType;
@@ -6,7 +7,6 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
@@ -21,7 +21,7 @@ public class MainScreen {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainScreen window = new MainScreen(manager);
+					MainScreen window = new MainScreen();
 					window.frmHello.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,22 +33,9 @@ public class MainScreen {
 	/**
 	 * Create the application.
 	 */
-	private JFrame window;
-	private static InterfaceManager manager;
-
-	public MainScreen(InterfaceManager incomingManager) {
-		manager = incomingManager;
-		initialize();
-		
-	}
-	
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	public void finishedWindow() {
-		manager.closeMainScreen(this);
-	}
+	public MainScreen() {
+        initialize();
+    }
 
 	/**
 	 * Initialize the contents of the frame.
@@ -88,13 +75,5 @@ public class MainScreen {
 		});
 		btnNewButton_1.setBounds(47, 194, 113, 23);
 		frmHello.getContentPane().add(btnNewButton_1);
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
 	}
 }
