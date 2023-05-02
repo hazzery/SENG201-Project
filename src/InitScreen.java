@@ -3,20 +3,30 @@
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class InitScreen {
     public static final int NUM_ALL_ATHLETES = 8;
+    private static final int BORDER_WIDTH = 2;
     private JFrame frame;
 
-    private JPanel teamNameAndSeasonLengthPanel;
-    private JLabel enterTeamNameLabel;
-    private JTextField teamNameText;
-    private JLabel enterSeasonLengthLabel;
-    private JSlider seasonLengthSlider;
+    private JPanel HeaderPanel;
+        private JPanel teamNamePanel;
+            private JLabel enterTeamNameLabel;
+            private JTextField teamNameText;
+        private JPanel seasonLengthPanel;
+            private JLabel enterSeasonLengthLabel;
+            private JSlider seasonLengthSlider;
     private JPanel athleteSelectionPanel;
-    private JPanel allAthleteButtonsPanel;
-    private JLabel selectAthletes;
-    private JButton[] allAthleteButtons;
+        private JLabel selectAthletesLabel;
+        private JPanel allAthleteButtonsPanel;
+            private JButton[] allAthleteButtons;
+        private JPanel selectedAthleteButtonsPanel;
+            private JButton[] selectedAthleteButtons;
+    private JPanel acceptResetPanel;
+        private JButton resetAthletesButton;
+        private JButton acceptAthletesButton;
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -46,24 +56,34 @@ public class InitScreen {
         frame.setTitle("Ski team game");
         frame.setBounds(0, 0, 1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new GridLayout(2, 1, 0, 0));
+        frame.getContentPane().setLayout(new BorderLayout(100, 0));
         frame.getRootPane().setBorder(new EmptyBorder(75, 75, 75, 75));
 
-        teamNameAndSeasonLengthPanel = new JPanel();
-        teamNameAndSeasonLengthPanel.setLayout(new GridLayout(2, 2, 0, 0));
-        frame.add(teamNameAndSeasonLengthPanel);
+        HeaderPanel = new JPanel();
+        HeaderPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        HeaderPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        frame.add(HeaderPanel, BorderLayout.NORTH);
+
+        teamNamePanel = new JPanel();
+        teamNamePanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        teamNamePanel.setLayout(new BoxLayout(teamNamePanel, BoxLayout.X_AXIS));
+        HeaderPanel.add(teamNamePanel);
 
         enterTeamNameLabel = new JLabel();
         enterTeamNameLabel.setText("Enter team name:");
-        teamNameAndSeasonLengthPanel.add(enterTeamNameLabel);
+        teamNamePanel.add(enterTeamNameLabel);
 
         teamNameText = new JTextField();
-//        teamNameText.setMaximumSize(new Dimension(0, 100));
-        teamNameAndSeasonLengthPanel.add(teamNameText);
+        teamNamePanel.add(teamNameText);
+
+        seasonLengthPanel = new JPanel();
+        seasonLengthPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        seasonLengthPanel.setLayout(new BoxLayout(seasonLengthPanel, BoxLayout.X_AXIS));
+        HeaderPanel.add(seasonLengthPanel);
 
         enterSeasonLengthLabel = new JLabel();
         enterSeasonLengthLabel.setText("Enter season length in weeks:");
-        teamNameAndSeasonLengthPanel.add(enterSeasonLengthLabel);
+        seasonLengthPanel.add(enterSeasonLengthLabel);
 
         seasonLengthSlider = new JSlider();
         seasonLengthSlider.setMajorTickSpacing(1);
@@ -72,17 +92,23 @@ public class InitScreen {
         seasonLengthSlider.setMinimum(5);
         seasonLengthSlider.setMaximum(15);
         seasonLengthSlider.setValue(10);
-        teamNameAndSeasonLengthPanel.add(seasonLengthSlider);
+        seasonLengthPanel.add(seasonLengthSlider);
 
         athleteSelectionPanel = new JPanel();
-        athleteSelectionPanel.setLayout(new GridLayout(3, 1, 0, 0));
-        frame.add(athleteSelectionPanel);
+        athleteSelectionPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        athleteSelectionPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 1;
+        frame.add(athleteSelectionPanel, BorderLayout.CENTER);
 
-        selectAthletes = new JLabel();
-        selectAthletes.setText("Select athletes from the below options:");
-        athleteSelectionPanel.add(selectAthletes);
+        selectAthletesLabel = new JLabel();
+        selectAthletesLabel.setText("Select athletes from the below options:");
+        athleteSelectionPanel.add(selectAthletesLabel);
 
         allAthleteButtonsPanel = new JPanel();
+        allAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         allAthleteButtonsPanel.setLayout(new GridLayout(2, 4, 0, 0));
         athleteSelectionPanel.add(allAthleteButtonsPanel);
 
@@ -91,6 +117,30 @@ public class InitScreen {
             allAthleteButtons[i] = new JButton();
             allAthleteButtonsPanel.add(allAthleteButtons[i]);
         }
+
+        selectedAthleteButtonsPanel = new JPanel();
+        selectedAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        selectedAthleteButtonsPanel.setLayout(new GridBagLayout());
+        athleteSelectionPanel.add(selectedAthleteButtonsPanel);
+
+        selectedAthleteButtons = new JButton[NUM_ALL_ATHLETES];
+        for (int i = 0; i < selectedAthleteButtons.length; i++) {
+            selectedAthleteButtons[i] = new JButton();
+            selectedAthleteButtonsPanel.add(selectedAthleteButtons[i]);
+        }
+
+        acceptResetPanel = new JPanel();
+        acceptResetPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        acceptResetPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        frame.add(acceptResetPanel, BorderLayout.SOUTH);
+
+        resetAthletesButton = new JButton();
+        resetAthletesButton.setText("Reset team");
+        acceptResetPanel.add(resetAthletesButton);
+
+        acceptAthletesButton = new JButton();
+        acceptAthletesButton.setText("Accept team and continue");
+        acceptResetPanel.add(acceptAthletesButton);
     }
 
 }
