@@ -37,6 +37,10 @@
 
 import java.util.ArrayList;
 
+/**
+ * MatchSetUp Class that sets up matches
+ *
+ */
 public class MatchSetUp {
     private static final int NUM_MATCHES = 3;
 
@@ -49,12 +53,22 @@ public class MatchSetUp {
     private int difficulty;
     private int numMatches;
 
-
+    /**
+	 * Creates a MatchSetUp with the given number of matches and difficulty.
+	 *
+	 * @param numMatches The number of matches that have been played.
+     * @param difficulty The difficulty of the game.
+	 */
     public MatchSetUp(int numMatches, int difficulty) {
         this.numMatches = numMatches;
         this.difficulty = difficulty;
     }
 
+    /**
+	 * Determines the Difficulty Scalar based off of the {@link difficulty} and {@link numMatches}.
+	 *
+	 * @return The Difficulty Scalar.
+	 */
     public double difficultyScaler(){
         double difficultyScaler = difficulty * 0.5;
         return difficultyScaler + 0.05 * numMatches;
@@ -62,10 +76,16 @@ public class MatchSetUp {
 
     
 
-    /**
-     * Generates NUM_MATCHES number of matches
-     */
     
-
+    
+    //Creates 3 Oppisiton Teams to choose from
+        //Creates a random team with random stats
+        //Gets called by UI element - ie on open of match screen
+        //Ui will call for team1, team2, team3
+        //Ui will call for list of athletes for each team
+        //Ui will call for stats of each athlete based on difficulty scalar
+        //Ui will call for team name
+        //Ui will deliver a chosen team - Ie listen for Ui element click with a pointer of which team was clicked
+        //Class will deliver the chosen team to the game
 
 }
