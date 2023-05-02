@@ -39,7 +39,8 @@ public class GameMenu {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 775, 458);
+        frame.setTitle("Ski Team Menu");
+        frame.setBounds(0, 0, 1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 

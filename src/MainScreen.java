@@ -44,7 +44,7 @@ public class MainScreen {
 		frmHello = new JFrame();
 		frmHello.setTitle("THE GAME!!!!");
 		frmHello.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		frmHello.setBounds(100, 100, 673, 412);
+        frmHello.setBounds(0, 0, 1920, 1080);
 		frmHello.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmHello.getContentPane().setLayout(null);
 		
