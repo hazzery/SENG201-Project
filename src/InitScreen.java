@@ -2,18 +2,21 @@
 //import java.awt.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class InitScreen {
+    public static final int NUM_ALL_ATHLETES = 8;
     private JFrame frame;
 
-    private JPanel teamNameAndSeasonLength;
-    private JLabel enterTeamName;
-    private JTextField teamName;
-    private JLabel enterSeasonLength;
-    private JSlider seasonLength;
-    private JPanel athleteSelection;
+    private JPanel teamNameAndSeasonLengthPanel;
+    private JLabel enterTeamNameLabel;
+    private JTextField teamNameText;
+    private JLabel enterSeasonLengthLabel;
+    private JSlider seasonLengthSlider;
+    private JPanel athleteSelectionPanel;
+    private JPanel allAthleteButtonsPanel;
     private JLabel selectAthletes;
-    private JButton[] allAthletes;
+    private JButton[] allAthleteButtons;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -44,42 +47,50 @@ public class InitScreen {
         frame.setBounds(0, 0, 1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(2, 1, 0, 0));
+        frame.getRootPane().setBorder(new EmptyBorder(75, 75, 75, 75));
 
-        teamNameAndSeasonLength = new JPanel();
-        teamNameAndSeasonLength.setLayout(new GridLayout(2, 2, 0, 0));
-        frame.add(teamNameAndSeasonLength);
+        teamNameAndSeasonLengthPanel = new JPanel();
+        teamNameAndSeasonLengthPanel.setLayout(new GridLayout(2, 2, 0, 0));
+        frame.add(teamNameAndSeasonLengthPanel);
 
-        enterTeamName = new JLabel();
-        enterTeamName.setText("Enter team name:");
-        teamNameAndSeasonLength.add(enterTeamName);
+        enterTeamNameLabel = new JLabel();
+        enterTeamNameLabel.setText("Enter team name:");
+        teamNameAndSeasonLengthPanel.add(enterTeamNameLabel);
 
-        teamName = new JTextField();
-        teamNameAndSeasonLength.add(teamName);
+        teamNameText = new JTextField();
+//        teamNameText.setMaximumSize(new Dimension(0, 100));
+        teamNameAndSeasonLengthPanel.add(teamNameText);
 
-        enterSeasonLength = new JLabel();
-        enterSeasonLength.setText("Enter season length in weeks:");
-        teamNameAndSeasonLength.add(enterSeasonLength);
+        enterSeasonLengthLabel = new JLabel();
+        enterSeasonLengthLabel.setText("Enter season length in weeks:");
+        teamNameAndSeasonLengthPanel.add(enterSeasonLengthLabel);
 
-        seasonLength = new JSlider();
-        seasonLength.setMajorTickSpacing(1);
-        seasonLength.setPaintTicks(true);
-        seasonLength.setPaintLabels(true);
-        seasonLength.setMinimum(5);
-        seasonLength.setMaximum(15);
-        seasonLength.setValue(10);
-        teamNameAndSeasonLength.add(seasonLength);
+        seasonLengthSlider = new JSlider();
+        seasonLengthSlider.setMajorTickSpacing(1);
+        seasonLengthSlider.setPaintTicks(true);
+        seasonLengthSlider.setPaintLabels(true);
+        seasonLengthSlider.setMinimum(5);
+        seasonLengthSlider.setMaximum(15);
+        seasonLengthSlider.setValue(10);
+        teamNameAndSeasonLengthPanel.add(seasonLengthSlider);
 
-//        athleteSelection = new JPanel();
-//        athleteSelection.setLayout(new GridLayout(1, 1, 0, 0));
-//        frame.add(athleteSelection);
-//
-//        selectAthletes = new JLabel();
-//        selectAthletes.setText("Select athletes from the below options:");
-//        athleteSelection.add(selectAthletes);
-//        for (int i = 0; i < allAthletes.length; i++) {
-//            allAthletes[i] = new JButton();
-//            athleteSelection.add(allAthletes[i]);
-//        }
+        athleteSelectionPanel = new JPanel();
+        athleteSelectionPanel.setLayout(new GridLayout(3, 1, 0, 0));
+        frame.add(athleteSelectionPanel);
+
+        selectAthletes = new JLabel();
+        selectAthletes.setText("Select athletes from the below options:");
+        athleteSelectionPanel.add(selectAthletes);
+
+        allAthleteButtonsPanel = new JPanel();
+        allAthleteButtonsPanel.setLayout(new GridLayout(2, 4, 0, 0));
+        athleteSelectionPanel.add(allAthleteButtonsPanel);
+
+        allAthleteButtons = new JButton[NUM_ALL_ATHLETES];
+        for (int i = 0; i < allAthleteButtons.length; i++) {
+            allAthleteButtons[i] = new JButton();
+            allAthleteButtonsPanel.add(allAthleteButtons[i]);
+        }
     }
 
 }
