@@ -1,7 +1,5 @@
-
-
 /**
- * Class that models an Athlete
+ * Class that models an athlete
  */
 public class Athlete implements Purchasable {
     private String name;
@@ -15,7 +13,7 @@ public class Athlete implements Purchasable {
 
 
     /**
-	 * Represents the Stats of a {@link Athlete} 
+	 * Represents the stats of an {@link Athlete}
 	 */
     public enum StatType {
         STAMINA,
@@ -26,16 +24,14 @@ public class Athlete implements Purchasable {
 
 
     /**
-	 * Creates an Athletes Class with the given stats.
+	 * Creates an athlete with the given stats
 	 *
-	 * @param name The name for the Athlete
-     * @param nickName The nickname for the Athlete
-     * @param stamina The stamina for the Athlete
-     * @param offence The offence for the Athlete
-     * @param defence The defence for the Athlete
-     * @param contractPrice The contract price for the Athlete
-     * @param sellBackPrice The sell back price for the Athlete
-     * 
+	 * @param name A descriptive name for the Athlete
+     * @param stamina The athlete's stamina value
+     * @param offence The athlete's offence value
+     * @param defence The athlete's defence value
+     * @param contractPrice The contract price for the athlete
+     * @param sellBackPrice The sell back price for the athlete
 	 */
     public Athlete(String name, int stamina, int offence, int defence, int contractPrice, int sellBackPrice) {
         this.name = name;
@@ -49,92 +45,92 @@ public class Athlete implements Purchasable {
     }
 
     /**
-	 * Gets the Name of Athlete.
+	 * Gets the name of the athlete
 	 *
-	 * @return The Name of the Athlete.
+	 * @return The athlete's descriptive name
 	 */
     public String getName() {
         return this.name;
     }
 
     /**
-	 * Gets the Nickname of Athlete.
+	 * Gets the athlete's nickname
 	 *
-	 * @return The Nickname of the Athlete.
+	 * @return The athlete's nickname
 	 */
     public String getNickname() {
         return this.nickName;
     }
 
     /**
-	 * Gets the Stamina of Athlete.
+	 * Gets the athlete's stamina stat
 	 *
-	 * @return The Stamina of the Athlete.
+	 * @return The value of the athlete's stamina stat
 	 */
     public int getStamina() {
         return this.stamina;
     }
 
     /**
-	 * Gets the Offence of Athlete.
+	 * Gets the athlete's offence stat
 	 *
-	 * @return The Offence of the Athlete.
+	 * @return The value of the athlete's offence stat
 	 */
     public int getOffence() {
         return this.offence;
     }
 
     /**
-	 * Gets the Defense of Athlete.
+	 * Gets the athlete's defence stat
 	 *
-	 * @return The Defense of the Athlete.
+	 * @return The value of the athlete's defence stat
 	 */
     public int getDefence() {
         return this.defence;
     }
 
     /**
-	 * Gets the Current Health of Athlete.
+	 * Gets the current health of the athlete
 	 *
-	 * @return The Current Health of the Athlete.
+	 * @return The current health of the athlete
 	 */
     public int getCurrentHealth() {
         return this.current_health;
     }
 
     /**
-	 * Gets the ContractPrice of Athlete.
+	 * Gets the contract sale price of the Athlete
+     * The contract price is the amount the athlete originally costs to purchase
 	 *
-	 * @return The ContractPrice of the Athlete.
+	 * @return The contract price of the athlete
 	 */
     public int getContractPrice() {
         return this.contractPrice;
     }
 
     /**
-	 * Gets the SellBackPrice of Athlete.
-	 *
-	 * @return The SellBackPrice of the Athlete.
+	 * Gets the sell back price of  the athlete
+	 * The sell back price is the amount the user can get back for selling an athlete they already own
+     *
+	 * @return The sell back price of the athlete
 	 */
     public int getSellBackPrice() {
         return this.sellBackPrice;
     }
 
-
     /**
-	 * Gets the Description of Athlete.
+	 * Generates a string description of the athlete
 	 *
-	 * @return The Description of the Athlete.
+	 * @return A short description of the athlete
 	 */
     public String getDescription() {
         return "Stamina: " + this.stamina + "  Offence: " + this.offence + "  Defence: " + this.defence;
     }
 
-
     /**
-	 * Gets the Name of Athlete.
-	 *
-	 * @return The Name of the Athlete.
+	 * Sets a new nickname for the athlete
+     *
+     * @param nickName The new nickname for the athlete
 	 */
     public void setNickname(String nickName) {
         this.nickName = nickName;
