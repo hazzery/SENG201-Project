@@ -1,22 +1,17 @@
 import java.util.ArrayList;
 
 /**
- * Class the Models a Team.
+ * Class the models a team
  */
 public class Team {
-    /**
-     * Sets the minimum size of a Team.
-	 */
     public static final int MIN_SIZE = 4;
-
     private final String name;
     private ArrayList<Athlete> athletes;
 
     /**
-	 * Creates a Team with the given name.
+	 * Creates a team with the given name
      * 
-     * @param name The name for the Team
-     * 
+     * @param name A name for the team
 	 */
     public Team(String name) {
         this.name = name;
@@ -24,39 +19,38 @@ public class Team {
     }
 
      /**
-	 * Gets the Name of Team.
+	 * Gets the name of the team
 	 *
-	 * @return The Name of the Team.
+	 * @return The team's name
 	 */
     public String getName() {
         return this.name;
     }
 
     /**
-	 * Gets the Size of Team.
+	 * Gets the size of the team
 	 *
-	 * @return The Size of the Team.
+	 * @return The number of athletes in the team
 	 */
     public int size() {
         return this.athletes.size();
     }
 
     /**
-	 * Gets the Athlete of Team.
+	 * Determines if the team contains the given athlete
 	 *
-     * @param athlete The athlete to get from the Team.
-	 * @return The Athlete of the Team.
+     * @param athlete An Athlete to check membership of
+	 * @return `true` if the team contains the athlete, `false` otherwise
      */
     public boolean contains(Athlete athlete) {
         return this.athletes.contains(athlete);
     }
 
     /**
-	 * Adds an Athlete to the Team with the given nickname.
+	 * Adds an athlete to the team with a specified nickname
 	 *  
-     * @param athlete The athlete to add to the Team
-	 * @param nickname The nickname for the Athlete
-     *
+     * @param athlete The athlete to add to the team
+	 * @param nickname A nickname for the athlete
      */
     public void addAthlete(Athlete athlete, String nickname) {
         athlete.setNickname(nickname);
@@ -64,8 +58,7 @@ public class Team {
     }
 
     /**
-	 * User Interface for displaying Athletes.
-	 * 
+	 * Displays all athletes in the team to the given interface
 	 */
     public void displayAthletes(UserInterface ui) {
         ui.showOutput("Athletes in " + this.name + ":");
