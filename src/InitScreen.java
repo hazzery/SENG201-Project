@@ -7,7 +7,7 @@ import javax.swing.border.LineBorder;
 
 public class InitScreen {
     public static final int NUM_ALL_ATHLETES = 8;
-    private static final int BORDER_WIDTH = 2;
+    private static final int BORDER_WIDTH = 0;
     private JFrame frame;
 
     private JPanel HeaderPanel;
@@ -19,11 +19,12 @@ public class InitScreen {
             private JSlider seasonLengthSlider;
     private JPanel athleteSelectionPanel;
         private JLabel selectAthletesLabel;
-        private JPanel allAthleteButtonsPanel;
-            private JButton[] allAthleteButtons;
-        private JPanel selectedAthleteButtonsPanel;
-            private JButton[] selectedAthleteButtons;
-    private JPanel acceptResetPanel;
+        private JPanel buttonsWrapperPanel;
+            private JPanel allAthleteButtonsPanel;
+                private JButton[] allAthleteButtons;
+            private JPanel selectedAthleteButtonsPanel;
+                private JButton[] selectedAthleteButtons;
+    private JPanel FooterPanel;
         private JButton resetAthletesButton;
         private JButton acceptAthletesButton;
 
@@ -96,21 +97,25 @@ public class InitScreen {
 
         athleteSelectionPanel = new JPanel();
         athleteSelectionPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        athleteSelectionPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 1;
+        athleteSelectionPanel.setLayout(new BorderLayout(0, 0));
         frame.add(athleteSelectionPanel, BorderLayout.CENTER);
 
         selectAthletesLabel = new JLabel();
         selectAthletesLabel.setText("Select athletes from the below options:");
-        athleteSelectionPanel.add(selectAthletesLabel);
+        athleteSelectionPanel.add(selectAthletesLabel, BorderLayout.NORTH);
+
+        buttonsWrapperPanel = new JPanel();
+        buttonsWrapperPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
+        athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
+
 
         allAthleteButtonsPanel = new JPanel();
         allAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         allAthleteButtonsPanel.setLayout(new GridLayout(2, 4, 0, 0));
-        athleteSelectionPanel.add(allAthleteButtonsPanel);
+        buttonsWrapperPanel.add(allAthleteButtonsPanel);
+
+        buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
         allAthleteButtons = new JButton[NUM_ALL_ATHLETES];
         for (int i = 0; i < allAthleteButtons.length; i++) {
@@ -120,8 +125,8 @@ public class InitScreen {
 
         selectedAthleteButtonsPanel = new JPanel();
         selectedAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        selectedAthleteButtonsPanel.setLayout(new GridBagLayout());
-        athleteSelectionPanel.add(selectedAthleteButtonsPanel);
+        selectedAthleteButtonsPanel.setLayout(new GridLayout(1, 8, 0, 0));
+        buttonsWrapperPanel.add(selectedAthleteButtonsPanel);
 
         selectedAthleteButtons = new JButton[NUM_ALL_ATHLETES];
         for (int i = 0; i < selectedAthleteButtons.length; i++) {
@@ -129,18 +134,18 @@ public class InitScreen {
             selectedAthleteButtonsPanel.add(selectedAthleteButtons[i]);
         }
 
-        acceptResetPanel = new JPanel();
-        acceptResetPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        acceptResetPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        frame.add(acceptResetPanel, BorderLayout.SOUTH);
+        FooterPanel = new JPanel();
+        FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        frame.add(FooterPanel, BorderLayout.SOUTH);
 
         resetAthletesButton = new JButton();
         resetAthletesButton.setText("Reset team");
-        acceptResetPanel.add(resetAthletesButton);
+        FooterPanel.add(resetAthletesButton);
 
         acceptAthletesButton = new JButton();
         acceptAthletesButton.setText("Accept team and continue");
-        acceptResetPanel.add(acceptAthletesButton);
+        FooterPanel.add(acceptAthletesButton);
     }
 
 }
