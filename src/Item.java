@@ -1,6 +1,5 @@
-
 /**
- * Class that models an Item
+ * Class that models an item
  */
 public class Item implements Purchasable {
 
@@ -10,48 +9,48 @@ public class Item implements Purchasable {
     private int sellBackPrice;
     private String description;
 
+
     /**
-	 * Creates an Item Class with the given infomation.
+	 * Creates an item with the given information
 	 *
-	 * @param contractPrice The contract price for the Item
-     * @param sellBackPrice The sell back price for the Item
-     * @param description The description for the Item
-     * @param statType The stat type for the Item
-     * @param improvementAmount The improvement amount for the Item
-     * 
+	 * @param contractPrice The contract price for the item
+     * @param sellBackPrice The sell back price for the item
+     * @param statType The stat in which consuming this item improves
+     * @param improvementAmount The amount in which consuming this item improves the stat
 	 */
-    public Item(int contractPrice, int sellBackPrice, String description, Athlete.StatType statType, int improvementAmount) {
+    public Item(int contractPrice, int sellBackPrice, Athlete.StatType statType, int improvementAmount) {
         this.contractPrice = contractPrice;
         this.sellBackPrice = sellBackPrice;
-        this.description = description;
         this.statType = statType;
         this.improvementAmount = improvementAmount;
     }
 
     /**
-	 * Gets the Contract Price of Item.
-	 *
-	 * @return The Contract Price of Item.
-	 */
+     * Gets the contract sale price of the athlete
+     * The contract price is the amount the athlete originally costs to purchase
+     *
+     * @return The contract price of the athlete
+     */
     public int getContractPrice() {
         return this.contractPrice;
     }
 
     /**
-	 * Gets the Stat Type of Item.
-	 *
-	 * @return The Stat Type of Item.
-	 */
+     * Gets the sell back price of  the athlete
+     * The sell back price is the amount the user can get back for selling an athlete they already own
+     *
+     * @return The sell back price of the athlete
+     */
     public int getSellBackPrice() {
         return this.sellBackPrice;
     }
 
     /**
-	 * Gets the Stat Type of Item.
-	 *
-	 * @return The Stat Type of Item.
+     * Generates a string description of the item
+     *
+     * @return A short description of the item
      */
-        public String getDescription() {
-        return this.description;
+    public String getDescription() {
+        return "Improves " + this.statType + " by " + this.improvementAmount;
     }
 }
