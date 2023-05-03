@@ -72,6 +72,11 @@ public class GameManager {
         return seasonLength;
     }
 
+    public static void startGame() {
+        MainScreen.closeWindow();
+        InitScreen initScreen = new InitScreen();
+    }
+
     public void showAllAthletes() {
         int counter = 1;
         for (Athlete athlete : athletes) {

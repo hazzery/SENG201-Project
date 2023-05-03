@@ -7,9 +7,10 @@ import javax.swing.border.LineBorder;
 
 public class InitScreen {
     public static final int NUM_ALL_ATHLETES = 8;
-    private static final int BORDER_WIDTH = 0;
-    private JFrame frame;
+    private static final int BORDER_WIDTH = 1;
+    private static JFrame frame;
 
+    // Indentation of components below shows hierarchy of elements on the screen
     private JPanel HeaderPanel;
         private JPanel teamNamePanel;
             private JLabel enterTeamNameLabel;
@@ -29,24 +30,13 @@ public class InitScreen {
         private JButton acceptAthletesButton;
 
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    InitScreen window = new InitScreen();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Create the application.
      */
     public InitScreen() {
         initialize();
+        frame.setVisible(true);
     }
 
     /**
@@ -146,6 +136,10 @@ public class InitScreen {
         acceptAthletesButton = new JButton();
         acceptAthletesButton.setText("Accept team and continue");
         FooterPanel.add(acceptAthletesButton);
+    }
+
+    public void closeWindow() {
+        this.frame.dispose();
     }
 
 }

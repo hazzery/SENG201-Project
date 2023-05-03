@@ -1,7 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        GameManager manager = new GameManager();
+//        GameManager manager = new GameManager();
+//        manager.setUpSeason();
 
-        manager.setUpSeason();
+        MainScreen mainWindow = new MainScreen();
     }
 }
