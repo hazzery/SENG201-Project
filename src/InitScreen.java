@@ -104,6 +104,8 @@ public class InitScreen extends JPanel implements UserInterface{
             showOutput("You must select at least " + Team.MIN_SIZE + " athletes");
             return;
         }
+
+        GameManager.startGame(teamName, seasonLength, selectedAthletes);
     }
 
     /**
