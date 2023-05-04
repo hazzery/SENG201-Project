@@ -43,7 +43,7 @@ public class MainScreen {
 		frame.getContentPane().add(panel);
 		
 		JButton btnNewButton = new JButton("Start Game");
-		btnNewButton.addActionListener(e -> GameManager.startGame());
+		btnNewButton.addActionListener(e -> GameManager.gameSetup());
 		btnNewButton.setBounds(47, 158, 113, 23);
 		frame.getContentPane().add(btnNewButton);
 		
