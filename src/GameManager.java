@@ -97,58 +97,15 @@ public class GameManager {
         return seasonLength;
     }
 
-    public static void startGame() {
+    public static void gameSetup() {
         MainScreen.closeWindow();
         InitScreen initScreen = new InitScreen();
     }
 
-    public void showAllAthletes(UserInterface ui) {
-        int counter = 1;
-        for (Athlete athlete : athletes) {
-            ui.showOutput(counter + ": " + athlete.getName());
-            ui.showOutput("   " + athlete.getDescription());
-            counter++;
-        }
-    }
-
-    public void selectInitialTeam(UserInterface ui) {
-        ui.showOutput("Select your initial team of at least 4 athletes");
-        ui.showOutput("Enter the number to the left of the athlete's name and press enter");
-        ui.showOutput("Enter -1 to finish selecting athletes");
-
-        showAllAthletes(ui);
-
-        int athlete;
-        while (true) {  // Loop until user enters negative number
-            athlete = ui.getInt();
-
-            if (athlete < 0) {
-                if (team.size() < Team.MIN_SIZE) {
-                    ui.showOutput("Team must have at least 4 athletes");
-                    continue;
-                }
-                break;  // End loop if user enters negative number
-            }
-
-            if (athlete == 0 || athlete > athletes.size()) {
-                ui.showOutput("Please enter a valid athlete number, or -1 to finish");
-                ui.showOutput("Valid athlete numbers are 1 to " + athletes.size());
-                continue;
-            }
-
-            if (team.contains(athletes.get(athlete - 1))) {
-                ui.showOutput("Athlete already in team");
-                continue;
-            }
-
-            String nickname = getValidName(ui, "Enter a nickname for " + athletes.get(athlete - 1).getName());
-
-            team.addAthlete(athletes.get(athlete - 1), nickname);
-            ui.showOutput("Added " + athletes.get(athlete - 1).getName() + " to team as " + nickname);
-
-        }
-
-        team.displayAthletes(ui);
+    public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> athletes) {
+        MainScreen.closeWindow();
+        team = new Team(teamName, athletes);
+        GameManager.seasonLength = seasonLength;
     }
 
     /*
@@ -172,21 +129,5 @@ public class GameManager {
             }
             break;
         }
-    }
-
-
-    public void setUpSeason(UserInterface ui) {
-        ui.showOutput("Enter a name for your team");
-        String teamName = ui.getString();
-
-        try {
-            validateName(teamName);
-        } catch (IllegalArgumentException e) {
-            ui.showOutput(e.getMessage());
-            teamName = ui.getString();
-        }
-        seasonLength = getSeasonLength(ui);
-
-        selectInitialTeam(ui);
     }
 }
