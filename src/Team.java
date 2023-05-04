@@ -6,16 +6,16 @@ import java.util.ArrayList;
 public class Team {
     public static final int MIN_SIZE = 4;
     private final String name;
-    private ArrayList<Athlete> athletes;
+    private Athlete[] athletes;
 
     /**
 	 * Creates a team with the given name
      * 
      * @param name A name for the team
 	 */
-    public Team(String name) {
+    public Team(String name, ArrayList<Athlete> athletes) {
         this.name = name;
-        this.athletes = new ArrayList<>(MIN_SIZE);
+        this.athletes = athletes.toArray(new Athlete[athletes.size()]);
     }
 
      /**
@@ -33,7 +33,7 @@ public class Team {
 	 * @return The number of athletes in the team
 	 */
     public int size() {
-        return this.athletes.size();
+        return this.athletes.length;
     }
 
     /**
@@ -43,27 +43,23 @@ public class Team {
 	 * @return `true` if the team contains the athlete, `false` otherwise
      */
     public boolean contains(Athlete athlete) {
-        return this.athletes.contains(athlete);
-    }
-
-    /**
-	 * Adds an athlete to the team with a specified nickname
-	 *  
-     * @param athlete The athlete to add to the team
-	 * @param nickname A nickname for the athlete
-     */
-    public void addAthlete(Athlete athlete, String nickname) {
-        athlete.setNickname(nickname);
-        this.athletes.add(athlete);
+        for (Athlete a : this.athletes) {
+            if (a.equals(athlete)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
 	 * Displays all athletes in the team to the given interface
 	 */
     public void displayAthletes(UserInterface ui) {
-        ui.showOutput("Athletes in " + this.name + ":");
+        String string = "Athletes in " + this.name + ":\n";
         for (Athlete athlete : this.athletes) {
-            ui.showOutput(athlete.getName() + ": " + athlete.getNickname());
+            string += athlete.getName() + ": " + athlete.getNickname() + '\n';
         }
+
+        ui.showOutput(string);
     }
 }
