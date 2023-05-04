@@ -99,7 +99,7 @@ public class Athlete implements Purchasable {
     }
 
     /**
-	 * Gets the contract sale price of the Athlete
+	 * Gets the contract sale price of the athlete
      * The contract price is the amount the athlete originally costs to purchase
 	 *
 	 * @return The contract price of the athlete
@@ -124,7 +124,7 @@ public class Athlete implements Purchasable {
 	 * @return A short description of the athlete
 	 */
     public String getDescription() {
-        return "Stamina: " + this.stamina + "  Offence: " + this.offence + "  Defence: " + this.defence;
+        return "Stamina: " + this.stamina + ",  Offence: " + this.offence + ",  Defence: " + this.defence;
     }
 
     /**
