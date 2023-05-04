@@ -1,7 +1,7 @@
-public abstract class UserInterface {
-    abstract String getString();
+public interface UserInterface {
+    String getString();
 
-    abstract int getInt();
+    int getInt();
 
-    abstract <T> void showOutput(T output);
+    <T> void showOutput(T output);
 }

@@ -2,17 +2,17 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class CommandLineInterface extends UserInterface {
+public class CommandLineInterface implements UserInterface {
 
     static Scanner inputScanner = new Scanner(System.in);
 
     @Override
-    String getString() {
+    public String getString() {
         return inputScanner.nextLine();  // Read user input
     }
 
     @Override
-    int getInt() {
+    public int getInt() {
         while (true) {
             try {
                 return inputScanner.nextInt();  // Read user input
@@ -24,7 +24,7 @@ public class CommandLineInterface extends UserInterface {
     }
 
     @Override
-    <T> void showOutput(T output) {
+    public <T> void showOutput(T output) {
         System.out.println(output);
     }
 }
