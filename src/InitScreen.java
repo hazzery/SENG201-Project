@@ -1,14 +1,16 @@
-//import javax.swing.*;
-//import java.awt.*;
-import java.awt.*;
-import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
 
-public class InitScreen {
+public class InitScreen extends JPanel implements UserInterface{
     public static final int NUM_ALL_ATHLETES = 8;
     private static final int BORDER_WIDTH = 1;
     private static JFrame frame;
+
+    private static ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
+
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel HeaderPanel;
@@ -40,11 +42,76 @@ public class InitScreen {
     }
 
     /**
+     * Add an athlete to the selected athletes list and update the GUI
+     * @param athlete the athlete to add to the selected athletes list
+     */
+    private void selectAthlete(Athlete athlete) {
+        if (!selectedAthletes.contains(athlete)) {
+            final int athleteIndex = selectedAthletes.size();
+            selectedAthletes.add(athlete);
+
+            selectedAthleteButtons[athleteIndex] = new JButton();
+            selectedAthleteButtons[athleteIndex].setText(athlete.getName());
+            selectedAthleteButtonsPanel.add(selectedAthleteButtons[athleteIndex]);
+
+            selectedAthleteButtonsPanel.revalidate();
+            selectedAthleteButtonsPanel.repaint();
+
+            selectedAthleteButtons[athleteIndex].addActionListener(e -> unselectAthlete(athlete, athleteIndex));
+        }
+    }
+
+    /**
+     * Remove an athlete from the selected athletes list and update the GUI
+     * @param athlete the athlete to remove from the selected athletes list
+     * @param athleteIndex the index of the athlete in the selected athletes list
+     */
+    private void unselectAthlete(Athlete athlete, int athleteIndex) {
+        if (selectedAthletes.contains(athlete)) {
+            selectedAthletes.remove(athlete);
+            selectedAthleteButtonsPanel.remove(selectedAthleteButtons[athleteIndex]);
+            selectedAthleteButtonsPanel.revalidate();
+            selectedAthleteButtonsPanel.repaint();
+        }
+    }
+
+    /**
+     * Remove all athletes from the selected athletes list and update the GUI
+     */
+    private void resetAthletes() {
+        selectedAthletes.clear();
+        selectedAthleteButtonsPanel.removeAll();
+        selectedAthleteButtonsPanel.revalidate();
+        selectedAthleteButtonsPanel.repaint();
+    }
+
+    /**
+     * Confirm the selected athletes and move to the next screen
+     */
+    private void acceptTeam() {
+        String teamName = teamNameText.getText();
+
+        try {
+            GameManager.validateName(teamName);
+        } catch (IllegalArgumentException e) {
+            showOutput(e.getMessage());
+            return;
+        }
+
+        int seasonLength = seasonLengthSlider.getValue();
+
+        if (selectedAthletes.size() < Team.MIN_SIZE) {
+            showOutput("You must select at least " + Team.MIN_SIZE + " athletes");
+            return;
+        }
+    }
+
+    /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setTitle("Ski team game");
+        frame.setTitle("Cool Ski game");
         frame.setBounds(0, 0, 1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout(100, 0));
@@ -110,6 +177,13 @@ public class InitScreen {
         allAthleteButtons = new JButton[NUM_ALL_ATHLETES];
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
+
+            String text = StringBuilder.make(GameManager.athletes.get(i).getName(),
+                    GameManager.athletes.get(i).getDescription());
+            allAthleteButtons[i].setText(text);
+
+            final int finalI = i;
+            allAthleteButtons[i].addActionListener(e -> this.selectAthlete(GameManager.athletes.get(finalI)));
             allAthleteButtonsPanel.add(allAthleteButtons[i]);
         }
 
@@ -119,10 +193,6 @@ public class InitScreen {
         buttonsWrapperPanel.add(selectedAthleteButtonsPanel);
 
         selectedAthleteButtons = new JButton[NUM_ALL_ATHLETES];
-        for (int i = 0; i < selectedAthleteButtons.length; i++) {
-            selectedAthleteButtons[i] = new JButton();
-            selectedAthleteButtonsPanel.add(selectedAthleteButtons[i]);
-        }
 
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
@@ -131,10 +201,12 @@ public class InitScreen {
 
         resetAthletesButton = new JButton();
         resetAthletesButton.setText("Reset team");
+        resetAthletesButton.addActionListener(e -> resetAthletes());
         FooterPanel.add(resetAthletesButton);
 
         acceptAthletesButton = new JButton();
         acceptAthletesButton.setText("Accept team and continue");
+        acceptAthletesButton.addActionListener(e -> acceptTeam());
         FooterPanel.add(acceptAthletesButton);
     }
 
@@ -142,4 +214,30 @@ public class InitScreen {
         this.frame.dispose();
     }
 
+    /**
+     * Gets user input for team name
+     * @return the value currently in the team name text field
+     */
+    @Override
+    public String getString() {
+        return teamNameText.getText();
+    }
+
+    /**
+     * Gets user input for season length
+     * @return the value currently in the season length slider
+     */
+    @Override
+    public int getInt() {
+        return seasonLengthSlider.getValue();
+    }
+
+    /**
+     * @param output the message to be displayed to the user
+     * @param <T> the type of the message
+     */
+    @Override
+    public <T> void showOutput(T output) {
+        JOptionPane.showMessageDialog(frame, output);
+    }
 }
