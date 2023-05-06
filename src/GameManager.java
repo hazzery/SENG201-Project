@@ -37,8 +37,7 @@ public class GameManager {
             throw new IllegalArgumentException("Name must be at most 15 characters long");
         }
 
-        if (name.matches("[A-Za-z0-9]+")) {
-        } else {
+        if (!name.matches("[A-Za-z0-9]+")) {
             throw new IllegalArgumentException("Name must contain only letters and numbers");
         }
     }
