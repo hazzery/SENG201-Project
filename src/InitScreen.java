@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
-public class InitScreen extends JPanel implements UserInterface{
+public class InitScreen extends JPanel {
     public static final int NUM_ALL_ATHLETES = 8;
     private static final int BORDER_WIDTH = 1;
     private static JFrame frame;
 
-    private static ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
+    private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
 
 
     // Indentation of components below shows hierarchy of elements on the screen
@@ -94,14 +94,14 @@ public class InitScreen extends JPanel implements UserInterface{
         try {
             GameManager.validateName(teamName);
         } catch (IllegalArgumentException e) {
-            showOutput(e.getMessage());
+            JOptionPane.showMessageDialog(frame, e.getMessage());
             return;
         }
 
         int seasonLength = seasonLengthSlider.getValue();
 
         if (selectedAthletes.size() < Team.MIN_SIZE) {
-            showOutput("You must select at least " + Team.MIN_SIZE + " athletes");
+            JOptionPane.showMessageDialog(frame, "You must select at least " + Team.MIN_SIZE + " athletes");
             return;
         }
     }
@@ -178,7 +178,7 @@ public class InitScreen extends JPanel implements UserInterface{
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
 
-            String text = StringBuilder.make(GameManager.athletes.get(i).getName(),
+            String text = HTMLString.make(GameManager.athletes.get(i).getName(),
                     GameManager.athletes.get(i).getDescription());
             allAthleteButtons[i].setText(text);
 
@@ -211,33 +211,10 @@ public class InitScreen extends JPanel implements UserInterface{
     }
 
     public void closeWindow() {
-        this.frame.dispose();
+        frame.dispose();
     }
 
-    /**
-     * Gets user input for team name
-     * @return the value currently in the team name text field
-     */
-    @Override
-    public String getString() {
-        return teamNameText.getText();
-    }
-
-    /**
-     * Gets user input for season length
-     * @return the value currently in the season length slider
-     */
-    @Override
-    public int getInt() {
-        return seasonLengthSlider.getValue();
-    }
-
-    /**
-     * @param output the message to be displayed to the user
-     * @param <T> the type of the message
-     */
-    @Override
-    public <T> void showOutput(T output) {
-        JOptionPane.showMessageDialog(frame, output);
-    }
+//    teamNameText.getText()
+//    seasonLengthSlider.getValue()
+//    JOptionPane.showMessageDialog(frame, output)
 }
