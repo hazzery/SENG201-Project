@@ -3,8 +3,6 @@ import java.awt.Dialog.ModalExclusionType;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
@@ -48,11 +46,9 @@ public class MainScreen {
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Settings");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Settings Button Pressed", "InfoBox: Infomation", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
+		btnNewButton_1.addActionListener(e -> 
+				JOptionPane.showMessageDialog(null, "Settings Button Pressed",
+						"InfoBox: Information", JOptionPane.INFORMATION_MESSAGE));
 		btnNewButton_1.setBounds(47, 194, 113, 23);
 		frame.getContentPane().add(btnNewButton_1);
 	}
