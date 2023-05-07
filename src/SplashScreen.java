@@ -1,11 +1,13 @@
-import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import java.awt.Color;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class SplashScreen extends JPanel{
+public class SplashScreen extends JPanel {
+
+	private static final int BORDER_WIDTH = 2;
+
 	/**
 	 * Create the application.
 	 */
@@ -18,26 +20,30 @@ public class SplashScreen extends JPanel{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JTextPane txtpnTheGameIs = new JTextPane();
-		txtpnTheGameIs.setText("The Game Is HERE!!!");
-		txtpnTheGameIs.setBounds(24, 112, 151, 20);
-		this.add(txtpnTheGameIs);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBorder(new EmptyBorder(150, 350, 350, 350));
+
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+		this.add(titlePanel);
+
+		JLabel gameTitle = new JLabel("Cool Ski Game");
+		gameTitle.setFont(new Font(null, Font.PLAIN, 75));
+		titlePanel.add(gameTitle);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(1, 2, 0, 0));
+		buttonPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+		this.add(buttonPanel);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(192, 192, 192));
-		panel.setBounds(229, 11, 422, 355);
-		this.add(panel);
+		JButton startGameButton = new JButton("Start Game");
+		startGameButton.addActionListener(e -> GameManager.initializeGame());
+		buttonPanel.add(startGameButton);
 		
-		JButton btnNewButton = new JButton("Start Game");
-		btnNewButton.addActionListener(e -> GameManager.initializeGame());
-		btnNewButton.setBounds(47, 158, 113, 23);
-		this.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Settings");
-		btnNewButton_1.addActionListener(e -> 
+		JButton settingsButton = new JButton("Settings");
+		settingsButton.addActionListener(e ->
 				JOptionPane.showMessageDialog(null, "Settings Button Pressed",
-						"InfoBox: Information", JOptionPane.INFORMATION_MESSAGE));
-		btnNewButton_1.setBounds(47, 194, 113, 23);
-		this.add(btnNewButton_1);
+				"InfoBox: Information", JOptionPane.INFORMATION_MESSAGE));
+		buttonPanel.add(settingsButton);
 	}
 }
