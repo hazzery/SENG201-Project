@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class GameManager {
     private static int seasonLength;
     private static Team team;
+    private static boolean hardMode;
 
     private static MainScreen mainScreen;
     private static InitScreen initScreen;
@@ -32,7 +33,7 @@ public class GameManager {
     public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
         GameManager.seasonLength = seasonLength;
         GameManager.team = new Team(teamName, selectedAthletes);
-//        GameManager.hardMode = hardMode;
+        GameManager.hardMode = hardMode;
 
         initScreen.closeWindow();
 //        GameScreen gameScreen = new GameScreen();
