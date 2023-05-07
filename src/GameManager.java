@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class GameManager {
     private static int seasonLength;
     private static Team team;
     private static boolean hardMode;
 
+    private static JFrame mainWindow;
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
 
@@ -30,18 +33,16 @@ public class GameManager {
         athletes.add(skierEight);
     }
 
-    public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
-        GameManager.seasonLength = seasonLength;
-        GameManager.team = new Team(teamName, selectedAthletes);
-        GameManager.hardMode = hardMode;
-
-        initScreen.closeWindow();
-//        GameScreen gameScreen = new GameScreen();
-    }
-
     public void launchSplashScreen() {
+        mainWindow = new JFrame();
+        mainWindow.setTitle("Cool Ski game");
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setBounds(0, 0, 1920, 1080);
+        mainWindow.setUndecorated(true);
+        mainWindow.setVisible(true);
 
         splashScreen = new SplashScreen();
+        mainWindow.setContentPane(splashScreen);
     }
 
     public static void validateName(String name) {
@@ -56,8 +57,23 @@ public class GameManager {
         }
     }
 
+    private static void setScreen(JPanel panel) {
+        mainWindow.remove(mainWindow.getContentPane());
+        mainWindow.setContentPane(panel);
+        mainWindow.revalidate();
+        mainWindow.repaint();
+    }
+
     public static void initializeGame() {
-        splashScreen.closeWindow();
         initScreen = new InitScreen();
+        setScreen(initScreen);
+    }
+    public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
+        GameManager.seasonLength = seasonLength;
+        GameManager.team = new Team(teamName, selectedAthletes);
+        GameManager.hardMode = hardMode;
+
+        GameScreen gameScreen = new GameScreen();
+        setScreen(gameScreen);
     }
 }

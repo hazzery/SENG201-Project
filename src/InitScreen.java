@@ -7,7 +7,6 @@ import java.awt.*;
 public class InitScreen extends JPanel {
     public static final int NUM_ALL_ATHLETES = 8;
     private static final int BORDER_WIDTH = 0;
-    private static JFrame frame;
 
     private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
 
@@ -39,7 +38,7 @@ public class InitScreen extends JPanel {
      */
     public InitScreen() {
         initialize();
-        frame.setVisible(true);
+        setVisible(true);
     }
 
     /**
@@ -54,7 +53,7 @@ public class InitScreen extends JPanel {
             try {
                 GameManager.validateName(nickName);
             } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(frame, e.getMessage());
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 selectAthlete(athlete);
                 return;
             }
@@ -107,14 +106,14 @@ public class InitScreen extends JPanel {
         try {
             GameManager.validateName(teamName);
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(frame, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
 
         int seasonLength = seasonLengthSlider.getValue();
 
         if (selectedAthletes.size() < Team.MIN_SIZE) {
-            JOptionPane.showMessageDialog(frame, "You must select at least " + Team.MIN_SIZE + " athletes");
+            JOptionPane.showMessageDialog(this, "You must select at least " + Team.MIN_SIZE + " athletes");
             return;
         }
 
@@ -127,17 +126,13 @@ public class InitScreen extends JPanel {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame();
-        frame.setTitle("Cool Ski game");
-        frame.setBounds(0, 0, 1920, 1080);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BorderLayout(100, 0));
-        frame.getRootPane().setBorder(new EmptyBorder(75, 75, 75, 75));
+        this.setLayout(new BorderLayout(100, 0));
+        this.setBorder(new EmptyBorder(75, 75, 75, 75));
 
         headerPanel = new JPanel();
         headerPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         headerPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        frame.add(headerPanel, BorderLayout.NORTH);
+        this.add(headerPanel, BorderLayout.NORTH);
 
         teamNamePanel = new JPanel();
         teamNamePanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
@@ -177,7 +172,7 @@ public class InitScreen extends JPanel {
         athleteSelectionPanel = new JPanel();
         athleteSelectionPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         athleteSelectionPanel.setLayout(new BorderLayout(0, 0));
-        frame.add(athleteSelectionPanel, BorderLayout.CENTER);
+        this.add(athleteSelectionPanel, BorderLayout.CENTER);
 
         selectAthletesLabel = new JLabel();
         selectAthletesLabel.setText("Select athletes from the below options:");
@@ -219,7 +214,7 @@ public class InitScreen extends JPanel {
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        frame.add(FooterPanel, BorderLayout.SOUTH);
+        this.add(FooterPanel, BorderLayout.SOUTH);
 
         resetAthletesButton = new JButton();
         resetAthletesButton.setText("Reset team");
@@ -230,10 +225,6 @@ public class InitScreen extends JPanel {
         acceptAthletesButton.setText("Accept team and continue");
         acceptAthletesButton.addActionListener(e -> acceptTeam());
         FooterPanel.add(acceptAthletesButton);
-    }
-
-    public void closeWindow() {
-        frame.dispose();
     }
 
 //    teamNameText.getText()
