@@ -4,6 +4,9 @@ public class GameManager {
     private static int seasonLength;
     private static Team team;
 
+    private static MainScreen mainScreen;
+    private static InitScreen initScreen;
+
 
     public static final ArrayList<Athlete> athletes = new ArrayList<>(4);
     private static final Athlete skierOne =    new Athlete("Skier One"   , 1, 4, 1, 1, 1);
@@ -26,8 +29,17 @@ public class GameManager {
         athletes.add(skierEight);
     }
 
+    public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
+        GameManager.seasonLength = seasonLength;
+        GameManager.team = new Team(teamName, selectedAthletes);
+//        GameManager.hardMode = hardMode;
+
+        initScreen.closeWindow();
+//        GameScreen gameScreen = new GameScreen();
+    }
+
     public void launchSplashScreen() {
-        MainScreen mainScreen = new MainScreen();
+        mainScreen = new MainScreen();
     }
 
     public static void validateName(String name) {
@@ -42,8 +54,8 @@ public class GameManager {
         }
     }
 
-    public static void startGame() {
-        MainScreen.closeWindow();
-        InitScreen initScreen = new InitScreen();
+    public static void initializeGame() {
+        mainScreen.closeWindow();
+        initScreen = new InitScreen();
     }
 }
