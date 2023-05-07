@@ -5,7 +5,7 @@ public class GameManager {
     private static Team team;
     private static boolean hardMode;
 
-    private static MainScreen mainScreen;
+    private static SplashScreen splashScreen;
     private static InitScreen initScreen;
 
 
@@ -40,7 +40,8 @@ public class GameManager {
     }
 
     public void launchSplashScreen() {
-        mainScreen = new MainScreen();
+
+        splashScreen = new SplashScreen();
     }
 
     public static void validateName(String name) {
@@ -56,7 +57,7 @@ public class GameManager {
     }
 
     public static void initializeGame() {
-        mainScreen.closeWindow();
+        splashScreen.closeWindow();
         initScreen = new InitScreen();
     }
 }

@@ -1,12 +1,12 @@
-import javax.swing.JFrame;
 import java.awt.Dialog.ModalExclusionType;
-import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Color;
 
-public class MainScreen {
+public class SplashScreen {
 
 	private static JFrame frame;
 
@@ -14,7 +14,7 @@ public class MainScreen {
 	/**
 	 * Create the application.
 	 */
-	public MainScreen() {
+	public SplashScreen() {
         initialize();
 		frame.setVisible(true);
     }
