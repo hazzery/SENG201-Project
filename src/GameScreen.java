@@ -7,7 +7,6 @@ public class GameScreen extends JPanel {
     private static final int BORDER_WIDTH = 2;
 
 
-
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;
         private JPanel teamInfoPanel;
@@ -26,6 +25,17 @@ public class GameScreen extends JPanel {
     public GameScreen() {
         initialize();
         setVisible(true);
+    }
+
+    private void updateTeamInfo() {
+        teamNameLabel.setText(GameManager.getTeamName());
+        bankBalanceLabel.setText("$" + GameManager.getBankBalance());
+    }
+
+    private void updateSeasonInfo() {
+        GameManager.nextWeek();
+        currentWeekLabel.setText("Week " + GameManager.currentWeek() + " of " + GameManager.getSeasonLength());
+        remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
     }
 
     /**
@@ -77,6 +87,7 @@ public class GameScreen extends JPanel {
 
         nextWeekButton = new JButton();
         nextWeekButton.setText("Next Week");
+        nextWeekButton.addActionListener(e -> updateSeasonInfo());
         FooterPanel.add(nextWeekButton);
     }
 
