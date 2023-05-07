@@ -12,6 +12,7 @@ public class Team {
 	 * Creates a team with the given name
      * 
      * @param name A name for the team
+     * @param athletes All athletes to be put in the team
 	 */
     public Team(String name, ArrayList<Athlete> athletes) {
         this.name = name;
