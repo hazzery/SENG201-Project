@@ -7,6 +7,8 @@ public class GameManager {
     private static Team team;
     private static boolean hardMode;
 
+    private static int bankBalance = 0;
+
     private static JFrame mainWindow;
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
@@ -33,13 +35,33 @@ public class GameManager {
         athletes.add(skierEight);
     }
 
-    public void launchSplashScreen() {
+    public static String getTeamName() {
+        return team.getName();
+    }
+
+    public static int getBankBalance() {
+        return bankBalance;
+    }
+
+    public static int currentWeek() {
+        return 1;
+    }
+
+    public static int getSeasonLength() {
+        return seasonLength;
+    }
+
+    public static void initializeMainWindow() {
         mainWindow = new JFrame();
         mainWindow.setTitle("Cool Ski game");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setBounds(0, 0, 1920, 1080);
         mainWindow.setUndecorated(true);
         mainWindow.setVisible(true);
+    }
+
+    public void launchSplashScreen() {
+        initializeMainWindow();
 
         splashScreen = new SplashScreen();
         mainWindow.setContentPane(splashScreen);
