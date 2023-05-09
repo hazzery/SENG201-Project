@@ -8,6 +8,7 @@ public class GameManager {
     private static boolean hardMode;
 
     private static int bankBalance = 0;
+    private static int currentWeek = 1;
 
     private static JFrame mainWindow;
     private static SplashScreen splashScreen;
@@ -24,6 +25,9 @@ public class GameManager {
     private static final Athlete skierSeven =  new Athlete("Skier Seven"  , 4, 1, 4, 1, 1);
     private static final Athlete skierEight =  new Athlete("Skier Eight"  , 4, 1, 4, 1, 1);
 
+    /**
+     * Add all athletes to the list of athletes
+     */
     public GameManager() {
         athletes.add(skierOne);
         athletes.add(skierTwo);
@@ -35,38 +39,35 @@ public class GameManager {
         athletes.add(skierEight);
     }
 
-    public static String getTeamName() {
-        return team.getName();
-    }
-
-    public static int getBankBalance() {
-        return bankBalance;
-    }
-
-    public static int currentWeek() {
-        return 1;
-    }
-
-    public static int getSeasonLength() {
-        return seasonLength;
-    }
-
+    /**
+     * Initializes the main window
+     * Setting the title, size, and close operation
+     */
     public static void initializeMainWindow() {
         mainWindow = new JFrame();
         mainWindow.setTitle("Cool Ski game");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setBounds(0, 0, 1920, 1080);
-        mainWindow.setUndecorated(true);
         mainWindow.setVisible(true);
     }
 
-    public void launchSplashScreen() {
+    /**
+     * Launches the application window
+     * initializes the main window and sets it to display the splash screen
+     */
+    public void launchApplicationWindow() {
         initializeMainWindow();
 
         splashScreen = new SplashScreen();
         mainWindow.setContentPane(splashScreen);
     }
 
+    /**
+     * Checks to see if the provided string meets the criteria for a valid name
+     * Valid names must be between 3 and 15 characters long and contain only letters and numbers
+     * @param name the name to validate
+     * @throws IllegalArgumentException if the name is invalid
+     */
     public static void validateName(String name) {
         if (name.length() < 3) {
             throw new IllegalArgumentException("Name must be at least 3 characters long");
@@ -79,6 +80,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Changes the current screen to the provided panel
+     * @param panel the panel to display
+     */
     private static void setScreen(JPanel panel) {
         mainWindow.remove(mainWindow.getContentPane());
         mainWindow.setContentPane(panel);
@@ -86,10 +91,21 @@ public class GameManager {
         mainWindow.repaint();
     }
 
+    /**
+     * Changes the current screen from the splash screen to the game initialization screen
+     */
     public static void initializeGame() {
         initScreen = new InitScreen();
         setScreen(initScreen);
     }
+
+    /**
+     * Starts the game with the provided parameters
+     * @param teamName the name of the player's team
+     * @param seasonLength the length of the season in weeks
+     * @param selectedAthletes the athletes selected by the player
+     * @param hardMode `true` if the game is in hard mode, `false` otherwise
+     */
     public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
         GameManager.seasonLength = seasonLength;
         GameManager.team = new Team(teamName, selectedAthletes);
@@ -97,5 +113,44 @@ public class GameManager {
 
         GameScreen gameScreen = new GameScreen();
         setScreen(gameScreen);
+    }
+
+    /**
+     * Gets the name of the player's team
+     * @return the name of the player's team
+     */
+    public static String getTeamName() {
+        return team.getName();
+    }
+
+    /**
+     * Gets the player's current bank balance
+     * @return
+     */
+    public static int getBankBalance() {
+        return bankBalance;
+    }
+
+    /**
+     * Gets the current week within the season
+     * @return the current week
+     */
+    public static int currentWeek() {
+        return currentWeek;
+    }
+
+    /**
+     * Gets the length of the season
+     * @return the length of the season
+     */
+    public static int getSeasonLength() {
+        return seasonLength;
+    }
+
+    /**
+     * Increments the current week by one
+     */
+    public static void nextWeek() {
+        currentWeek++;
     }
 }
