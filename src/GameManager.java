@@ -7,6 +7,9 @@ public class GameManager {
     private static Team team;
     private static boolean hardMode;
 
+    public static Team team;
+    public static ArrayList<Item> items = new ArrayList<>();
+
     private static int bankBalance = 0;
     private static int currentWeek = 1;
 
@@ -152,5 +155,25 @@ public class GameManager {
      */
     public static void nextWeek() {
         currentWeek++;
+    }
+
+    public static void initializeItems() {
+        Item item1 = new Item("Item One", Athlete.StatType.OFFENCE, 1, 10, 5);
+        Item item2 = new Item("Item Two", Athlete.StatType.DEFENCE, 1, 10, 5);
+        Item item3 = new Item("Item Three", Athlete.StatType.OFFENCE, 2, 20, 10);
+        Item item4 = new Item("Item Four", Athlete.StatType.DEFENCE, 2, 20, 10);
+        Item item5 = new Item("Item Five", Athlete.StatType.OFFENCE, 3, 30, 20);
+        Item item6 = new Item("Item Six", Athlete.StatType.DEFENCE, 3, 30, 20);
+        Item item7 = new Item("Item Seven", Athlete.StatType.OFFENCE, 4, 40, 30);
+        Item item8 = new Item("Item Eight", Athlete.StatType.DEFENCE, 4, 40, 30);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
+        items.add(item7);
+        items.add(item8);
     }
 }
