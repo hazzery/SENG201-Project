@@ -15,6 +15,7 @@ public class GameScreen extends JPanel {
         private JPanel seasonPanel;
             private JLabel currentWeekLabel;
             private JLabel remainingWeeksLabel;
+    private JPanel centrePanel;
     private JPanel FooterPanel;
         private JButton nextWeekButton;
 
@@ -36,6 +37,18 @@ public class GameScreen extends JPanel {
         GameManager.nextWeek();
         currentWeekLabel.setText("Week " + GameManager.currentWeek() + " of " + GameManager.getSeasonLength());
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
+    }
+
+    public void goToStadium() {
+        centrePanel = new StadiumScreen();
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void goToMarket() {
+        centrePanel = new MarketScreen();
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -80,6 +93,9 @@ public class GameScreen extends JPanel {
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
         seasonPanel.add(remainingWeeksLabel);
 
+        centrePanel = new ClubScreen(this);
+        this.add(centrePanel, BorderLayout.CENTER);
+
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
@@ -92,6 +108,8 @@ public class GameScreen extends JPanel {
     }
 
     public static void main(String[] args) {
+        GameManager.initializeAthletes();
+        GameManager.initializeItems();
         GameManager.initializeMainWindow();
         GameManager.startGame("HarryTeam", 10, GameManager.athletes, false);
     }
