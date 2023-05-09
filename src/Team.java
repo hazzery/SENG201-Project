@@ -51,4 +51,8 @@ public class Team {
         }
         return false;
     }
+
+    public Athlete get(int index) {
+        return this.athletes[index];
+    }
 }
