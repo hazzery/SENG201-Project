@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 public class GameManager {
     private static int seasonLength;
-    private static Team team;
     private static boolean hardMode;
 
     public static Team team;
@@ -16,31 +15,18 @@ public class GameManager {
     private static JFrame mainWindow;
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
+    private static GameScreen gameScreen;
 
 
-    public static final ArrayList<Athlete> athletes = new ArrayList<>(4);
-    private static final Athlete skierOne =    new Athlete("Skier One"   , 1, 4, 1, 1, 1);
-    private static final Athlete skierTwo =    new Athlete("Skier Two"   , 2, 3, 2, 1, 1);
-    private static final Athlete skierThree =  new Athlete("Skier Three" , 3, 2, 3, 1, 1);
-    private static final Athlete skierFour =   new Athlete("Skier Four"  , 4, 1, 4, 1, 1);
-    private static final Athlete skierFive =   new Athlete("Skier Five"  , 4, 1, 4, 1, 1);
-    private static final Athlete skierSix =    new Athlete("Skier Six"  , 4, 1, 4, 1, 1);
-    private static final Athlete skierSeven =  new Athlete("Skier Seven"  , 4, 1, 4, 1, 1);
-    private static final Athlete skierEight =  new Athlete("Skier Eight"  , 4, 1, 4, 1, 1);
-
-    /**
-     * Add all athletes to the list of athletes
-     */
-    public GameManager() {
-        athletes.add(skierOne);
-        athletes.add(skierTwo);
-        athletes.add(skierThree);
-        athletes.add(skierFour);
-        athletes.add(skierFive);
-        athletes.add(skierSix);
-        athletes.add(skierSeven);
-        athletes.add(skierEight);
-    }
+    public static ArrayList<Athlete> athletes = new ArrayList<>(4);
+    private static final Athlete skierOne =    new Athlete("Skier One"   , 4, 8, 1, 1, 1);
+    private static final Athlete skierTwo =    new Athlete("Skier Two"   , 4, 7, 2, 1, 1);
+    private static final Athlete skierThree =  new Athlete("Skier Three" , 4, 6, 3, 1, 1);
+    private static final Athlete skierFour =   new Athlete("Skier Four"  , 4, 5, 4, 1, 1);
+    private static final Athlete skierFive =   new Athlete("Skier Five"  , 4, 4, 5, 1, 1);
+    private static final Athlete skierSix =    new Athlete("Skier Six"  , 4, 3, 6, 1, 1);
+    private static final Athlete skierSeven =  new Athlete("Skier Seven"  , 4, 2, 7, 1, 1);
+    private static final Athlete skierEight =  new Athlete("Skier Eight"  , 4, 1, 8, 1, 1);
 
     /**
      * Initializes the main window
@@ -54,11 +40,22 @@ public class GameManager {
         mainWindow.setVisible(true);
     }
 
+    public static void initializeAthletes() {
+        athletes.add(skierOne);
+        athletes.add(skierTwo);
+        athletes.add(skierThree);
+        athletes.add(skierFour);
+        athletes.add(skierFive);
+        athletes.add(skierSix);
+        athletes.add(skierSeven);
+        athletes.add(skierEight);
+    }
+
     /**
      * Launches the application window
      * initializes the main window and sets it to display the splash screen
      */
-    public void launchApplicationWindow() {
+    public static void launchApplicationWindow() {
         initializeMainWindow();
 
         splashScreen = new SplashScreen();
@@ -114,7 +111,7 @@ public class GameManager {
         GameManager.team = new Team(teamName, selectedAthletes);
         GameManager.hardMode = hardMode;
 
-        GameScreen gameScreen = new GameScreen();
+        gameScreen = new GameScreen();
         setScreen(gameScreen);
     }
 
@@ -128,7 +125,7 @@ public class GameManager {
 
     /**
      * Gets the player's current bank balance
-     * @return
+     * @return the player's current bank balance
      */
     public static int getBankBalance() {
         return bankBalance;
