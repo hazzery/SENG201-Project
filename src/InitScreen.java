@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
-public class InitScreen extends JPanel implements UserInterface{
+public class InitScreen extends JPanel {
     public static final int NUM_ALL_ATHLETES = 8;
-    private static final int BORDER_WIDTH = 1;
-    private static JFrame frame;
+    private static final int BORDER_WIDTH = 0;
 
-    private static ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
+    private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
 
 
     // Indentation of components below shows hierarchy of elements on the screen
-    private JPanel HeaderPanel;
+    private JPanel headerPanel;
         private JPanel teamNamePanel;
             private JLabel enterTeamNameLabel;
             private JTextField teamNameText;
         private JPanel seasonLengthPanel;
             private JLabel enterSeasonLengthLabel;
             private JSlider seasonLengthSlider;
+        private JCheckBox difficultyButton;
     private JPanel athleteSelectionPanel;
         private JLabel selectAthletesLabel;
         private JPanel buttonsWrapperPanel;
@@ -38,7 +38,7 @@ public class InitScreen extends JPanel implements UserInterface{
      */
     public InitScreen() {
         initialize();
-        frame.setVisible(true);
+        setVisible(true);
     }
 
     /**
@@ -48,10 +48,22 @@ public class InitScreen extends JPanel implements UserInterface{
     private void selectAthlete(Athlete athlete) {
         if (!selectedAthletes.contains(athlete)) {
             final int athleteIndex = selectedAthletes.size();
+
+            String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
+            try {
+                GameManager.validateName(nickName);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                selectAthlete(athlete);
+                return;
+            }
+
+            athlete.setNickname(nickName);
             selectedAthletes.add(athlete);
 
             selectedAthleteButtons[athleteIndex] = new JButton();
-            selectedAthleteButtons[athleteIndex].setText(athlete.getName());
+            String athleteButtonText = HTMLString.make(athlete.getName(), athlete.getNickname());
+            selectedAthleteButtons[athleteIndex].setText(athleteButtonText);
             selectedAthleteButtonsPanel.add(selectedAthleteButtons[athleteIndex]);
 
             selectedAthleteButtonsPanel.revalidate();
@@ -94,40 +106,38 @@ public class InitScreen extends JPanel implements UserInterface{
         try {
             GameManager.validateName(teamName);
         } catch (IllegalArgumentException e) {
-            showOutput(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
 
         int seasonLength = seasonLengthSlider.getValue();
 
         if (selectedAthletes.size() < Team.MIN_SIZE) {
-            showOutput("You must select at least " + Team.MIN_SIZE + " athletes");
+            JOptionPane.showMessageDialog(this, "You must select at least " + Team.MIN_SIZE + " athletes");
             return;
         }
 
-        GameManager.startGame(teamName, seasonLength, selectedAthletes);
+        boolean hardMode = difficultyButton.isSelected();
+
+        GameManager.startGame(teamName, seasonLength, selectedAthletes, hardMode);
     }
 
     /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame();
-        frame.setTitle("Cool Ski game");
-        frame.setBounds(0, 0, 1920, 1080);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BorderLayout(100, 0));
-        frame.getRootPane().setBorder(new EmptyBorder(75, 75, 75, 75));
+        this.setLayout(new BorderLayout(100, 0));
+        this.setBorder(new EmptyBorder(75, 75, 75, 75));
 
-        HeaderPanel = new JPanel();
-        HeaderPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        HeaderPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        frame.add(HeaderPanel, BorderLayout.NORTH);
+        headerPanel = new JPanel();
+        headerPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        headerPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        this.add(headerPanel, BorderLayout.NORTH);
 
         teamNamePanel = new JPanel();
         teamNamePanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         teamNamePanel.setLayout(new BoxLayout(teamNamePanel, BoxLayout.X_AXIS));
-        HeaderPanel.add(teamNamePanel);
+        headerPanel.add(teamNamePanel);
 
         enterTeamNameLabel = new JLabel();
         enterTeamNameLabel.setText("Enter team name:");
@@ -139,10 +149,10 @@ public class InitScreen extends JPanel implements UserInterface{
         seasonLengthPanel = new JPanel();
         seasonLengthPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         seasonLengthPanel.setLayout(new BoxLayout(seasonLengthPanel, BoxLayout.X_AXIS));
-        HeaderPanel.add(seasonLengthPanel);
+        headerPanel.add(seasonLengthPanel);
 
         enterSeasonLengthLabel = new JLabel();
-        enterSeasonLengthLabel.setText("Enter season length in weeks:");
+        enterSeasonLengthLabel.setText("Choose season length in weeks:");
         seasonLengthPanel.add(enterSeasonLengthLabel);
 
         seasonLengthSlider = new JSlider();
@@ -154,10 +164,15 @@ public class InitScreen extends JPanel implements UserInterface{
         seasonLengthSlider.setValue(10);
         seasonLengthPanel.add(seasonLengthSlider);
 
+        difficultyButton = new JCheckBox();
+        difficultyButton.setText("Hard Mode");
+        seasonLengthPanel.add(difficultyButton);
+
+
         athleteSelectionPanel = new JPanel();
         athleteSelectionPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         athleteSelectionPanel.setLayout(new BorderLayout(0, 0));
-        frame.add(athleteSelectionPanel, BorderLayout.CENTER);
+        this.add(athleteSelectionPanel, BorderLayout.CENTER);
 
         selectAthletesLabel = new JLabel();
         selectAthletesLabel.setText("Select athletes from the below options:");
@@ -180,7 +195,7 @@ public class InitScreen extends JPanel implements UserInterface{
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
 
-            String text = StringBuilder.make(GameManager.athletes.get(i).getName(),
+            String text = HTMLString.make(GameManager.athletes.get(i).getName(),
                     GameManager.athletes.get(i).getDescription());
             allAthleteButtons[i].setText(text);
 
@@ -199,7 +214,7 @@ public class InitScreen extends JPanel implements UserInterface{
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
         FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        frame.add(FooterPanel, BorderLayout.SOUTH);
+        this.add(FooterPanel, BorderLayout.SOUTH);
 
         resetAthletesButton = new JButton();
         resetAthletesButton.setText("Reset team");
@@ -212,34 +227,7 @@ public class InitScreen extends JPanel implements UserInterface{
         FooterPanel.add(acceptAthletesButton);
     }
 
-    public void closeWindow() {
-        this.frame.dispose();
-    }
-
-    /**
-     * Gets user input for team name
-     * @return the value currently in the team name text field
-     */
-    @Override
-    public String getString() {
-        return teamNameText.getText();
-    }
-
-    /**
-     * Gets user input for season length
-     * @return the value currently in the season length slider
-     */
-    @Override
-    public int getInt() {
-        return seasonLengthSlider.getValue();
-    }
-
-    /**
-     * @param output the message to be displayed to the user
-     * @param <T> the type of the message
-     */
-    @Override
-    public <T> void showOutput(T output) {
-        JOptionPane.showMessageDialog(frame, output);
-    }
+//    teamNameText.getText()
+//    seasonLengthSlider.getValue()
+//    JOptionPane.showMessageDialog(frame, output)
 }
