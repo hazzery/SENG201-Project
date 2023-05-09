@@ -1,8 +1,18 @@
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class GameManager {
     private static int seasonLength;
     private static Team team;
+    private static boolean hardMode;
+
+    private static int bankBalance = 0;
+    private static int currentWeek = 1;
+
+    private static JFrame mainWindow;
+    private static SplashScreen splashScreen;
+    private static InitScreen initScreen;
 
 
     public static final ArrayList<Athlete> athletes = new ArrayList<>(4);
@@ -15,6 +25,9 @@ public class GameManager {
     private static final Athlete skierSeven =  new Athlete("Skier Seven"  , 4, 1, 4, 1, 1);
     private static final Athlete skierEight =  new Athlete("Skier Eight"  , 4, 1, 4, 1, 1);
 
+    /**
+     * Add all athletes to the list of athletes
+     */
     public GameManager() {
         athletes.add(skierOne);
         athletes.add(skierTwo);
@@ -26,167 +39,118 @@ public class GameManager {
         athletes.add(skierEight);
     }
 
-    public void launchSplashScreen() {
-        MainScreen mainScreen = new MainScreen();
+    /**
+     * Initializes the main window
+     * Setting the title, size, and close operation
+     */
+    public static void initializeMainWindow() {
+        mainWindow = new JFrame();
+        mainWindow.setTitle("Cool Ski game");
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setBounds(0, 0, 1920, 1080);
+        mainWindow.setVisible(true);
     }
 
-    static String getValidName(UserInterface ui, String prompt) {
-        boolean valid = false;
+    /**
+     * Launches the application window
+     * initializes the main window and sets it to display the splash screen
+     */
+    public void launchApplicationWindow() {
+        initializeMainWindow();
 
-        String name = null;
-
-        while (!valid) {
-            ui.showOutput(prompt);
-            name = ui.getString();  // Read user input
-            System.out.println(name);
-
-            if (name.isBlank())
-                name = ui.getString();
-
-            if (name.length() < 3) {
-                ui.showOutput("Name must be at least 3 characters long");
-                continue;
-            } else if (name.length() > 15) {
-                ui.showOutput("Name must be at most 15 characters long");
-                continue;
-            }
-
-            if (name.matches("[A-Za-z0-9]+")) {
-                valid = true;
-            } else {
-                ui.showOutput("Name must contain only letters and numbers");
-            }
-        }
-
-        return name;
+        splashScreen = new SplashScreen();
+        mainWindow.setContentPane(splashScreen);
     }
 
-    public static boolean validateName(String name) {
+    /**
+     * Checks to see if the provided string meets the criteria for a valid name
+     * Valid names must be between 3 and 15 characters long and contain only letters and numbers
+     * @param name the name to validate
+     * @throws IllegalArgumentException if the name is invalid
+     */
+    public static void validateName(String name) {
         if (name.length() < 3) {
             throw new IllegalArgumentException("Name must be at least 3 characters long");
         } else if (name.length() > 15) {
             throw new IllegalArgumentException("Name must be at most 15 characters long");
         }
 
-        if (name.matches("[A-Za-z0-9]+")) {
-            return true;
-        } else {
+        if (!name.matches("[A-Za-z0-9]+")) {
             throw new IllegalArgumentException("Name must contain only letters and numbers");
         }
     }
 
-    static int getSeasonLength(UserInterface ui) {
-        boolean valid = false;
+    /**
+     * Changes the current screen to the provided panel
+     * @param panel the panel to display
+     */
+    private static void setScreen(JPanel panel) {
+        mainWindow.remove(mainWindow.getContentPane());
+        mainWindow.setContentPane(panel);
+        mainWindow.revalidate();
+        mainWindow.repaint();
+    }
 
-        int seasonLength = 0;
+    /**
+     * Changes the current screen from the splash screen to the game initialization screen
+     */
+    public static void initializeGame() {
+        initScreen = new InitScreen();
+        setScreen(initScreen);
+    }
 
-        while (!valid) {
-            ui.showOutput("How many weeks would you like the season to last?");
+    /**
+     * Starts the game with the provided parameters
+     * @param teamName the name of the player's team
+     * @param seasonLength the length of the season in weeks
+     * @param selectedAthletes the athletes selected by the player
+     * @param hardMode `true` if the game is in hard mode, `false` otherwise
+     */
+    public static void startGame(String teamName, int seasonLength, ArrayList<Athlete> selectedAthletes, boolean hardMode) {
+        GameManager.seasonLength = seasonLength;
+        GameManager.team = new Team(teamName, selectedAthletes);
+        GameManager.hardMode = hardMode;
 
-            seasonLength = ui.getInt();
-        
-            if (seasonLength < 5) {
-                ui.showOutput("Season must be at least 5 weeks long");
-            } else if (seasonLength > 15) {
-                ui.showOutput("Season must be at most 15 weeks long");
-            } else {
-                valid = true;
-            }
-        }
+        GameScreen gameScreen = new GameScreen();
+        setScreen(gameScreen);
+    }
 
+    /**
+     * Gets the name of the player's team
+     * @return the name of the player's team
+     */
+    public static String getTeamName() {
+        return team.getName();
+    }
+
+    /**
+     * Gets the player's current bank balance
+     * @return
+     */
+    public static int getBankBalance() {
+        return bankBalance;
+    }
+
+    /**
+     * Gets the current week within the season
+     * @return the current week
+     */
+    public static int currentWeek() {
+        return currentWeek;
+    }
+
+    /**
+     * Gets the length of the season
+     * @return the length of the season
+     */
+    public static int getSeasonLength() {
         return seasonLength;
     }
 
-    public static void startGame() {
-        MainScreen.closeWindow();
-        InitScreen initScreen = new InitScreen();
-    }
-
-    public void showAllAthletes(UserInterface ui) {
-        int counter = 1;
-        for (Athlete athlete : athletes) {
-            ui.showOutput(counter + ": " + athlete.getName());
-            ui.showOutput("   " + athlete.getDescription());
-            counter++;
-        }
-    }
-
-    public void selectInitialTeam(UserInterface ui) {
-        ui.showOutput("Select your initial team of at least 4 athletes");
-        ui.showOutput("Enter the number to the left of the athlete's name and press enter");
-        ui.showOutput("Enter -1 to finish selecting athletes");
-
-        showAllAthletes(ui);
-
-        int athlete;
-        while (true) {  // Loop until user enters negative number
-            athlete = ui.getInt();
-
-            if (athlete < 0) {
-                if (team.size() < Team.MIN_SIZE) {
-                    ui.showOutput("Team must have at least 4 athletes");
-                    continue;
-                }
-                break;  // End loop if user enters negative number
-            }
-
-            if (athlete == 0 || athlete > athletes.size()) {
-                ui.showOutput("Please enter a valid athlete number, or -1 to finish");
-                ui.showOutput("Valid athlete numbers are 1 to " + athletes.size());
-                continue;
-            }
-
-            if (team.contains(athletes.get(athlete - 1))) {
-                ui.showOutput("Athlete already in team");
-                continue;
-            }
-
-            String nickname = getValidName(ui, "Enter a nickname for " + athletes.get(athlete - 1).getName());
-
-            team.addAthlete(athletes.get(athlete - 1), nickname);
-            ui.showOutput("Added " + athletes.get(athlete - 1).getName() + " to team as " + nickname);
-
-        }
-
-        team.displayAthletes(ui);
-    }
-
-    /*
-     * Untested Code, 
+    /**
+     * Increments the current week by one
      */
-
-    public void selectDifficulty(UserInterface ui){
-        ui.showOutput("Select your difficulty");
-        ui.showOutput("1: Easy");
-        ui.showOutput("2: Medium");
-        ui.showOutput("3: Hard");
-        ui.showOutput("4: Impossible");
-
-        int difficulty;
-
-        while (true) {
-            difficulty = ui.getInt(); //Gets user input and completes Integer Check
-            if (difficulty < 1 || difficulty > 4) { //Checks if difficulty is between 1 and 4 by checking if input is outside of 1 and 4.
-                ui.showOutput("Please enter a valid difficulty");
-                continue;
-            }
-            break;
-        }
-    }
-
-
-    public void setUpSeason(UserInterface ui) {
-        ui.showOutput("Enter a name for your team");
-        String teamName = ui.getString();
-
-        try {
-            validateName(teamName);
-        } catch (IllegalArgumentException e) {
-            ui.showOutput(e.getMessage());
-            teamName = ui.getString();
-        }
-        seasonLength = getSeasonLength(ui);
-
-        selectInitialTeam(ui);
+    public static void nextWeek() {
+        currentWeek++;
     }
 }

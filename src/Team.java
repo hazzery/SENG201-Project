@@ -6,16 +6,17 @@ import java.util.ArrayList;
 public class Team {
     public static final int MIN_SIZE = 4;
     private final String name;
-    private Athlete[] athletes;
+    private final Athlete[] athletes;
 
     /**
 	 * Creates a team with the given name
      * 
      * @param name A name for the team
+     * @param athletes All athletes to be put in the team
 	 */
     public Team(String name, ArrayList<Athlete> athletes) {
         this.name = name;
-        this.athletes = athletes.toArray(new Athlete[athletes.size()]);
+        this.athletes = athletes.toArray(new Athlete[0]);
     }
 
      /**
@@ -49,17 +50,5 @@ public class Team {
             }
         }
         return false;
-    }
-
-    /**
-	 * Displays all athletes in the team to the given interface
-	 */
-    public void displayAthletes(UserInterface ui) {
-        String string = "Athletes in " + this.name + ":\n";
-        for (Athlete athlete : this.athletes) {
-            string += athlete.getName() + ": " + athlete.getNickname() + '\n';
-        }
-
-        ui.showOutput(string);
     }
 }
