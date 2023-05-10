@@ -144,6 +144,7 @@ public class InitScreen extends JPanel {
         teamNamePanel.add(enterTeamNameLabel);
 
         teamNameText = new JTextField();
+        teamNameText.setText("ValidTeamName");
         teamNamePanel.add(teamNameText);
 
         seasonLengthPanel = new JPanel();
