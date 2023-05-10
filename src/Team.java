@@ -81,12 +81,14 @@ public class Team {
         reserves.remove(athlete);
     }
 
-    public void setReserve(Athlete athlete) {
+
+    public boolean setReserve(Athlete athlete) throws IllegalStateException {
         if (this.reserves.size() >= MAX_RESERVES) {
-            throw new IllegalStateException("Cannot have more than 2 reserves");
+            throw new IllegalStateException("Cannot have more than " + MAX_RESERVES + " reserves");
         }
         this.reserves.add(athlete);
         athletes.remove(athlete);
+        return true;
     }
 
 }
