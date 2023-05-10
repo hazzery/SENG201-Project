@@ -5,8 +5,10 @@ import java.util.ArrayList;
  */
 public class Team {
     public static final int MIN_SIZE = 4;
+    public static final int MAX_RESERVES = 5;
     private final String name;
-    private final Athlete[] athletes;
+    private final ArrayList<Athlete> athletes;
+    private final ArrayList<Athlete> reserves;
 
     /**
 	 * Creates a team with the given name
@@ -16,7 +18,8 @@ public class Team {
 	 */
     public Team(String name, ArrayList<Athlete> athletes) {
         this.name = name;
-        this.athletes = athletes.toArray(new Athlete[0]);
+        this.athletes = athletes;
+        this.reserves = new ArrayList<Athlete>();
     }
 
      /**
@@ -29,12 +32,21 @@ public class Team {
     }
 
     /**
-	 * Gets the size of the team
+	 * Gets the number of athletes actively participating in the team
 	 *
 	 * @return The number of athletes in the team
 	 */
-    public int size() {
-        return this.athletes.length;
+    public int numActive() {
+        return this.athletes.size();
+    }
+
+    /**
+     * Gets the number of athletes set as reserves
+     *
+     * @return The number of athletes in the team
+     */
+    public int numReserves() {
+        return this.reserves.size();
     }
 
     /**
@@ -52,7 +64,24 @@ public class Team {
         return false;
     }
 
-    public Athlete get(int index) {
-        return this.athletes[index];
+    public Athlete getActive(int index) {
+        return this.athletes.get(index);
     }
+    public Athlete getReserve(int index) {
+        return this.reserves.get(index);
+    }
+
+    public void setActive(Athlete athlete) {
+        this.athletes.add(athlete);
+        reserves.remove(athlete);
+    }
+
+    public void setReserve(Athlete athlete) {
+        if (this.reserves.size() >= MAX_RESERVES) {
+            throw new IllegalStateException("Cannot have more than 2 reserves");
+        }
+        this.reserves.add(athlete);
+        athletes.remove(athlete);
+    }
+
 }
