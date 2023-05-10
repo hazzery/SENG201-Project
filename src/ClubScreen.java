@@ -3,22 +3,24 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ClubScreen extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(2, Color.RED, 5);
+    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;
         private JLabel clubHeaderLabel;
     private JPanel mainPanel;
-        private JPanel activesPanel;
+        private JPanel athletesWrapperPanel;
+            private JLabel activeAthletesLabel;
             private JPanel athletesPanel;
-                private JLabel activeAthletesLabel;
                 private AthletePanel[] athletePanels;
-        private JPanel inactivesPanel;
-                private JLabel inactiveAthletesLabel;
+        private JPanel reservesWrapperPanel;
+            private JLabel inactiveAthletesLabel;
             private JPanel reservesPanel;
                 private AthletePanel[] reservePanels;
-        private JPanel itemsPanel;
-            private JPanel[] itemPanels;
+        private JPanel itemsWrapperPanel;
+            private JLabel itemsLabel;
+            private JPanel itemsPanel;
+                private JPanel[] itemPanels;
 
     private JPanel goElsewherePanel;
         private JButton goToMarketButton;
@@ -45,51 +47,59 @@ public class ClubScreen extends JPanel {
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);
 
-        activesPanel = new JPanel();
-        activesPanel.setBorder(marginBorder);
-        activesPanel.setLayout(new BoxLayout(activesPanel, BoxLayout.X_AXIS));
-        mainPanel.add(activesPanel);
+        athletesWrapperPanel = new JPanel();
+        athletesWrapperPanel.setBorder(marginBorder);
+        athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
+        mainPanel.add(athletesWrapperPanel);
 
-        activeAthletesLabel = new JLabel("Active");
-        activesPanel.add(activeAthletesLabel);
+        activeAthletesLabel = new JLabel("Activated");
+        activeAthletesLabel.setOpaque(true);
+        athletesWrapperPanel.add(activeAthletesLabel);
 
         athletesPanel = new JPanel();
         athletesPanel.setBorder(marginBorder);
         athletesPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        activesPanel.add(athletesPanel);
+        athletesWrapperPanel.add(athletesPanel);
 
-        athletePanels = new AthletePanel[GameManager.team.numActive()];
+        athletePanels = new AthletePanel[GameManager.NUM_ALL_ATHLETES];
 
         for (int i = 0; i < GameManager.team.numActive(); i++) {
-            athletePanels[i] = new AthletePanel(GameManager.team.getActive(i));
+            athletePanels[i] = new AthletePanel(GameManager.team.getActive(i), false, this);
             athletesPanel.add(athletePanels[i]);
         }
 
-        inactivesPanel = new JPanel();
-        inactivesPanel.setBorder(marginBorder);
-        inactivesPanel.setLayout(new BoxLayout(inactivesPanel, BoxLayout.X_AXIS));
-        mainPanel.add(inactivesPanel);
+        reservesWrapperPanel = new JPanel();
+        reservesWrapperPanel.setBorder(marginBorder);
+        reservesWrapperPanel.setLayout(new BoxLayout(reservesWrapperPanel, BoxLayout.X_AXIS));
+        mainPanel.add(reservesWrapperPanel);
 
-        String reserveText = HTMLString.make("R", "e", "s", "e", "r", "v", "e", "d");
-        inactiveAthletesLabel = new JLabel(reserveText);
-        inactivesPanel.add(inactiveAthletesLabel);
+        inactiveAthletesLabel = new JLabel("Reserved");
+        reservesWrapperPanel.add(inactiveAthletesLabel);
 
         reservesPanel = new JPanel();
         reservesPanel.setBorder(marginBorder);
         reservesPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        inactivesPanel.add(reservesPanel);
+        reservesWrapperPanel.add(reservesPanel);
 
-        reservePanels = new AthletePanel[GameManager.team.numReserves()];
+        reservePanels = new AthletePanel[Team.MAX_RESERVES];
 
         for (int i = 0; i < GameManager.team.numReserves(); i++) {
-            reservePanels[i] = new AthletePanel(GameManager.team.getReserve(i));
+            reservePanels[i] = new AthletePanel(GameManager.team.getReserve(i), true, this);
             reservesPanel.add(reservePanels[i]);
         }
+
+        itemsWrapperPanel = new JPanel();
+        itemsWrapperPanel.setBorder(marginBorder);
+        itemsWrapperPanel.setLayout(new BoxLayout(itemsWrapperPanel, BoxLayout.X_AXIS));
+        mainPanel.add(itemsWrapperPanel);
+
+        itemsLabel = new JLabel("Inventory");
+        itemsWrapperPanel.add(itemsLabel);
 
         itemsPanel = new JPanel();
         itemsPanel.setBorder(marginBorder);
         itemsPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        mainPanel.add(itemsPanel);
+        itemsWrapperPanel.add(itemsPanel);
 
         itemPanels = new ItemPanel[GameManager.items.size()];
 
@@ -118,5 +128,38 @@ public class ClubScreen extends JPanel {
         parent = gameScreen;
         initialize();
         setVisible(true);
+    }
+
+    void reserveAthlete(Athlete athlete, AthletePanel athletePanel) {
+        boolean successfullyReserved = false;
+        try {
+            successfullyReserved = GameManager.team.setReserve(athlete);
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Cannot have more than " + Team.MAX_RESERVES + " reserves");
+        }
+
+        if (successfullyReserved) {
+            reservesPanel.setVisible(true);
+
+            athletesPanel.remove(athletePanel);
+            athletePanel.configureButton(true);
+            reservesPanel.add(athletePanel);
+            reservesPanel.revalidate();
+            reservesPanel.repaint();
+        }
+    }
+
+    void activateAthlete(Athlete athlete, AthletePanel athletePanel) {
+        GameManager.team.setActive(athlete);
+        reservesPanel.remove(athletePanel);
+        athletePanel.configureButton(false);
+        athletesPanel.add(athletePanel);
+        athletesPanel.revalidate();
+        athletesPanel.repaint();
+
+        if (GameManager.team.numReserves() == 0) {
+            reservesPanel.setVisible(false);
+        }
     }
 }
