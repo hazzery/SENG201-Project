@@ -61,7 +61,7 @@ public class InitScreen extends JPanel {
             selectedAthletes.add(athlete);
 
             selectedAthleteButtons[athleteIndex] = new JButton();
-            String athleteButtonText = HTMLString.make(athlete.getName(), athlete.getNickname());
+            String athleteButtonText = HTMLString.multiLine(athlete.getName(), athlete.getNickname());
             selectedAthleteButtons[athleteIndex].setText(athleteButtonText);
             selectedAthleteButtonsPanel.add(selectedAthleteButtons[athleteIndex]);
 
@@ -195,7 +195,7 @@ public class InitScreen extends JPanel {
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
 
-            String text = HTMLString.make(GameManager.athletes.get(i).getName(),
+            String text = HTMLString.multiLine(GameManager.athletes.get(i).getName(),
                     GameManager.athletes.get(i).getDescription());
             allAthleteButtons[i].setText(text);
 

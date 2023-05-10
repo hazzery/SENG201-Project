@@ -1,5 +1,5 @@
 public class HTMLString {
-    static String make(String... strings) {
+    static String multiLine(String... strings) {
         StringBuilder builder = new StringBuilder("<html>");
 
         for (String string : strings) {
