@@ -3,24 +3,23 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ClubScreen extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(2, Color.BLACK, 5);
+    MarginBorder marginBorder = new MarginBorder(2, Color.RED, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;
         private JLabel clubHeaderLabel;
     private JPanel mainPanel;
-        private JPanel teamPanel;
+        private JPanel activesPanel;
             private JPanel athletesPanel;
+                private JLabel activeAthletesLabel;
                 private AthletePanel[] athletePanels;
+        private JPanel inactivesPanel;
+                private JLabel inactiveAthletesLabel;
             private JPanel reservesPanel;
                 private AthletePanel[] reservePanels;
         private JPanel itemsPanel;
             private JPanel[] itemPanels;
-                private JLabel[] itemNameLabels;
-                private JPanel[] itemImprovementPanels;
-                    private JLabel[] itemImprovementAmountLabels;
-                    private JLabel[] itemStatTypeLabels;
-                private JButton[] itemUseButtons;
+
     private JPanel goElsewherePanel;
         private JButton goToMarketButton;
         private JButton goToStadiumButton;
@@ -46,10 +45,18 @@ public class ClubScreen extends JPanel {
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);
 
+        activesPanel = new JPanel();
+        activesPanel.setBorder(marginBorder);
+        activesPanel.setLayout(new BoxLayout(activesPanel, BoxLayout.X_AXIS));
+        mainPanel.add(activesPanel);
+
+        activeAthletesLabel = new JLabel("Active");
+        activesPanel.add(activeAthletesLabel);
+
         athletesPanel = new JPanel();
         athletesPanel.setBorder(marginBorder);
         athletesPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        mainPanel.add(athletesPanel);
+        activesPanel.add(athletesPanel);
 
         athletePanels = new AthletePanel[GameManager.team.numActive()];
 
@@ -58,10 +65,19 @@ public class ClubScreen extends JPanel {
             athletesPanel.add(athletePanels[i]);
         }
 
+        inactivesPanel = new JPanel();
+        inactivesPanel.setBorder(marginBorder);
+        inactivesPanel.setLayout(new BoxLayout(inactivesPanel, BoxLayout.X_AXIS));
+        mainPanel.add(inactivesPanel);
+
+        String reserveText = HTMLString.make("R", "e", "s", "e", "r", "v", "e", "d");
+        inactiveAthletesLabel = new JLabel(reserveText);
+        inactivesPanel.add(inactiveAthletesLabel);
+
         reservesPanel = new JPanel();
         reservesPanel.setBorder(marginBorder);
         reservesPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        mainPanel.add(reservesPanel);
+        inactivesPanel.add(reservesPanel);
 
         reservePanels = new AthletePanel[GameManager.team.numReserves()];
 
@@ -75,45 +91,11 @@ public class ClubScreen extends JPanel {
         itemsPanel.setLayout(new GridLayout(1, 0, 0, 0));
         mainPanel.add(itemsPanel);
 
-        itemPanels = new JPanel[GameManager.items.size()];
-        itemNameLabels = new JLabel[GameManager.items.size()];
-        itemImprovementPanels = new JPanel[GameManager.items.size()];
-        itemImprovementAmountLabels = new JLabel[GameManager.items.size()];
-        itemStatTypeLabels = new JLabel[GameManager.items.size()];
-        itemUseButtons = new JButton[GameManager.items.size()];
+        itemPanels = new ItemPanel[GameManager.items.size()];
 
         for (int i = 0; i < GameManager.items.size(); i++) {
-            itemPanels[i] = new JPanel();
-            itemPanels[i].setBorder(marginBorder);
-            itemPanels[i].setLayout(new GridLayout(0, 1, 0, 0));
+            itemPanels[i] = new ItemPanel(GameManager.items.get(i));
             itemsPanel.add(itemPanels[i]);
-
-            Item item = GameManager.items.get(i);
-
-            itemNameLabels[i] = new JLabel();
-            itemNameLabels[i].setText(item.getName());
-            itemPanels[i].add(itemNameLabels[i]);
-
-            itemImprovementPanels[i] = new JPanel();
-            itemImprovementPanels[i].setBorder(marginBorder);
-            itemImprovementPanels[i].setLayout(new BoxLayout(itemImprovementPanels[i], BoxLayout.X_AXIS));
-            itemPanels[i].add(itemImprovementPanels[i]);
-
-            itemImprovementAmountLabels[i] = new JLabel();
-            itemImprovementAmountLabels[i].setText("+" + item.getImprovementAmount());
-            itemImprovementPanels[i].add(itemImprovementAmountLabels[i]);
-
-            itemImprovementPanels[i].add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(7, 0)));
-
-            itemStatTypeLabels[i] = new JLabel();
-            itemStatTypeLabels[i].setText(item.getStatType().name().toLowerCase());
-            itemImprovementPanels[i].add(itemStatTypeLabels[i]);
-
-            itemUseButtons[i] = new JButton();
-            itemUseButtons[i].setText("Use");
-            itemUseButtons[i].addActionListener(e -> JOptionPane.showMessageDialog(this,
-                    "Which Athlete?", "Use Item", JOptionPane.INFORMATION_MESSAGE));
-            itemPanels[i].add(itemUseButtons[i]);
         }
 
         goElsewherePanel = new JPanel();
