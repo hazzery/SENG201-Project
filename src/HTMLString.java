@@ -9,4 +9,8 @@ public class HTMLString {
 
         return builder.toString();
     }
+
+    static String header(String string) {
+        return "<html><h1>" + string + "</h1></html>";
+    }
 }
