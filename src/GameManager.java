@@ -18,7 +18,7 @@ public class GameManager {
     private static GameScreen gameScreen;
 
 
-    public static ArrayList<Athlete> athletes = new ArrayList<>(4);
+    public static ArrayList<Athlete> athletes = new ArrayList<>(8);
     private static final Athlete skierOne =    new Athlete("Skier One"   , 4, 8, 1, 1, 1);
     private static final Athlete skierTwo =    new Athlete("Skier Two"   , 4, 7, 2, 1, 1);
     private static final Athlete skierThree =  new Athlete("Skier Three" , 4, 6, 3, 1, 1);
