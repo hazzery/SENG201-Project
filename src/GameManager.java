@@ -68,7 +68,7 @@ public class GameManager {
      * @param name the name to validate
      * @throws IllegalArgumentException if the name is invalid
      */
-    public static void validateName(String name) {
+    public static void validateName(String name) throws IllegalArgumentException{
         if (name.length() < 3) {
             throw new IllegalArgumentException("Name must be at least 3 characters long");
         } else if (name.length() > 15) {
