@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InitScreen extends JPanel {
-    public static final int NUM_ALL_ATHLETES = 8;
     private static final int BORDER_WIDTH = 0;
 
     private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
@@ -192,7 +191,7 @@ public class InitScreen extends JPanel {
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        allAthleteButtons = new JButton[NUM_ALL_ATHLETES];
+        allAthleteButtons = new JButton[GameManager.NUM_ALL_ATHLETES];
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
 
@@ -210,7 +209,7 @@ public class InitScreen extends JPanel {
         selectedAthleteButtonsPanel.setLayout(new GridLayout(1, 8, 0, 0));
         buttonsWrapperPanel.add(selectedAthleteButtonsPanel);
 
-        selectedAthleteButtons = new JButton[NUM_ALL_ATHLETES];
+        selectedAthleteButtons = new JButton[GameManager.NUM_ALL_ATHLETES];
 
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
