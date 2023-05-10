@@ -18,8 +18,13 @@ public class Team {
 	 */
     public Team(String name, ArrayList<Athlete> athletes) {
         this.name = name;
-        this.athletes = athletes;
-        this.reserves = new ArrayList<Athlete>();
+        this.athletes = new ArrayList<>();
+
+        for (Athlete athlete : athletes) {
+            this.athletes.add(athlete);
+        }
+
+        this.reserves = new ArrayList<>();
     }
 
      /**
