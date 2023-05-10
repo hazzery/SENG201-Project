@@ -32,7 +32,7 @@ public class ClubScreen extends JPanel {
     void initialize() {
         this.setLayout(new BorderLayout(0, 0));
         this.setBorder(marginBorder);
-        this.setBorder(new EmptyBorder(5, 5, 5, 5));
+        this.setBorder(marginBorder);
 
         headerPanel = new JPanel();
         headerPanel.setBorder(marginBorder);
