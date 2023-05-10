@@ -135,4 +135,22 @@ public class Athlete implements Purchasable {
     public void setNickname(String nickName) {
         this.nickName = nickName;
     }
+
+    /**
+     * Applies an item to the athlete,
+     * increasing the athlete's stats by the amount specified by the item
+     * @param item The item to apply to the athlete
+     */
+    public void applyItem(Item item) {
+        switch (item.getStatType()) {
+            case STAMINA -> this.stamina += item.getImprovementAmount();
+            case OFFENCE -> this.offence += item.getImprovementAmount();
+            case DEFENCE -> this.defence += item.getImprovementAmount();
+            case CURRENT_HEALTH -> this.current_health += item.getImprovementAmount();
+        }
+    }
+
+    public String toString() {
+        return this.nickName;
+    }
 }
