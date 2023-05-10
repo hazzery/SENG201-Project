@@ -8,17 +8,16 @@ public class ItemPanel extends JPanel {
     private JLabel itemImprovementLabel;
     private JButton itemUseButton;
 
-    private void useItem() {
-//        Object[] possibilities = {"ham", "spam", "yam"};
-        String s = (String)JOptionPane.showInputDialog(null, "Choose an athlete to apply this item to:\n",
-                "Select athlete", JOptionPane.QUESTION_MESSAGE, null, GameManager.athletes.toArray(),"Choose athlete");
+    private ClubScreen parent;
 
-        //If a string was returned, say so.
-        if ((s != null) && (s.length() > 0)) {
-            JOptionPane.showInputDialog(null, "You entered: " + s);
-            return;
-        }
-        JOptionPane.showInputDialog(null, "You failed to enter a string");
+    private void useItem(Item item) {
+        Athlete athlete = (Athlete) JOptionPane.showInputDialog(null, "Choose an athlete to apply this item to:\n",
+                "Select athlete", JOptionPane.QUESTION_MESSAGE, null, GameManager.team.fullTeam(),"Choose athlete");
+
+        if (athlete != null)
+            parent.useItem(item, athlete, this);
+        else
+            JOptionPane.showMessageDialog(null, "You failed to enter an athlete.");
     }
 
     private void initialize(Item item) {
@@ -38,11 +37,12 @@ public class ItemPanel extends JPanel {
 
         itemUseButton = new JButton();
         itemUseButton.setText("Use");
-        itemUseButton.addActionListener(e -> useItem());
+        itemUseButton.addActionListener(e -> useItem(item));
         this.add(itemUseButton);
     }
 
-    public ItemPanel(Item item) {
+    public ItemPanel(Item item, ClubScreen parent) {
+        this.parent = parent;
         initialize(item);
         setVisible(true);
     }

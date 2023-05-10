@@ -39,7 +39,7 @@ public class ClubScreen extends JPanel {
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
         this.add(headerPanel, BorderLayout.NORTH);
 
-        clubHeaderLabel = new JLabel("Club");
+        clubHeaderLabel = new JLabel(HTMLString.header("Club"));
         headerPanel.add(clubHeaderLabel);
 
         mainPanel = new JPanel();
@@ -104,7 +104,7 @@ public class ClubScreen extends JPanel {
         itemPanels = new ItemPanel[GameManager.items.size()];
 
         for (int i = 0; i < GameManager.items.size(); i++) {
-            itemPanels[i] = new ItemPanel(GameManager.items.get(i));
+            itemPanels[i] = new ItemPanel(GameManager.items.get(i), this);
             itemsPanel.add(itemPanels[i]);
         }
 
@@ -161,5 +161,30 @@ public class ClubScreen extends JPanel {
         if (GameManager.team.numReserves() == 0) {
             reservesPanel.setVisible(false);
         }
+    }
+
+    public void updateAthletePanels() {
+        for (AthletePanel athletePanel : athletePanels) {
+            athletePanel.updateStats();
+            athletePanel.revalidate();
+            athletePanel.repaint();
+        }
+
+        for (AthletePanel reservePanel : reservePanels) {
+            if (reservePanel != null) {
+                reservePanel.updateStats();
+                reservePanel.revalidate();
+                reservePanel.repaint();
+            }
+        }
+    }
+
+    public void useItem(Item item, Athlete athlete, ItemPanel itemPanel) {
+        athlete.applyItem(item);
+        updateAthletePanels();
+        GameManager.items.remove(item);
+        itemsPanel.remove(itemPanel);
+        itemsPanel.revalidate();
+        itemsPanel.repaint();
     }
 }

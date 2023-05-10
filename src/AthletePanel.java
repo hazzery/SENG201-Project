@@ -28,6 +28,13 @@ public class AthletePanel extends JPanel {
             toggleReservedButton.addActionListener(e -> parent.reserveAthlete(athlete, this));
         }
     }
+
+    public void updateStats() {
+        athleteOffenceLabel.setText("Offence: " + athlete.getOffence());
+        athleteDefenceLabel.setText("Defence: " + athlete.getDefence());
+        athleteStaminaLabel.setText("Stamina: " + athlete.getStamina());
+        athleteHealthLabel.setText("Health: " + athlete.getCurrentHealth());
+    }
     
     private void initialize(boolean isReserved) {
         this.setBorder(marginBorder);
