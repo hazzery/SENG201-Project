@@ -2,11 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ItemPanel extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(2, Color.BLACK, 5);
+    MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     private JLabel itemNameLabel;
     private JLabel itemImprovementLabel;
     private JButton itemUseButton;
+
+    private void useItem() {
+//        Object[] possibilities = {"ham", "spam", "yam"};
+        String s = (String)JOptionPane.showInputDialog(null, "Choose an athlete to apply this item to:\n",
+                "Select athlete", JOptionPane.QUESTION_MESSAGE, null, GameManager.athletes.toArray(),"Choose athlete");
+
+        //If a string was returned, say so.
+        if ((s != null) && (s.length() > 0)) {
+            JOptionPane.showInputDialog(null, "You entered: " + s);
+            return;
+        }
+        JOptionPane.showInputDialog(null, "You failed to enter a string");
+    }
 
     private void initialize(Item item) {
         this.setBorder(marginBorder);
@@ -25,8 +38,7 @@ public class ItemPanel extends JPanel {
 
         itemUseButton = new JButton();
         itemUseButton.setText("Use");
-        itemUseButton.addActionListener(e -> JOptionPane.showMessageDialog(this,
-                "Which Athlete?", "Use Item", JOptionPane.INFORMATION_MESSAGE));
+        itemUseButton.addActionListener(e -> useItem());
         this.add(itemUseButton);
     }
 
