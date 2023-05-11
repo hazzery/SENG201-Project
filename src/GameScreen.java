@@ -124,7 +124,7 @@ public class GameScreen extends JPanel {
         this.add(centrePanel, BorderLayout.CENTER);
 
         clubScreen = new ClubScreen(this);
-        centrePanel.add(clubScreen)
+        centrePanel.add(clubScreen);
         stadiumScreen = new StadiumScreen(this);
         marketScreen = new MarketScreen(this);
 
