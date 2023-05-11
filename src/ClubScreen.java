@@ -1,9 +1,8 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ClubScreen extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;

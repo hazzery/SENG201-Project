@@ -1,10 +1,8 @@
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.*;
 import java.awt.*;
 
 public class GameScreen extends JPanel {
-    private static final int BORDER_WIDTH = 2;
+    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
     // Indentation of components below shows hierarchy of elements on the screen
@@ -83,15 +81,15 @@ public class GameScreen extends JPanel {
      */
     private void initialize() {
         this.setLayout(new BorderLayout(100, 0));
-        this.setBorder(new EmptyBorder(5, 5, 5, 5));
+        this.setBorder(marginBorder);
 
         headerPanel = new JPanel();
-        headerPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        headerPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        headerPanel.setBorder(marginBorder);
+        headerPanel.setLayout(new GridLayout(1, 0, 0, 0));
         this.add(headerPanel, BorderLayout.NORTH);
 
         teamInfoPanel = new JPanel();
-        teamInfoPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        teamInfoPanel.setBorder(marginBorder);
         teamInfoPanel.setLayout(new BoxLayout(teamInfoPanel, BoxLayout.X_AXIS));
         headerPanel.add(teamInfoPanel);
 
@@ -106,7 +104,7 @@ public class GameScreen extends JPanel {
         teamInfoPanel.add(bankBalanceLabel);
 
         seasonPanel = new JPanel();
-        seasonPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        seasonPanel.setBorder(marginBorder);
         seasonPanel.setLayout(new BoxLayout(seasonPanel, BoxLayout.X_AXIS));
         headerPanel.add(seasonPanel);
 
@@ -120,7 +118,9 @@ public class GameScreen extends JPanel {
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
         seasonPanel.add(remainingWeeksLabel);
 
-        centrePanel = new ClubScreen(this);
+        centrePanel = new JPanel();
+        centrePanel.setBorder(marginBorder);
+        centrePanel.setLayout(new CardLayout(0, 0));
         this.add(centrePanel, BorderLayout.CENTER);
 
         clubScreen = new ClubScreen(this);
@@ -129,8 +129,8 @@ public class GameScreen extends JPanel {
         marketScreen = new MarketScreen(this);
 
         FooterPanel = new JPanel();
-        FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        FooterPanel.setBorder(marginBorder);
+        FooterPanel.setLayout(new GridLayout(1, 0, 0, 0));
         this.add(FooterPanel, BorderLayout.SOUTH);
 
         nextWeekButton = new JButton();
