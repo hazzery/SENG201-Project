@@ -16,8 +16,24 @@ public class GameScreen extends JPanel {
             private JLabel currentWeekLabel;
             private JLabel remainingWeeksLabel;
     private JPanel centrePanel;
+        private JPanel clubScreen;
+        private JPanel marketScreen;
+        private JPanel stadiumScreen;
     private JPanel FooterPanel;
         private JButton nextWeekButton;
+
+
+    enum Screen {
+        CLUB, MARKET, STADIUM;
+
+        public Screen next() {
+            return values()[(ordinal() + 1) % values().length];
+        }
+
+        public Screen previous() {
+            return values()[(ordinal() - 1) % values().length];
+        }
+    }
 
 
     /**
@@ -39,16 +55,27 @@ public class GameScreen extends JPanel {
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
     }
 
-    public void goToStadium() {
-        centrePanel = new StadiumScreen();
-        this.revalidate();
-        this.repaint();
-    }
-
-    public void goToMarket() {
-        centrePanel = new MarketScreen();
-        this.revalidate();
-        this.repaint();
+    /**
+     * Changes the current screen to the specified screen
+     * @param screen the screen type to display
+     */
+    void setScreen(Screen screen) {
+        switch (screen) {
+            case CLUB:
+                centrePanel.removeAll();
+                centrePanel.add(clubScreen);
+                break;
+            case MARKET:
+                centrePanel.removeAll();
+                centrePanel.add(marketScreen);
+                break;
+            case STADIUM:
+                centrePanel.removeAll();
+                centrePanel.add(stadiumScreen);
+                break;
+        }
+        centrePanel.revalidate();
+        centrePanel.repaint();
     }
 
     /**
@@ -95,6 +122,11 @@ public class GameScreen extends JPanel {
 
         centrePanel = new ClubScreen(this);
         this.add(centrePanel, BorderLayout.CENTER);
+
+        clubScreen = new ClubScreen(this);
+        centrePanel.add(clubScreen)
+        stadiumScreen = new StadiumScreen(this);
+        marketScreen = new MarketScreen(this);
 
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));

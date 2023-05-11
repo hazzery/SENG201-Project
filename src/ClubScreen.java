@@ -21,7 +21,6 @@ public class ClubScreen extends JPanel {
             private JLabel itemsLabel;
             private JPanel itemsPanel;
                 private JPanel[] itemPanels;
-
     private JPanel goElsewherePanel;
         private JButton goToMarketButton;
         private JButton goToStadiumButton;
@@ -40,6 +39,7 @@ public class ClubScreen extends JPanel {
         this.add(headerPanel, BorderLayout.NORTH);
 
         clubHeaderLabel = new JLabel(HTMLString.header("Club"));
+        clubHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
         headerPanel.add(clubHeaderLabel);
 
         mainPanel = new JPanel();
@@ -115,12 +115,12 @@ public class ClubScreen extends JPanel {
 
         goToStadiumButton = new JButton();
         goToStadiumButton.setText("Go to Stadium");
-        goToStadiumButton.addActionListener(e -> parent.goToStadium());
+        goToStadiumButton.addActionListener(e -> parent.setScreen(GameScreen.Screen.STADIUM));
         goElsewherePanel.add(goToStadiumButton);
 
         goToMarketButton = new JButton();
         goToMarketButton.setText("Go to Market");
-        goToMarketButton.addActionListener(e -> parent.goToMarket());
+        goToMarketButton.addActionListener(e -> parent.setScreen(GameScreen.Screen.MARKET));
         goElsewherePanel.add(goToMarketButton);
     }
 
