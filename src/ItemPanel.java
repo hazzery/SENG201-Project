@@ -1,26 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ItemPanel extends JPanel {
+public abstract class ItemPanel extends JPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     private JLabel itemNameLabel;
     private JLabel itemImprovementLabel;
-    private JButton itemUseButton;
+    protected JButton itemActionButton;
 
-    private ClubScreen parent;
-
-    private void useItem(Item item) {
-        Athlete athlete = (Athlete) JOptionPane.showInputDialog(null, "Choose an athlete to apply this item to:\n",
-                "Select athlete", JOptionPane.QUESTION_MESSAGE, null, GameManager.team.fullTeam(),"Choose athlete");
-
-        if (athlete != null)
-            parent.useItem(item, athlete, this);
-        else
-            JOptionPane.showMessageDialog(null, "You failed to enter an athlete.");
-    }
-
-    private void initialize(Item item) {
+    protected void initialize(Item item) {
         this.setBorder(marginBorder);
         this.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -34,15 +22,9 @@ public class ItemPanel extends JPanel {
         itemImprovementLabel = new JLabel();
         itemImprovementLabel.setText("+" + item.getImprovementAmount() + " " + item.getStatType().name().toLowerCase());
         this.add(itemImprovementLabel);
-
-        itemUseButton = new JButton();
-        itemUseButton.setText("Use");
-        itemUseButton.addActionListener(e -> useItem(item));
-        this.add(itemUseButton);
     }
 
-    public ItemPanel(Item item, ClubScreen parent) {
-        this.parent = parent;
+    public ItemPanel(Item item) {
         initialize(item);
         setVisible(true);
     }

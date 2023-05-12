@@ -85,7 +85,7 @@ public class ClubScreen extends GameScreenPanel {
         itemPanels = new ItemPanel[GameManager.items.size()];
 
         for (int i = 0; i < GameManager.items.size(); i++) {
-            itemPanels[i] = new ItemPanel(GameManager.items.get(i), this);
+            itemPanels[i] = new ClubItemPanel(GameManager.items.get(i), this);
             itemsPanel.add(itemPanels[i]);
         }
     }

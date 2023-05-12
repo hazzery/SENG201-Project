@@ -31,9 +31,9 @@ public class MarketScreen extends GameScreenPanel {
         itemShelf.setLayout(new BoxLayout(itemShelf, BoxLayout.X_AXIS));
         contentPanel.add(itemShelf);
 
-        itemPanels = new ItemPanel[GameManager.items.size()];
+        itemPanels = new MarketItemPanel[GameManager.items.size()];
         for (int i = 0; i < GameManager.items.size(); i++) {
-            itemPanels[i] = new ItemPanel(GameManager.items.get(i), new ClubScreen(parent));
+            itemPanels[i] = new MarketItemPanel(GameManager.items.get(i), this);
             itemShelf.add(itemPanels[i]);
         }
 
@@ -55,5 +55,18 @@ public class MarketScreen extends GameScreenPanel {
         athleteShelf.remove(marketAthletePanel);
         athleteShelf.revalidate();
         athleteShelf.repaint();
+    }
+
+    public void purchaseItem(Item item, MarketItemPanel marketItemPanel) {
+        try {
+            GameManager.purchaseItem(item);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            return; // Don't update the screen if the purchase failed
+        }
+        // Update the screen
+        itemShelf.remove(marketItemPanel);
+        itemShelf.revalidate();
+        itemShelf.repaint();
     }
 }

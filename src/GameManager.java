@@ -184,4 +184,12 @@ public class GameManager {
             bankBalance -= athlete.getContractPrice();
             team.addAthlete(athlete);
     }
+
+    public static void purchaseItem(Item item) {
+        if (bankBalance < item.getContractPrice()) {
+            throw new IllegalStateException("Not enough money to purchase item");
+        }
+        bankBalance -= item.getContractPrice();
+        items.add(item);
+    }
 }
