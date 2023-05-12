@@ -90,4 +90,8 @@ public class Team {
         }
         return false;
     }
+
+    public void addAthlete(Athlete athlete) {
+        this.actives.add(athlete);
+    }
 }
