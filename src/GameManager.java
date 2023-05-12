@@ -111,6 +111,9 @@ public class GameManager {
         GameManager.team = new Team(teamName, selectedAthletes);
         GameManager.hardMode = hardMode;
 
+        team.setReserve(GameManager.athletes.get(6));
+        team.setReserve(GameManager.athletes.get(7));
+
         gameScreen = new GameScreen();
         setScreen(gameScreen);
     }
@@ -172,5 +175,13 @@ public class GameManager {
         items.add(item6);
         items.add(item7);
         items.add(item8);
+    }
+
+    public static void purchaseAthlete(Athlete athlete) {
+        if (bankBalance < athlete.getContractPrice()) {
+            throw new IllegalStateException("Not enough money to purchase athlete");
+        }
+            bankBalance -= athlete.getContractPrice();
+            team.addAthlete(athlete);
     }
 }

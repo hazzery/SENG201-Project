@@ -1,45 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ClubScreen extends JPanel {
+public class ClubScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
-    private JPanel headerPanel;
-        private JLabel clubHeaderLabel;
     private JPanel mainPanel;
         private JPanel athletesWrapperPanel;
             private JLabel activeAthletesLabel;
             private JPanel athletesPanel;
-                private AthletePanel[] athletePanels;
+                private ClubAthletePanel[] athletePanels;
         private JPanel reservesWrapperPanel;
             private JLabel inactiveAthletesLabel;
             private JPanel reservesPanel;
-                private AthletePanel[] reservePanels;
+                private ClubAthletePanel[] reservePanels;
         private JPanel itemsWrapperPanel;
             private JLabel itemsLabel;
             private JPanel itemsPanel;
                 private JPanel[] itemPanels;
-    private JPanel goElsewherePanel;
-        private JButton goToMarketButton;
-        private JButton goToStadiumButton;
 
-
-    GameScreen parent;
-
-    void initialize() {
-        this.setLayout(new BorderLayout(0, 0));
-        this.setBorder(marginBorder);
-        this.setBorder(marginBorder);
-
-        headerPanel = new JPanel();
-        headerPanel.setBorder(marginBorder);
-        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
-        this.add(headerPanel, BorderLayout.NORTH);
-
-        clubHeaderLabel = new JLabel(HTMLString.header("Club"));
-        clubHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.add(clubHeaderLabel);
+    @Override
+    protected void  initialize() {
+        super.initialize();
 
         mainPanel = new JPanel();
         mainPanel.setBorder(marginBorder);
@@ -60,10 +42,10 @@ public class ClubScreen extends JPanel {
         athletesPanel.setLayout(new GridLayout(1, 0, 0, 0));
         athletesWrapperPanel.add(athletesPanel);
 
-        athletePanels = new AthletePanel[GameManager.NUM_ALL_ATHLETES];
+        athletePanels = new ClubAthletePanel[GameManager.NUM_ALL_ATHLETES];
 
         for (int i = 0; i < GameManager.team.numActive(); i++) {
-            athletePanels[i] = new AthletePanel(GameManager.team.getActive(i), false, this);
+            athletePanels[i] = new ClubAthletePanel(GameManager.team.getActive(i), false, this);
             athletesPanel.add(athletePanels[i]);
         }
 
@@ -80,10 +62,10 @@ public class ClubScreen extends JPanel {
         reservesPanel.setLayout(new GridLayout(1, 0, 0, 0));
         reservesWrapperPanel.add(reservesPanel);
 
-        reservePanels = new AthletePanel[Team.MAX_RESERVES];
+        reservePanels = new ClubAthletePanel[Team.MAX_RESERVES];
 
         for (int i = 0; i < GameManager.team.numReserves(); i++) {
-            reservePanels[i] = new AthletePanel(GameManager.team.getReserve(i), true, this);
+            reservePanels[i] = new ClubAthletePanel(GameManager.team.getReserve(i), true, this);
             reservesPanel.add(reservePanels[i]);
         }
 
@@ -106,33 +88,18 @@ public class ClubScreen extends JPanel {
             itemPanels[i] = new ItemPanel(GameManager.items.get(i), this);
             itemsPanel.add(itemPanels[i]);
         }
-
-        goElsewherePanel = new JPanel();
-        goElsewherePanel.setBorder(marginBorder);
-        goElsewherePanel.setLayout(new GridLayout(1, 0, 0, 0));
-        this.add(goElsewherePanel, BorderLayout.SOUTH);
-
-        goToStadiumButton = new JButton();
-        goToStadiumButton.setText("Go to Stadium");
-        goToStadiumButton.addActionListener(e -> parent.setScreen(GameScreen.Screen.STADIUM));
-        goElsewherePanel.add(goToStadiumButton);
-
-        goToMarketButton = new JButton();
-        goToMarketButton.setText("Go to Market");
-        goToMarketButton.addActionListener(e -> parent.setScreen(GameScreen.Screen.MARKET));
-        goElsewherePanel.add(goToMarketButton);
     }
 
     ClubScreen(GameScreen gameScreen) {
-        parent = gameScreen;
-        initialize();
-        setVisible(true);
+        super(GameScreen.Screen.CLUB, gameScreen);
     }
 
-    void reserveAthlete(Athlete athlete, AthletePanel athletePanel) {
+    void reserveAthlete(Athlete athlete, ClubAthletePanel athletePanel) {
+        System.out.println("Reserving " + athlete.getName());
         boolean successfullyReserved = false;
         try {
             successfullyReserved = GameManager.team.setReserve(athlete);
+            System.out.println("Successfully reserved " + athlete.getName());
         } catch (IllegalStateException e) {
             JOptionPane.showMessageDialog(null,
                     "Cannot have more than " + Team.MAX_RESERVES + " reserves");
@@ -149,7 +116,8 @@ public class ClubScreen extends JPanel {
         }
     }
 
-    void activateAthlete(Athlete athlete, AthletePanel athletePanel) {
+    void activateAthlete(Athlete athlete, ClubAthletePanel athletePanel) {
+        System.out.println("Activating " + athlete.getName());
         GameManager.team.setActive(athlete);
         reservesPanel.remove(athletePanel);
         athletePanel.configureButton(false);

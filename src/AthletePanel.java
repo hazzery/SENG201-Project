@@ -10,24 +10,11 @@ public class AthletePanel extends JPanel {
     private JLabel athleteDefenceLabel;
     private JLabel athleteStaminaLabel;
     private JLabel athleteHealthLabel;
-    private JButton toggleReservedButton;
-
-    private final Athlete athlete;
-    private final ClubScreen parent;
+    protected JButton actionButton;
 
 
-    public void configureButton(boolean isReserved) {
-        for (ActionListener listener : toggleReservedButton.getActionListeners())
-            toggleReservedButton.removeActionListener(listener);
-
-        if (isReserved) {
-            toggleReservedButton.setText("Activate");
-            toggleReservedButton.addActionListener(e -> parent.activateAthlete(athlete, this));
-        } else {
-            toggleReservedButton.setText("Reserve");
-            toggleReservedButton.addActionListener(e -> parent.reserveAthlete(athlete, this));
-        }
-    }
+    protected Athlete athlete;
+    protected GameScreenPanel parent;
 
     public void updateStats() {
         athleteOffenceLabel.setText("Offence: " + athlete.getOffence());
@@ -36,7 +23,7 @@ public class AthletePanel extends JPanel {
         athleteHealthLabel.setText("Health: " + athlete.getCurrentHealth());
     }
     
-    private void initialize(boolean isReserved) {
+    protected void initialize() {
         this.setBorder(marginBorder);
         this.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -62,16 +49,11 @@ public class AthletePanel extends JPanel {
         athleteHealthLabel = new JLabel();
         athleteHealthLabel.setText("Health: " + athlete.getCurrentHealth());
         this.add(athleteHealthLabel);
-
-        toggleReservedButton = new JButton();
-        configureButton(isReserved);
-        this.add(toggleReservedButton);
     }
     
-    public AthletePanel(Athlete athlete, boolean isReserved, ClubScreen parent) {
-        this.parent = parent;
+    public AthletePanel(Athlete athlete) {
         this.athlete = athlete;
-        initialize(isReserved);
+        initialize();
         setVisible(true);
     }
 }

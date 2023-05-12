@@ -58,20 +58,14 @@ public class GameScreen extends JPanel {
      * @param screen the screen type to display
      */
     void setScreen(Screen screen) {
+        centrePanel.removeAll();
+
         switch (screen) {
-            case CLUB:
-                centrePanel.removeAll();
-                centrePanel.add(clubScreen);
-                break;
-            case MARKET:
-                centrePanel.removeAll();
-                centrePanel.add(marketScreen);
-                break;
-            case STADIUM:
-                centrePanel.removeAll();
-                centrePanel.add(stadiumScreen);
-                break;
+            case CLUB -> centrePanel.add(clubScreen);
+            case MARKET -> centrePanel.add(marketScreen);
+            case STADIUM -> centrePanel.add(stadiumScreen);
         }
+
         centrePanel.revalidate();
         centrePanel.repaint();
     }
@@ -125,7 +119,7 @@ public class GameScreen extends JPanel {
 
         clubScreen = new ClubScreen(this);
         centrePanel.add(clubScreen);
-        stadiumScreen = new StadiumScreen(this);
+        stadiumScreen = new StadiumScreen();
         marketScreen = new MarketScreen(this);
 
         FooterPanel = new JPanel();
