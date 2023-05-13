@@ -7,7 +7,7 @@ public class GameManager {
     private static boolean hardMode;
 
     public static Team team;
-    public static ArrayList<Item> items = new ArrayList<>();
+
 
     private static int bankBalance = 0;
     private static int currentWeek = 1;
@@ -160,26 +160,24 @@ public class GameManager {
         currentWeek++;
     }
 
-    public static void initializeItems() {
-        Item item1 = new Item("Item One", Athlete.StatType.OFFENCE, 1, 10, 5);
-        Item item2 = new Item("Item Two", Athlete.StatType.DEFENCE, 1, 10, 5);
-        Item item3 = new Item("Item Three", Athlete.StatType.OFFENCE, 2, 20, 10);
-        Item item4 = new Item("Item Four", Athlete.StatType.DEFENCE, 2, 20, 10);
-        Item item5 = new Item("Item Five", Athlete.StatType.OFFENCE, 3, 30, 20);
-        Item item6 = new Item("Item Six", Athlete.StatType.DEFENCE, 3, 30, 20);
-        Item item7 = new Item("Item Seven", Athlete.StatType.OFFENCE, 4, 40, 30);
-        Item item8 = new Item("Item Eight", Athlete.StatType.DEFENCE, 4, 40, 30);
+    public static ArrayList<Item> items = new ArrayList<>();
 
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
-        items.add(item4);
-        items.add(item5);
-        items.add(item6);
-        items.add(item7);
-        items.add(item8);
+    /**
+     * Creates a random Item when initializeItems() is called upon
+     * 
+     * @param NUM_ALL_ITEMS the number of items to initialize
+     */
+    public static void initializeItems() {
+        for (int i = 0; i < 8; i++) {
+            Item item = ItemRandom.createRandomItem(num_min, num_max);
+            items.add(item);
+          }
     }
 
+    /**
+     * Gets the list of all athletes
+     * @return the list of all athletes
+     */
     public static void purchaseAthlete(Athlete athlete) {
         if (bankBalance < athlete.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase athlete");
@@ -188,6 +186,10 @@ public class GameManager {
             team.addAthlete(athlete);
     }
 
+    /**
+     * Gets the list of all items
+     * @return the list of all items
+     */
     public static void purchaseItem(Item item) {
         if (bankBalance < item.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase item");

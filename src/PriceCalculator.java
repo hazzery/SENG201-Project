@@ -37,7 +37,6 @@ public class PriceCalculator {
      */
     public int createAthleteSellBackPrice(){
         return (stamina + offence + defence) * 3 + 100;
-        
     }
 
 
