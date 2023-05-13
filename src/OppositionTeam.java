@@ -9,11 +9,17 @@
 
 import java.util.ArrayList;
 
-public class OppositionTeam{
-    
+public class OppositionTeam {
+    private final String name;
     static ArrayList<Athlete> oppositionAthletes = new ArrayList<>(4);
     
+    public OppositionTeam(String name, ArrayList<Athlete> oppositionAthletes) {
+        this.name = name;
+        initializeOppositionAthletes();
+        OppositionTeam.oppositionAthletes = oppositionAthletes;
+    }
 
+    
     public static int opp_num_min = 60;
     public static int opp_num_max = 80;
 
@@ -28,8 +34,21 @@ public class OppositionTeam{
           }
     }
 
-    public static void main(){
-        initializeOppositionAthletes();
+    /**
+	 * Gets the name of the team
+	 *
+	 * @return The team's name
+	 */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Gets the name of the oppisition team
+     * @return the name of the oppisition team
+     */
+    public Athlete getOppAthlete(int index) {
+        return OppositionTeam.oppositionAthletes.get(index);
     }
 }
 
