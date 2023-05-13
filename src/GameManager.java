@@ -18,16 +18,7 @@ public class GameManager {
     private static GameScreen gameScreen;
 
     public static final int NUM_ALL_ATHLETES = 8;
-    public static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
-    private static final Athlete skierOne =    new Athlete("Skier One"   , 4, 8, 1, 1, 1);
-    private static final Athlete skierTwo =    new Athlete("Skier Two"   , 4, 7, 2, 1, 1);
-    private static final Athlete skierThree =  new Athlete("Skier Three" , 4, 6, 3, 1, 1);
-    private static final Athlete skierFour =   new Athlete("Skier Four"  , 4, 5, 4, 1, 1);
-    private static final Athlete skierFive =   new Athlete("Skier Five"  , 4, 4, 5, 1, 1);
-    private static final Athlete skierSix =    new Athlete("Skier Six"  , 4, 3, 6, 1, 1);
-    private static final Athlete skierSeven =  new Athlete("Skier Seven"  , 4, 2, 7, 1, 1);
-    private static final Athlete skierEight =  new Athlete("Skier Eight"  , 4, 1, 8, 1, 1);
-
+    
     /**
      * Initializes the main window
      * Setting the title, size, and close operation
@@ -40,15 +31,23 @@ public class GameManager {
         mainWindow.setVisible(true);
     }
 
+    /**
+     * Initializes the athletes array
+     * 
+     * @param NUM_ALL_ATHLETES the number of athletes to initialize
+     */
+    static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
+
+    /**
+     * Creates a random Athletes when initializeAthletes() is called upon
+     * 
+     * @param NUM_ALL_ATHLETES the number of athletes to initialize
+     */
     public static void initializeAthletes() {
-        athletes.add(skierOne);
-        athletes.add(skierTwo);
-        athletes.add(skierThree);
-        athletes.add(skierFour);
-        athletes.add(skierFive);
-        athletes.add(skierSix);
-        athletes.add(skierSeven);
-        athletes.add(skierEight);
+        for (int i = 0; i < NUM_ALL_ATHLETES; i++) {
+            Athlete athlete = AthleteRandom.createRandomAthlete();
+            athletes.add(athlete);
+          }
     }
 
     /**
