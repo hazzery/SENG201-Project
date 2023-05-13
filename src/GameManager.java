@@ -18,6 +18,10 @@ public class GameManager {
     private static GameScreen gameScreen;
 
     public static final int NUM_ALL_ATHLETES = 8;
+
+    //THESE NUUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
+    public static int num_max;
+    public static int num_min;
     
     /**
      * Initializes the main window
@@ -45,7 +49,7 @@ public class GameManager {
      */
     public static void initializeAthletes() {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++) {
-            Athlete athlete = AthleteRandom.createRandomAthlete();
+            Athlete athlete = AthleteRandom.createRandomAthlete(num_min, num_max);
             athletes.add(athlete);
           }
     }

@@ -13,23 +13,39 @@ import java.util.Random;
  * Random Athlete Class
  * 
  */
-public class AthleteRandom {
+public class AthleteRandom{
 
     /** 
      * Creates a random Athlete when called upon
      * 
+     * @param min The minimum value
+     * @param max The maximum value
      * @return The Newly Created Athlete
      */
-    public static Athlete createRandomAthlete(){
-        Random rand = new Random();
-        String name = "Athlete" + rand.nextInt(100);
-        int stamina = rand.nextInt(100);
-        int offence = rand.nextInt(100);
-        int defence = rand.nextInt(100);
-        int contractPrice = rand.nextInt(100);
-        int sellBackPrice = rand.nextInt(100);
+    public static Athlete createRandomAthlete(int min, int max){
+        String name = "Athlete" + createRandomInt(min, max);
+        int stamina = createRandomInt(min, max);
+        int offence = createRandomInt(min, max);
+        int defence = createRandomInt(min, max);
+
+        PriceCalculator price = new PriceCalculator(stamina, offence, defence);
+        int contractPrice = price.createContractPrice();
+        int sellBackPrice = price.createSellBackPrice();
         Athlete athlete = new Athlete(name, stamina, offence, defence, contractPrice, sellBackPrice);
         return athlete;
+    }
+
+    /**
+     * Creates a random integer between the min and max values
+     * 
+     * @param min The minimum value
+     * @param max The maximum value
+     * @return The random integer
+     */
+    public static int createRandomInt(int min, int max){
+        Random rand = new Random();
+        int randomInt = rand.nextInt((max - min) + 1) + min;
+        return randomInt;
     }
   
 }
