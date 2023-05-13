@@ -7,20 +7,29 @@
  */
 
 
-// NEED TO DISCUSS FUTURE
-
-
 import java.util.ArrayList;
 
-public class OppositionTeam extends Team{
+public class OppositionTeam{
+    
+    static ArrayList<Athlete> oppositionAthletes = new ArrayList<>(4);
+    
+
+    public static int opp_num_min = 60;
+    public static int opp_num_max = 80;
+
     /**
-     * Creates a team with the given name
-     *
-     * @param name     A name for the team
-     * @param athletes All athletes to be put in the team
+     * Creates a random oppisition Athletes when initializeOppositionAthletes() is called upon
+     *  
      */
-    public OppositionTeam(String name, ArrayList<Athlete> athletes) {
-        super(name, athletes);
+    public static void initializeOppositionAthletes() {
+        for (int i = 0; i < 4; i++) {
+            Athlete oppositionAthlete = AthleteRandom.createRandomAthlete(opp_num_min, opp_num_max);
+            oppositionAthletes.add(oppositionAthlete);
+          }
+    }
+
+    public static void main(){
+        initializeOppositionAthletes();
     }
 }
 
