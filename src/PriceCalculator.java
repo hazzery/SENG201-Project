@@ -1,7 +1,7 @@
 /**
  * PriceCalculator
  * 
- * for calculating the price of an athlete
+ * for calculating the prices of an athlete
  */
 
 
@@ -27,7 +27,7 @@ public class PriceCalculator {
      * Creates a contract price for the athlete
      * @return The contract price
      */
-    public int createContractPrice(){
+    public int createAthleteContractPrice(){
         return (stamina + offence + defence) * 10;
     }
 
@@ -35,9 +35,11 @@ public class PriceCalculator {
      * Creates a sell back price for the athlete
      * @return The sell back price
      */
-    public int createSellBackPrice(){
+    public int createAthleteSellBackPrice(){
         return (stamina + offence + defence) * 3 + 100;
         
     }
+
+
 
 }

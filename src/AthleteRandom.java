@@ -29,8 +29,8 @@ public class AthleteRandom{
         int defence = createRandomInt(min, max);
 
         PriceCalculator price = new PriceCalculator(stamina, offence, defence);
-        int contractPrice = price.createContractPrice();
-        int sellBackPrice = price.createSellBackPrice();
+        int contractPrice = price.createAthleteContractPrice();
+        int sellBackPrice = price.createAthleteSellBackPrice();
         Athlete athlete = new Athlete(name, stamina, offence, defence, contractPrice, sellBackPrice);
         return athlete;
     }
