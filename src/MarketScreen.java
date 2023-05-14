@@ -47,7 +47,7 @@ public class MarketScreen extends GameScreenPanel {
     public void purchaseAthlete(Athlete athlete, MarketAthletePanel marketAthletePanel) {
         try {
             GameManager.purchaseAthlete(athlete);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return; // Don't update the screen if the purchase failed
         }
@@ -60,7 +60,7 @@ public class MarketScreen extends GameScreenPanel {
     public void purchaseItem(Item item, MarketItemPanel marketItemPanel) {
         try {
             GameManager.purchaseItem(item);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return; // Don't update the screen if the purchase failed
         }
