@@ -167,7 +167,7 @@ public class GameManager {
      * @param athlete the athlete to purchase
      * @throws IllegalStateException if the player does not have enough money to purchase the athlete
      */
-    public static void purchaseAthlete(Athlete athlete) {
+    public static void purchaseAthlete(Athlete athlete) throws IllegalStateException {
         if (bankBalance < athlete.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase athlete");
         }
@@ -182,7 +182,7 @@ public class GameManager {
      * @param item the item to purchase
      * @throws IllegalStateException if the player does not have enough money to purchase the item
      */
-    public static void purchaseItem(Item item) {
+    public static void purchaseItem(Item item) throws IllegalArgumentException{
         if (bankBalance < item.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase item");
         }
