@@ -17,7 +17,10 @@ public class GameManager {
     private static InitScreen initScreen;
     private static GameScreen gameScreen;
 
-    public static final int NUM_ALL_ATHLETES = 8;
+    public static final int NUM_ALL_ATHLETES = 12;
+    private static final int NUM_ALL_ITEMS = 10;
+    static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
+    public static ArrayList<Item> items = new ArrayList<>();
 
     //THESE NUUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
     public static int num_max;
@@ -36,27 +39,16 @@ public class GameManager {
     }
 
     /**
-     * Initializes the athletes array
-     * 
-     * @param NUM_ALL_ATHLETES the number of athletes to initialize
-     */
-    static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
-
-    /**
-     * Creates a random Athletes when initializeAthletes() is called upon
-     * 
-     * @param NUM_ALL_ATHLETES the number of athletes to initialize
+     * Fills the `athletes` array with `NUM_ALL_ATHLETES` random athletes
      */
     public static void initializeAthletes() {
-        for (int i = 0; i < NUM_ALL_ATHLETES; i++) {
-            Athlete athlete = AthleteRandom.createRandomAthlete(num_min, num_max);
-            athletes.add(athlete);
-          }
+        for (int i = 0; i < NUM_ALL_ATHLETES; i++)
+            athletes.add(AthleteRandom.createRandomAthlete(num_min, num_max));
     }
 
     /**
-     * Launches the application window
-     * initializes the main window and sets it to display the splash screen
+     * Launches the application window.
+     * Initializes the main window and sets it to display the splash screen
      */
     public static void launchApplicationWindow() {
         initializeMainWindow();
@@ -160,35 +152,35 @@ public class GameManager {
         currentWeek++;
     }
 
-    public static ArrayList<Item> items = new ArrayList<>();
-
     /**
-     * Creates a random Item when initializeItems() is called upon
-     * 
-     * @param NUM_ALL_ITEMS the number of items to initialize
+     * Fills the items array with `NUM_ALL_ITEMS` random items
      */
     public static void initializeItems() {
-        for (int i = 0; i < 8; i++) {
-            Item item = ItemRandom.createRandomItem(num_min, num_max);
-            items.add(item);
-          }
+        for (int i = 0; i < NUM_ALL_ITEMS; i++)
+            items.add(ItemRandom.createRandomItem(num_min, num_max));
     }
 
     /**
-     * Gets the list of all athletes
-     * @return the list of all athletes
+     * Purchases the provided athlete if the player has enough money.
+     * Removes the athlete's contract price from the player's bank balance
+     * and adds the athlete to the player's team
+     * @param athlete the athlete to purchase
+     * @throws IllegalStateException if the player does not have enough money to purchase the athlete
      */
     public static void purchaseAthlete(Athlete athlete) {
         if (bankBalance < athlete.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase athlete");
         }
-            bankBalance -= athlete.getContractPrice();
-            team.addAthlete(athlete);
+        bankBalance -= athlete.getContractPrice();
+        team.addAthlete(athlete);
     }
 
     /**
-     * Gets the list of all items
-     * @return the list of all items
+     * Purchases the provided item if the player has enough money.
+     * Removes the item's contract price from the player's bank balance
+     * and adds the item to the player's items
+     * @param item the item to purchase
+     * @throws IllegalStateException if the player does not have enough money to purchase the item
      */
     public static void purchaseItem(Item item) {
         if (bankBalance < item.getContractPrice()) {
