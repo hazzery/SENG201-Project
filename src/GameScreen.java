@@ -29,7 +29,8 @@ public class GameScreen extends JPanel {
         }
 
         public Screen previous() {
-            return values()[(ordinal() - 1) % values().length];
+            int index = (((ordinal() - 1) % values().length + values().length) % values().length);
+            return values()[index];
         }
     }
 
@@ -119,7 +120,7 @@ public class GameScreen extends JPanel {
 
         clubScreen = new ClubScreen(this);
         centrePanel.add(clubScreen);
-        stadiumScreen = new StadiumScreen();
+        stadiumScreen = new StadiumScreen(this);
         marketScreen = new MarketScreen(this);
 
         FooterPanel = new JPanel();
