@@ -22,12 +22,12 @@ public class GameManager {
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
     public static ArrayList<Item> items = new ArrayList<>();
 
-    //THESE NUUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
+    //THESE NUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
     public static int num_max;
     public static int num_min;
     
     /**
-     * Initializes the main window
+     * Initialises the main window
      * Setting the title, size, and close operation
      */
     public static void initializeMainWindow() {
@@ -48,7 +48,7 @@ public class GameManager {
 
     /**
      * Launches the application window.
-     * Initializes the main window and sets it to display the splash screen
+     * Initialises the main window and sets it to display the splash screen
      */
     public static void launchApplicationWindow() {
         initializeMainWindow();
@@ -87,7 +87,7 @@ public class GameManager {
     }
 
     /**
-     * Changes the current screen from the splash screen to the game initialization screen
+     * Changes the current screen from the splash screen to the game initialisation screen
      */
     public static void initializeGame() {
         initScreen = new InitScreen();

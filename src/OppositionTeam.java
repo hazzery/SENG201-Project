@@ -1,5 +1,5 @@
 /*
- * UNTESTED CODE, May be Shit, May not work
+ * UNTESTED CODE
  *
  * The idea around this code is to extend the already created
  * team class and to be able to scale stats based off of
@@ -24,12 +24,12 @@ public class OppositionTeam {
     public static int opp_num_max = 80;
 
     /**
-     * Creates a random oppisition Athletes when initializeOppositionAthletes() is called upon
+     * Creates a random opposition Athletes when initializeOppositionAthletes() is called upon
      *  
      */
     public static void initializeOppositionAthletes() {
         for (int i = 0; i < 4; i++) {
-            Athlete oppositionAthlete = AthleteRandom.createRandomAthlete(opp_num_min, opp_num_max);
+            Athlete oppositionAthlete = new Athlete();
             oppositionAthletes.add(oppositionAthlete);
           }
     }
@@ -44,8 +44,8 @@ public class OppositionTeam {
     }
 
     /**
-     * Gets the name of the oppisition team
-     * @return the name of the oppisition team
+     * Gets the name of the opposition team
+     * @return the name of the opposition team
      */
     public Athlete getOppAthlete(int index) {
         return OppositionTeam.oppositionAthletes.get(index);
