@@ -8,8 +8,6 @@ public class Athlete implements Purchasable {
     private int offence;
     private int defence;
     private int current_health;
-    private int contractPrice;
-    private int sellBackPrice;
 
 
     /**
@@ -30,18 +28,14 @@ public class Athlete implements Purchasable {
      * @param stamina The athlete's stamina value
      * @param offence The athlete's offence value
      * @param defence The athlete's defence value
-     * @param contractPrice The contract price for the athlete
-     * @param sellBackPrice The sell back price for the athlete
 	 */
-    public Athlete(String name, int stamina, int offence, int defence, int contractPrice, int sellBackPrice) {
+    public Athlete(String name, int stamina, int offence, int defence) {
         this.name = name;
         this.nickName = name;
         this.stamina = stamina;
         this.offence = offence;
         this.defence = defence;
         this.current_health = 100;
-        this.contractPrice = contractPrice;
-        this.sellBackPrice = sellBackPrice;
     }
 
     /**
@@ -105,17 +99,17 @@ public class Athlete implements Purchasable {
 	 * @return The contract price of the athlete
 	 */
     public int getContractPrice() {
-        return this.contractPrice;
+        return (stamina + offence + defence) * 10;
     }
 
     /**
-	 * Gets the sell back price of  the athlete
+	 * Gets the sell back price of the athlete
 	 * The sell back price is the amount the user can get back for selling an athlete they already own
      *
 	 * @return The sell back price of the athlete
 	 */
     public int getSellBackPrice() {
-        return this.sellBackPrice;
+        return (stamina + offence + defence) * 3 + 100;
     }
 
     /**

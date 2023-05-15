@@ -6,24 +6,18 @@ public class Item implements Purchasable {
     private String name;
     private Athlete.StatType statType;
     private int improvementAmount;
-    private int contractPrice;
-    private int sellBackPrice;
 
 
     /**
 	 * Creates an item with the given information
 	 *
-	 * @param contractPrice The contract price for the item
-     * @param sellBackPrice The sell back price for the item
      * @param statType The stat in which consuming this item improves
      * @param improvementAmount The amount in which consuming this item improves the stat
 	 */
-    public Item(String name, Athlete.StatType statType, int improvementAmount, int contractPrice, int sellBackPrice) {
+    public Item(String name, Athlete.StatType statType, int improvementAmount) {
         this.name = name;
         this.statType = statType;
         this.improvementAmount = improvementAmount;
-        this.contractPrice = contractPrice;
-        this.sellBackPrice = sellBackPrice;
     }
 
     /**
@@ -69,7 +63,7 @@ public class Item implements Purchasable {
      * @return The contract price of the athlete
      */
     public int getContractPrice() {
-        return this.contractPrice;
+        return improvementAmount * 5 + 175;
     }
 
     /**
@@ -79,6 +73,6 @@ public class Item implements Purchasable {
      * @return The sell back price of the athlete
      */
     public int getSellBackPrice() {
-        return this.sellBackPrice;
+        return improvementAmount * 2 + 150;
     }
 }
