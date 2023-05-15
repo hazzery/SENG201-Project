@@ -3,7 +3,7 @@ import java.awt.event.ActionListener;
 
 public class ClubAthletePanel extends AthletePanel {
     private ClubScreen parent;
-    boolean isReserved;
+
     @Override
     protected void initialize() {
         super.initialize();
@@ -30,7 +30,6 @@ public class ClubAthletePanel extends AthletePanel {
     public ClubAthletePanel(Athlete athlete, boolean isReserved, ClubScreen parent) {
         super(athlete);
         this.parent = parent;
-        this.isReserved = isReserved;
         configureButton(isReserved);
 
     }
