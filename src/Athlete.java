@@ -1,13 +1,25 @@
 /**
  * Class that models an athlete
  */
+
+import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.File;
+
+
 public class Athlete implements Purchasable {
-    private String name;
+    private final String name;
     private String nickName;
     private int stamina;
     private int offence;
     private int defence;
     private int current_health;
+
+    static private boolean nameScannerIsInitialised = false;
+    static private Scanner nameScanner;
+    static private Stack<String> athleteNames;
 
 
     /**
@@ -20,6 +32,37 @@ public class Athlete implements Purchasable {
         CURRENT_HEALTH
     }
 
+    /**
+     * Creates an athlete with randomised stats
+     */
+    public Athlete() {
+        initAthleteNameReader();
+
+        this.name = athleteNames.pop();
+        this.nickName = this.name;
+        this.stamina = ThreadLocalRandom.current().nextInt(0, 101);
+        this.offence = ThreadLocalRandom.current().nextInt(0, 101);
+        this.defence = ThreadLocalRandom.current().nextInt(0, 101);
+        this.current_health = 100;
+    }
+
+    private void initAthleteNameReader() {
+        if (nameScannerIsInitialised) return;
+
+        athleteNames = new Stack<String>();
+        try {
+            File myObj = new File("Resources/AthleteNames.txt");
+            nameScanner = new Scanner(myObj);
+            while (nameScanner.hasNextLine()) {
+                athleteNames.push(nameScanner.nextLine());
+            }
+            nameScanner.close();
+            nameScannerIsInitialised = true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     /**
 	 * Creates an athlete with the given stats

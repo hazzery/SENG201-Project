@@ -43,7 +43,7 @@ public class GameManager {
      */
     public static void initializeAthletes() {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
-            athletes.add(AthleteRandom.createRandomAthlete(num_min, num_max));
+            athletes.add(new Athlete());
     }
 
     /**
@@ -157,7 +157,7 @@ public class GameManager {
      */
     public static void initializeItems() {
         for (int i = 0; i < NUM_ALL_ITEMS; i++)
-            items.add(ItemRandom.createRandomItem(num_min, num_max));
+            items.add(new Item());
     }
 
     /**

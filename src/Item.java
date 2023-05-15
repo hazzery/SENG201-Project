@@ -1,15 +1,53 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Class that models an item
  */
 public class Item implements Purchasable {
 
-    private String name;
-    private Athlete.StatType statType;
-    private int improvementAmount;
+    private final String name;
+    private final Athlete.StatType statType;
+    private final int improvementAmount;
+
+
+    static private boolean nameScannerIsInitialised = false;
+    static private Stack<String> itemNames;
 
 
     /**
-	 * Creates an item with the given information
+     * Creates am item with randomised stats
+     */
+    public Item() {
+        initItemNameReader();
+        this.name = itemNames.pop();
+        this.statType = Athlete.StatType.values()[ThreadLocalRandom.current().nextInt(0, 3)];
+        this.improvementAmount = ThreadLocalRandom.current().nextInt(0, 101);
+    }
+
+    private void initItemNameReader() {
+        if (nameScannerIsInitialised) return;
+
+        try {
+            itemNames = new Stack<String>();
+            File itemNameFile = new File("Resources/ItemNames.txt");
+            Scanner nameScanner = new Scanner(itemNameFile);
+            while (nameScanner.hasNextLine()) {
+                itemNames.push(nameScanner.nextLine());
+            }
+            nameScanner.close();
+            nameScannerIsInitialised = true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+	 * Creates an item with the given stats
 	 *
      * @param statType The stat in which consuming this item improves
      * @param improvementAmount The amount in which consuming this item improves the stat
