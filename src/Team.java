@@ -33,6 +33,10 @@ public class Team {
         return this.name;
     }
 
+    public int size() {
+        return this.actives.size() + this.reserves.size();
+    }
+
     /**
 	 * Gets the number of athletes actively participating in the team
 	 *
@@ -91,7 +95,18 @@ public class Team {
         return false;
     }
 
-    public void addAthlete(Athlete athlete) {
-        this.actives.add(athlete);
+    public void addAthlete(Athlete athlete, boolean reserve) {
+        if (reserve)
+            this.reserves.add(athlete);
+        else
+            this.actives.add(athlete);
+    }
+
+    public void removeAthlete(Athlete athlete) {
+        try {
+            this.actives.remove(athlete);
+        } catch (Exception e) {
+            this.reserves.remove(athlete);
+        }
     }
 }

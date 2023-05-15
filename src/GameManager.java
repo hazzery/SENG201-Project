@@ -175,7 +175,7 @@ public class GameManager {
             throw new IllegalStateException("Not enough money to purchase athlete");
         }
         bankBalance -= athlete.getContractPrice();
-        team.addAthlete(athlete);
+        team.addAthlete(athlete, false);
     }
 
     /**
@@ -191,5 +191,10 @@ public class GameManager {
         }
         bankBalance -= item.getContractPrice();
         items.add(item);
+    }
+
+    public static void sellAthlete(Athlete athlete) {
+        bankBalance += athlete.getSellBackPrice();
+        team.removeAthlete(athlete);
     }
 }

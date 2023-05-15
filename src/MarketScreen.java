@@ -6,9 +6,11 @@ public class MarketScreen extends GameScreenPanel {
 
   //protected JPanel contentPanel
         private JPanel athleteShelf;
-            private AthletePanel[] athletePanels;
+            private MarketAthletePanel[] athletePanels;
         private JPanel itemShelf;
-            private ItemPanel[] itemPanels;
+            private MarketItemPanel[] itemPanels;
+        private JPanel teamShelf;
+            private MarketAthletePanel[] teamPanels;
 
     @Override
     protected void initialize() {
@@ -20,9 +22,9 @@ public class MarketScreen extends GameScreenPanel {
         athleteShelf.setLayout(new BoxLayout(athleteShelf, BoxLayout.X_AXIS));
         contentPanel.add(athleteShelf);
 
-        athletePanels = new AthletePanel[GameManager.athletes.size()];
+        athletePanels = new MarketAthletePanel[GameManager.athletes.size()];
         for (int i = 0; i < GameManager.athletes.size(); i++) {
-            athletePanels[i] = new MarketAthletePanel(GameManager.athletes.get(i),this);
+            athletePanels[i] = new MarketAthletePanel(GameManager.athletes.get(i), false, this);
             athleteShelf.add(athletePanels[i]);
         }
 
@@ -35,6 +37,18 @@ public class MarketScreen extends GameScreenPanel {
         for (int i = 0; i < GameManager.items.size(); i++) {
             itemPanels[i] = new MarketItemPanel(GameManager.items.get(i), this);
             itemShelf.add(itemPanels[i]);
+        }
+
+        teamShelf = new JPanel();
+        teamShelf.setBorder(marginBorder);
+        teamShelf.setLayout(new BoxLayout(teamShelf, BoxLayout.X_AXIS));
+        contentPanel.add(teamShelf);
+
+        teamPanels = new MarketAthletePanel[GameManager.team.size()];
+        final Athlete[] team = GameManager.team.fullTeam();
+        for (int i = 0; i < GameManager.team.size(); i++) {
+            teamPanels[i] = new MarketAthletePanel(team[i], true, this);
+            teamShelf.add(teamPanels[i]);
         }
 
     }
@@ -68,5 +82,18 @@ public class MarketScreen extends GameScreenPanel {
         itemShelf.remove(marketItemPanel);
         itemShelf.revalidate();
         itemShelf.repaint();
+
+        parent.updateTeamInfo();
+    }
+
+    public void sellAthlete(Athlete athlete, MarketAthletePanel marketAthletePanel) {
+        GameManager.sellAthlete(athlete);
+
+        // Update the screen
+        teamShelf.remove(marketAthletePanel);
+        teamShelf.revalidate();
+        teamShelf.repaint();
+
+        parent.updateTeamInfo();
     }
 }

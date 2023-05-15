@@ -1,3 +1,4 @@
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class MarketAthletePanel extends AthletePanel {
@@ -8,14 +9,29 @@ public class MarketAthletePanel extends AthletePanel {
     protected void initialize() {
         super.initialize();
         actionButton = new JButton();
-        actionButton.setText("Purchase");
         actionButton.setHorizontalAlignment(SwingConstants.CENTER);
-        actionButton.addActionListener(e -> parent.purchaseAthlete(athlete, this));
         this.add(actionButton);
     }
 
-    public MarketAthletePanel(Athlete athlete, MarketScreen parent) {
+    void configureButton(boolean isOwned) {
+        for (ActionListener al : actionButton.getActionListeners())
+            actionButton.removeActionListener(al);
+
+        if (isOwned) {
+            actionButton.setText("Sell");
+            actionButton.addActionListener(e -> parent.sellAthlete(athlete, this));
+        } else {
+            actionButton.setText("Purchase");
+            actionButton.addActionListener(e -> parent.purchaseAthlete(athlete, this));
+        }
+        revalidate();
+        repaint();
+    }
+
+
+    public MarketAthletePanel(Athlete athlete, boolean isOwned, MarketScreen parent) {
         super(athlete);
         this.parent = parent;
+        configureButton(isOwned);
     }
 }

@@ -43,15 +43,19 @@ public class GameScreen extends JPanel {
         setVisible(true);
     }
 
-    private void updateTeamInfo() {
+    void updateTeamInfo() {
         teamNameLabel.setText(GameManager.getTeamName());
         bankBalanceLabel.setText("$" + GameManager.getBankBalance());
+        teamInfoPanel.revalidate();
+        teamInfoPanel.repaint();
     }
 
-    private void updateSeasonInfo() {
+    void updateSeasonInfo() {
         GameManager.nextWeek();
         currentWeekLabel.setText("Week " + GameManager.currentWeek() + " of " + GameManager.getSeasonLength());
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
+        seasonPanel.revalidate();
+        seasonPanel.repaint();
     }
 
     /**
