@@ -50,7 +50,7 @@ public class InitScreen extends JPanel {
 
             String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
             try {
-                GameManager.validateName(nickName);
+                GameManager.validateName(nickName, true);
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 selectAthlete(athlete);
@@ -103,7 +103,7 @@ public class InitScreen extends JPanel {
         String teamName = teamNameText.getText();
 
         try {
-            GameManager.validateName(teamName);
+            GameManager.validateName(teamName, false);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return;
