@@ -2,6 +2,7 @@
  * Class that models an athlete
  */
 
+import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.FileNotFoundException;
@@ -20,6 +21,8 @@ public class Athlete implements Purchasable {
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
     static private Stack<String> athleteNames;
+
+    PurchasablePanel[] purchasablePanels;
 
 
     /**
@@ -86,8 +89,21 @@ public class Athlete implements Purchasable {
 	 *
 	 * @return The athlete's descriptive name
 	 */
+    @Override
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * @return 
+     */
+    @Override
+    public Map<String, String> getStats() {
+        return Map.of(
+            "Stamina", String.valueOf(this.stamina),
+            "Offence", String.valueOf(this.offence),
+            "Defence", String.valueOf(this.defence)
+        );
     }
 
     /**
@@ -141,6 +157,7 @@ public class Athlete implements Purchasable {
 	 *
 	 * @return The contract price of the athlete
 	 */
+    @Override
     public int getContractPrice() {
         return (stamina + offence + defence) * 10;
     }
@@ -151,6 +168,7 @@ public class Athlete implements Purchasable {
      *
 	 * @return The sell back price of the athlete
 	 */
+    @Override
     public int getSellBackPrice() {
         return (stamina + offence + defence) * 3 + 100;
     }
@@ -179,11 +197,30 @@ public class Athlete implements Purchasable {
      * @param item The item to apply to the athlete
      */
     public void applyItem(Item item) {
+        String newStatValue;
+
         switch (item.getStatType()) {
-            case STAMINA -> this.stamina += item.getImprovementAmount();
-            case OFFENCE -> this.offence += item.getImprovementAmount();
-            case DEFENCE -> this.defence += item.getImprovementAmount();
-            case CURRENT_HEALTH -> this.current_health += item.getImprovementAmount();
+            case STAMINA -> {
+                this.stamina += item.getImprovementAmount();
+                newStatValue = String.valueOf(this.stamina);
+            }
+            case OFFENCE ->  {
+                this.offence += item.getImprovementAmount();
+                newStatValue = String.valueOf(this.offence);
+            }
+            case DEFENCE ->  {
+                this.defence += item.getImprovementAmount();
+                newStatValue = String.valueOf(this.defence);
+            }
+            case CURRENT_HEALTH ->  {
+                this.current_health += item.getImprovementAmount();
+                newStatValue = String.valueOf(this.current_health);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + item.getStatType());
+        }
+
+        for (PurchasablePanel panel : purchasablePanels) {
+            panel.update(item.getStatType().name(), newStatValue);
         }
     }
 

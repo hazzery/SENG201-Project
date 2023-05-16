@@ -33,6 +33,10 @@ public class Team {
         return this.name;
     }
 
+    public int size() {
+        return this.actives.size() + this.reserves.size();
+    }
+
     /**
 	 * Gets the number of athletes actively participating in the team
 	 *
@@ -51,6 +55,14 @@ public class Team {
         return this.reserves.size();
     }
 
+    public Athlete[] getActives() {
+        return this.actives.toArray(new Athlete[0]);
+    }
+
+    public Athlete[] getReserves() {
+        return this.reserves.toArray(new Athlete[0]);
+    }
+
     public Athlete getActive(int index) {
         return this.actives.get(index);
     }
@@ -59,9 +71,15 @@ public class Team {
         return this.reserves.get(index);
     }
 
-    public void setActive(Athlete athlete) {
-        this.actives.add(athlete);
-        reserves.remove(athlete);
+    public boolean setActive(Athlete athlete) throws IllegalStateException {
+        if (reserves.contains(athlete)) {
+            reserves.remove(athlete);
+            actives.add(athlete);
+        }
+        else {
+            throw new IllegalStateException("Cannot activate an athlete that is not a reserve");
+        }
+        return true;
     }
 
     public boolean setReserve(Athlete athlete) throws IllegalStateException {
@@ -73,7 +91,7 @@ public class Team {
         return true;
     }
 
-    Athlete[] fullTeam() {
+    Athlete[] getAll() {
         return Stream.concat(actives.stream(), reserves.stream()).toArray(Athlete[]::new);
     }
 
@@ -84,14 +102,25 @@ public class Team {
 	 * @return `true` if the team contains the athlete, `false` otherwise
      */
     public boolean contains(Athlete athlete) {
-        for (Athlete a : this.fullTeam()) {
+        for (Athlete a : this.getAll()) {
             if (a.equals(athlete))
                 return true;
         }
         return false;
     }
 
-    public void addAthlete(Athlete athlete) {
-        this.actives.add(athlete);
+    public void addAthlete(Athlete athlete, boolean reserve) {
+        if (reserve)
+            this.reserves.add(athlete);
+        else
+            this.actives.add(athlete);
+    }
+
+    public void removeAthlete(Athlete athlete) {
+        try {
+            this.actives.remove(athlete);
+        } catch (Exception e) {
+            this.reserves.remove(athlete);
+        }
     }
 }
