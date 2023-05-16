@@ -141,7 +141,7 @@ public class GameScreen extends JPanel {
     public static void main(String[] args) {
         GameManager.initializeAthletes();
         GameManager.initializeItems();
-        GameManager.initializeMainWindow();
+        WindowManager.initializeMainWindow();
         GameManager.startGame("HarryTeam", 10, GameManager.athletes, false);
     }
 }

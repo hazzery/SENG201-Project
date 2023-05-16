@@ -37,7 +37,7 @@ public class SplashScreen extends JPanel {
 		this.add(buttonPanel);
 		
 		JButton startGameButton = new JButton("Start Game");
-		startGameButton.addActionListener(e -> GameManager.initializeGame());
+		startGameButton.addActionListener(e -> WindowManager.showInitScreen());
 		buttonPanel.add(startGameButton);
 		
 		JButton settingsButton = new JButton("Settings");

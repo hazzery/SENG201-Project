@@ -12,31 +12,15 @@ public class GameManager {
     private static int bankBalance = 0;
     private static int currentWeek = 1;
 
-    private static JFrame mainWindow;
-    private static SplashScreen splashScreen;
-    private static InitScreen initScreen;
-    private static GameScreen gameScreen;
-
     public static final int NUM_ALL_ATHLETES = 12;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
-    public static ArrayList<Item> items = new ArrayList<>();
+    private static ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
+
 
     //THESE NUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
-    public static int num_max;
-    public static int num_min;
-    
-    /**
-     * Initialises the main window
-     * Setting the title, size, and close operation
-     */
-    public static void initializeMainWindow() {
-        mainWindow = new JFrame();
-        mainWindow.setTitle("Cool Ski game");
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setBounds(0, 0, 1920, 1080);
-        mainWindow.setVisible(true);
-    }
+    public static int minimumStatValue;
+    public static int maximumStatValue;
 
     /**
      * Fills the `athletes` array with `NUM_ALL_ATHLETES` random athletes
@@ -46,16 +30,6 @@ public class GameManager {
             athletes.add(new Athlete());
     }
 
-    /**
-     * Launches the application window.
-     * Initialises the main window and sets it to display the splash screen
-     */
-    public static void launchApplicationWindow() {
-        initializeMainWindow();
-
-        splashScreen = new SplashScreen();
-        mainWindow.setContentPane(splashScreen);
-    }
 
     /**
      * Checks to see if the provided string meets the criteria for a valid name
@@ -79,25 +53,6 @@ public class GameManager {
     }
 
     /**
-     * Changes the current screen to the provided panel
-     * @param panel the panel to display
-     */
-    private static void setScreen(JPanel panel) {
-        mainWindow.remove(mainWindow.getContentPane());
-        mainWindow.setContentPane(panel);
-        mainWindow.revalidate();
-        mainWindow.repaint();
-    }
-
-    /**
-     * Changes the current screen from the splash screen to the game initialisation screen
-     */
-    public static void initializeGame() {
-        initScreen = new InitScreen();
-        setScreen(initScreen);
-    }
-
-    /**
      * Starts the game with the provided parameters
      * @param teamName the name of the player's team
      * @param seasonLength the length of the season in weeks
@@ -109,11 +64,7 @@ public class GameManager {
         GameManager.team = new Team(teamName, selectedAthletes);
         GameManager.hardMode = hardMode;
 
-        team.setReserve(GameManager.athletes.get(6));
-        team.setReserve(GameManager.athletes.get(7));
-
-        gameScreen = new GameScreen();
-        setScreen(gameScreen);
+        WindowManager.showGameScreen();
     }
 
     /**
@@ -153,6 +104,28 @@ public class GameManager {
      */
     public static void nextWeek() {
         currentWeek++;
+    }
+
+    public static Item[] getItems() {
+        return items.toArray(new Item[0]);
+    }
+
+    public static Athlete[] generateAthletes(int n) {
+        Athlete[] athletes = new Athlete[n];
+
+        for (int i = 0; i < n; i++)
+            athletes[i] = new Athlete();
+
+        return athletes;
+    }
+
+    public static Item[] generateItems(int n) {
+        Item[] items = new Item[n];
+
+        for (int i = 0; i < n; i++)
+            items[i] = new Item();
+
+        return items;
     }
 
     /**
@@ -196,5 +169,10 @@ public class GameManager {
     public static void sellAthlete(Athlete athlete) {
         bankBalance += athlete.getSellBackPrice();
         team.removeAthlete(athlete);
+    }
+
+    public static void useItem(Item item, Athlete athlete) {
+        athlete.applyItem(item);
+        items.remove(item);
     }
 }

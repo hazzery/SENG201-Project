@@ -1,56 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MarketScreen extends GameScreenPanel {
     // Indentation of components below shows hierarchy of elements on the screen
 
   //protected JPanel contentPanel
-        private JPanel athleteShelf;
-            private MarketAthletePanel[] athletePanels;
-        private JPanel itemShelf;
-            private MarketItemPanel[] itemPanels;
-        private JPanel teamShelf;
-            private MarketAthletePanel[] teamPanels;
+        private PurchasablesShelf athletesShelf;
+        private PurchasablesShelf itemsShelf;
+        private PurchasablesShelf teamShelf;
+    private ActionListener purchaseAthlete;
 
     @Override
     protected void initialize() {
         super.initialize();
         contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        athleteShelf = new JPanel();
-        athleteShelf.setBorder(marginBorder);
-        athleteShelf.setLayout(new BoxLayout(athleteShelf, BoxLayout.X_AXIS));
-        contentPanel.add(athleteShelf);
+        athletesShelf = new PurchasablesShelf(GameManager.generateAthletes(5), "Purchase", purchaseAthlete);
+        contentPanel.add(athletesShelf);
 
-        athletePanels = new MarketAthletePanel[GameManager.athletes.size()];
-        for (int i = 0; i < GameManager.athletes.size(); i++) {
-            athletePanels[i] = new MarketAthletePanel(GameManager.athletes.get(i), false, this);
-            athleteShelf.add(athletePanels[i]);
-        }
+        itemsShelf = new PurchasablesShelf(GameManager.generateItems(5), "Purchase", purchaseItem);
+        contentPanel.add(itemsShelf);
 
-        itemShelf = new JPanel();
-        itemShelf.setBorder(marginBorder);
-        itemShelf.setLayout(new BoxLayout(itemShelf, BoxLayout.X_AXIS));
-        contentPanel.add(itemShelf);
-
-        itemPanels = new MarketItemPanel[GameManager.items.size()];
-        for (int i = 0; i < GameManager.items.size(); i++) {
-            itemPanels[i] = new MarketItemPanel(GameManager.items.get(i), this);
-            itemShelf.add(itemPanels[i]);
-        }
-
-        teamShelf = new JPanel();
-        teamShelf.setBorder(marginBorder);
-        teamShelf.setLayout(new BoxLayout(teamShelf, BoxLayout.X_AXIS));
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", sellAthlete);
         contentPanel.add(teamShelf);
-
-        teamPanels = new MarketAthletePanel[GameManager.team.size()];
-        final Athlete[] team = GameManager.team.fullTeam();
-        for (int i = 0; i < GameManager.team.size(); i++) {
-            teamPanels[i] = new MarketAthletePanel(team[i], true, this);
-            teamShelf.add(teamPanels[i]);
-        }
-
     }
 
 
