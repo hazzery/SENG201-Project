@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ClubScreen extends GameScreenPanel {
@@ -35,7 +36,8 @@ public class ClubScreen extends GameScreenPanel {
         activeAthletesLabel.setOpaque(true);
         athletesWrapperPanel.add(activeAthletesLabel);
 
-        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Reserve", reserveAthlete);
+        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Reserve", this::reserveAthlete);
+        GameManager.team.addActivesSubscriber(activesShelf);
         athletesWrapperPanel.add(activesShelf);
 
         reservesWrapperPanel = new JPanel();
@@ -46,7 +48,8 @@ public class ClubScreen extends GameScreenPanel {
         reservedAthletesLabel = new JLabel("Reserved");
         reservesWrapperPanel.add(reservedAthletesLabel);
 
-        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Activate", activateAthlete);
+        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Activate", this::activateAthlete);
+        GameManager.team.addReservesSubscriber(reservesShelf);
         reservesWrapperPanel.add(reservesShelf);
 
         itemsWrapperPanel = new JPanel();
@@ -57,7 +60,7 @@ public class ClubScreen extends GameScreenPanel {
         itemsLabel = new JLabel("Inventory");
         itemsWrapperPanel.add(itemsLabel);
 
-        itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Use", selectAthleteForItem);
+        itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Use", this::selectAthleteForItem);
         itemsWrapperPanel.add(itemsShelf);
     }
 
@@ -66,7 +69,7 @@ public class ClubScreen extends GameScreenPanel {
     }
 
 
-    ActionListener reserveAthlete = event -> {
+    private void reserveAthlete(ActionEvent event) {
         PurchasablePanel panel = (PurchasablePanel)(((JButton)event.getSource()).getParent());
         Athlete athlete = (Athlete) panel.getPurchasable();
 
@@ -82,17 +85,14 @@ public class ClubScreen extends GameScreenPanel {
         }
 
         if (successfullyReserved) {
-//            reservesPanel.setVisible(true);
             PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
             shelf.remove(panel);
-//            athletePanel.configureButton(true);
-//            reservesPanel.add(athletePanel);
             shelf.revalidate();
             shelf.repaint();
         }
-    };
+    }
 
-    ActionListener activateAthlete = event -> {
+    private void activateAthlete(ActionEvent event) {
         PurchasablePanel panel = (PurchasablePanel)(((JButton)event.getSource()).getParent());
         Athlete athlete = (Athlete) panel.getPurchasable();
 
@@ -108,17 +108,14 @@ public class ClubScreen extends GameScreenPanel {
         }
 
         if (successfullyActivated) {
-//            reservesPanel.setVisible(true);
             PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
             shelf.remove(panel);
-//            athletePanel.configureButton(true);
-//            reservesPanel.add(athletePanel);
             shelf.revalidate();
             shelf.repaint();
         }
-    };
+    }
 
-    ActionListener selectAthleteForItem = event -> {
+    private void selectAthleteForItem(ActionEvent event) {
         Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
                 "Select an athlete to use this item on", "Use Item", JOptionPane.PLAIN_MESSAGE,
                 null, GameManager.team.getActives(), "Choose athlete");
@@ -127,5 +124,5 @@ public class ClubScreen extends GameScreenPanel {
             Item item = (Item) ((PurchasablePanel) ((JButton) event.getSource()).getParent()).getPurchasable();
             GameManager.useItem(item, athlete);
         }
-    };
+    }
 }

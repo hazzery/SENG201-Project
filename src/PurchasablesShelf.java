@@ -1,38 +1,45 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PurchasablesShelf extends JPanel {
+    private final String buttonText;
+    private final ActionListener actionListener;
+
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
-    private PurchasablePanel[] purchasablePanels;
 
     public PurchasablesShelf(Purchasable[] purchasables, String buttonText, ActionListener actionListener) {
         setBorder(marginBorder);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        for (Purchasable purchasable : purchasables) {
-            PurchasablePanel panel = new PurchasablePanel(purchasable);
-            panel.addButton(buttonText, actionListener);
-            add(panel);
-        }
+        this.buttonText = buttonText;
+        this.actionListener = actionListener;
+
+        for (Purchasable purchasable : purchasables)
+            addPanel(purchasable);
+
         setVisible(true);
     }
 
-    static ActionListener actionListener = e -> {
-        PurchasablePanel panel = (PurchasablePanel)(((JButton)e.getSource()).getParent());
-        panel.remove((JButton)(e.getSource()));
-        panel.revalidate();
-        panel.repaint();
-    };
+    public void removePanel(Purchasable purchasable) {
+        for (Component component : getComponents()) {
+            PurchasablePanel panel = (PurchasablePanel) component;
+            if (panel.getPurchasable().equals(purchasable)) {
+                remove(panel);
+                revalidate();
+                repaint();
+                break;
+            }
+        }
+    }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 200);
-        Purchasable[] purchasables = new Purchasable[] {new Athlete("John Cena", 7, 9, 8), new Athlete("John Cena", 7, 9, 8), new Athlete("John Cena", 7, 9, 8)};
-        PurchasablesShelf shelf = new PurchasablesShelf(purchasables, "Purchase", actionListener);
-        frame.add(shelf);
-        frame.setVisible(true);
+    public void addPanel(Purchasable purchasable) {
+        PurchasablePanel panel = new PurchasablePanel(purchasable);
+        panel.addButton(buttonText, actionListener);
+        add(panel);
+        revalidate();
+        repaint();
     }
 }

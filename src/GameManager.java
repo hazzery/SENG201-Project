@@ -149,6 +149,17 @@ public class GameManager {
         }
         bankBalance -= athlete.getContractPrice();
         team.addAthlete(athlete, false);
+
+        for (PurchasablesShelf shelf : team.activesSubscribers)
+            shelf.addPanel(athlete);
+    }
+
+    public static void sellAthlete(Athlete athlete) {
+        bankBalance += athlete.getSellBackPrice();
+        team.removeAthlete(athlete);
+
+        for (PurchasablesShelf shelf : team.activesSubscribers)
+            shelf.removePanel(athlete);
     }
 
     /**
@@ -158,17 +169,12 @@ public class GameManager {
      * @param item the item to purchase
      * @throws IllegalStateException if the player does not have enough money to purchase the item
      */
-    public static void purchaseItem(Item item) throws IllegalArgumentException{
+    public static void purchaseItem(Item item) throws IllegalArgumentException {
         if (bankBalance < item.getContractPrice()) {
             throw new IllegalStateException("Not enough money to purchase item");
         }
         bankBalance -= item.getContractPrice();
         items.add(item);
-    }
-
-    public static void sellAthlete(Athlete athlete) {
-        bankBalance += athlete.getSellBackPrice();
-        team.removeAthlete(athlete);
     }
 
     public static void useItem(Item item, Athlete athlete) {

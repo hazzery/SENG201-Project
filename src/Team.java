@@ -10,6 +10,8 @@ public class Team {
     private final String name;
     private final ArrayList<Athlete> actives;
     private final ArrayList<Athlete> reserves;
+    public ArrayList<PurchasablesShelf> activesSubscribers = new ArrayList<>();
+    public ArrayList<PurchasablesShelf> reservesSubscribers = new ArrayList<>();
 
     /**
 	 * Creates a team with the given name
@@ -122,5 +124,13 @@ public class Team {
         } catch (Exception e) {
             this.reserves.remove(athlete);
         }
+    }
+
+    public void addActivesSubscriber(PurchasablesShelf shelf) {
+        this.activesSubscribers.add(shelf);
+    }
+
+    public void addReservesSubscriber(PurchasablesShelf shelf) {
+        this.reservesSubscribers.add(shelf);
     }
 }

@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -88,16 +86,6 @@ public class Item implements Purchasable {
     }
 
     /**
-     * Generates a string description of the item
-     *
-     * @return A short description of the item
-     */
-    @Override
-    public String getDescription() {
-        return "Improves " + this.statType + " by " + this.improvementAmount;
-    }
-
-    /**
      * Gets the contract sale price of the athlete
      * The contract price is the amount the athlete originally costs to purchase
      *
@@ -110,9 +98,7 @@ public class Item implements Purchasable {
 
     @Override
     public Map<String, String> getStats() {
-        return Map.of(
-                String.valueOf(improvementAmount), statType.name()
-        );
+        return Map.of(statType.name(), String.valueOf(improvementAmount));
     }
 
     /**
@@ -121,6 +107,7 @@ public class Item implements Purchasable {
      *
      * @return The sell back price of the athlete
      */
+    @Override
     public int getSellBackPrice() {
         return improvementAmount * 2 + 150;
     }

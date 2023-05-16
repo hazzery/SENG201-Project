@@ -2,6 +2,7 @@
  * Class that models an athlete
  */
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
@@ -22,8 +23,7 @@ public class Athlete implements Purchasable {
     static private Scanner nameScanner;
     static private Stack<String> athleteNames;
 
-    PurchasablePanel[] purchasablePanels;
-
+    ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<PurchasablePanel>();
 
     /**
 	 * Represents the stats of an {@link Athlete}
@@ -35,19 +35,6 @@ public class Athlete implements Purchasable {
         CURRENT_HEALTH
     }
 
-    /**
-     * Creates an athlete with randomised stats
-     */
-    public Athlete() {
-        initAthleteNameReader();
-
-        this.name = athleteNames.pop();
-        this.nickName = this.name;
-        this.stamina = ThreadLocalRandom.current().nextInt(0, 101);
-        this.offence = ThreadLocalRandom.current().nextInt(0, 101);
-        this.defence = ThreadLocalRandom.current().nextInt(0, 101);
-        this.current_health = 100;
-    }
 
     private void initAthleteNameReader() {
         if (nameScannerIsInitialised) return;
@@ -65,6 +52,20 @@ public class Athlete implements Purchasable {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Creates an athlete with randomised stats
+     */
+    public Athlete() {
+        initAthleteNameReader();
+
+        this.name = athleteNames.pop();
+        this.nickName = this.name;
+        this.stamina = ThreadLocalRandom.current().nextInt(0, 101);
+        this.offence = ThreadLocalRandom.current().nextInt(0, 101);
+        this.defence = ThreadLocalRandom.current().nextInt(0, 101);
+        this.current_health = 100;
     }
 
     /**
@@ -94,9 +95,6 @@ public class Athlete implements Purchasable {
         return this.name;
     }
 
-    /**
-     * @return 
-     */
     @Override
     public Map<String, String> getStats() {
         return Map.of(
@@ -174,15 +172,6 @@ public class Athlete implements Purchasable {
     }
 
     /**
-	 * Generates a string description of the athlete
-	 *
-	 * @return A short description of the athlete
-	 */
-    public String getDescription() {
-        return "Stamina: " + this.stamina + ",  Offence: " + this.offence + ",  Defence: " + this.defence;
-    }
-
-    /**
 	 * Sets a new nickname for the athlete
      *
      * @param nickName The new nickname for the athlete
@@ -220,8 +209,12 @@ public class Athlete implements Purchasable {
         }
 
         for (PurchasablePanel panel : purchasablePanels) {
-            panel.update(item.getStatType().name(), newStatValue);
+            panel.update(item.getStatType().name().toLowerCase(), newStatValue);
         }
+    }
+
+    public void registerPanel(PurchasablePanel panel) {
+        purchasablePanels.add(panel);
     }
 
     public String toString() {

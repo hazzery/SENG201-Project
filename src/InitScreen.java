@@ -195,8 +195,8 @@ public class InitScreen extends JPanel {
         for (int i = 0; i < allAthleteButtons.length; i++) {
             allAthleteButtons[i] = new JButton();
 
-            String text = HTMLString.multiLine(GameManager.athletes.get(i).getName(),
-                    GameManager.athletes.get(i).getDescription());
+            String text = HTMLString.multiLine(GameManager.athletes.get(i).getName(), "lmao");
+//                    GameManager.athletes.get(i).getDescription());
             allAthleteButtons[i].setText(text);
 
             final int finalI = i;

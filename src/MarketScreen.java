@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MarketScreen extends GameScreenPanel {
@@ -9,20 +10,21 @@ public class MarketScreen extends GameScreenPanel {
         private PurchasablesShelf athletesShelf;
         private PurchasablesShelf itemsShelf;
         private PurchasablesShelf teamShelf;
-    private ActionListener purchaseAthlete;
 
     @Override
     protected void initialize() {
         super.initialize();
         contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        athletesShelf = new PurchasablesShelf(GameManager.generateAthletes(5), "Purchase", purchaseAthlete);
+        athletesShelf = new PurchasablesShelf(GameManager.generateAthletes(5), "Purchase", this::purchaseAthlete);
         contentPanel.add(athletesShelf);
 
-        itemsShelf = new PurchasablesShelf(GameManager.generateItems(5), "Purchase", purchaseItem);
+        itemsShelf = new PurchasablesShelf(GameManager.generateItems(5), "Purchase", this::purchaseItem);
         contentPanel.add(itemsShelf);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", sellAthlete);
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", this::sellAthlete);
+        GameManager.team.addActivesSubscriber(teamShelf);
+        GameManager.team.addReservesSubscriber(teamShelf);
         contentPanel.add(teamShelf);
     }
 
@@ -31,42 +33,46 @@ public class MarketScreen extends GameScreenPanel {
         super(GameScreen.Screen.MARKET, gameScreen);
     }
 
-    public void purchaseAthlete(Athlete athlete, MarketAthletePanel marketAthletePanel) {
-        try {
-            GameManager.purchaseAthlete(athlete);
-        } catch (IllegalStateException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            return; // Don't update the screen if the purchase failed
-        }
-        // Update the screen
-        athleteShelf.remove(marketAthletePanel);
-        athleteShelf.revalidate();
-        athleteShelf.repaint();
-    }
+    private final void purchaseItem(ActionEvent e) {
+        System.out.println("purchaseItem");
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
+        Item item = (Item) panel.getPurchasable();
 
-    public void purchaseItem(Item item, MarketItemPanel marketItemPanel) {
+        boolean success = false;
         try {
             GameManager.purchaseItem(item);
-        } catch (IllegalStateException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            return; // Don't update the screen if the purchase failed
+            success = true;
+        } catch (IllegalStateException error) {
+            JOptionPane.showMessageDialog(this, error.getMessage());
         }
-        // Update the screen
-        itemShelf.remove(marketItemPanel);
-        itemShelf.revalidate();
-        itemShelf.repaint();
 
-        parent.updateTeamInfo();
+        if (success) {
+            PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
+            shelf.remove(panel);
+            shelf.revalidate();
+            shelf.repaint();
+        }
     }
 
-    public void sellAthlete(Athlete athlete, MarketAthletePanel marketAthletePanel) {
+    private final void purchaseAthlete(ActionEvent e)  {
+        System.out.println("purchaseAthlete");
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getPurchasable();
+
+        try {
+            GameManager.purchaseAthlete(athlete);
+            panel.getParent().remove(panel);
+        } catch (IllegalStateException error) {
+            JOptionPane.showMessageDialog(this, error.getMessage());
+        }
+    }
+
+
+    private final void sellAthlete(ActionEvent e) {
+        System.out.println("sellAthlete");
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getPurchasable();
+
         GameManager.sellAthlete(athlete);
-
-        // Update the screen
-        teamShelf.remove(marketAthletePanel);
-        teamShelf.revalidate();
-        teamShelf.repaint();
-
-        parent.updateTeamInfo();
     }
 }

@@ -5,12 +5,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PurchasablePanel extends JPanel {
-    private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
     private final HashMap<String, JLabel> statLabels;
     private Purchasable purchasable;
 
-    PurchasablePanel(Purchasable purchasable) {
+    public PurchasablePanel(Purchasable purchasable) {
         this.purchasable = purchasable;
+
+        if (purchasable instanceof Athlete athlete)
+            athlete.registerPanel(this);
+
         this.setLayout(new GridLayout(0, 1, 0, 0));
         this.setBorder(marginBorder);
 
@@ -36,20 +40,11 @@ public class PurchasablePanel extends JPanel {
     }
 
     public void update(String stat, String value) {
-        statLabels.get(stat).setText(value + ' ' + stat);
+        String titleCase = stat.substring(0, 1).toUpperCase() + stat.substring(1);
+        statLabels.get(titleCase).setText(value + ' ' + stat);
     }
 
     public Purchasable getPurchasable() {
         return purchasable;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 200);
-        PurchasablePanel panel = new PurchasablePanel(new Athlete("John Cena", 7, 9, 8));
-        panel.addButton("Purchase", e -> panel.update("Offence", "69"));
-        frame.add(panel);
-        frame.setVisible(true);
     }
 }
