@@ -64,6 +64,16 @@ public class ClubScreen extends GameScreenPanel {
         itemsWrapperPanel.add(itemsShelf);
     }
 
+    /**
+     *
+     */
+    @Override
+    public void reload() {
+        activesShelf.reload(GameManager.team.getActives());
+        reservesShelf.reload(GameManager.team.getReserves());
+        itemsShelf.reload(GameManager.getItems());
+    }
+
     ClubScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.CLUB, gameScreen);
     }
@@ -77,19 +87,22 @@ public class ClubScreen extends GameScreenPanel {
 
         boolean successfullyReserved = false;
         try {
-            successfullyReserved = GameManager.team.setReserve(athlete);
-            System.out.println("Successfully reserved " + athlete.getName());
+            GameManager.team.setReserve(athlete);
+            successfullyReserved = true;
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(null,
                     "Cannot have more than " + Team.MAX_RESERVES + " reserves");
         }
 
-        if (successfullyReserved) {
-            PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-            shelf.remove(panel);
-            shelf.revalidate();
-            shelf.repaint();
-        }
+        if (!successfullyReserved)
+            return;
+
+        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
+        shelf.remove(panel);
+        shelf.revalidate();
+        shelf.repaint();
+
+        reservesShelf.addPanel(athlete);
     }
 
     private void activateAthlete(ActionEvent event) {
@@ -112,17 +125,21 @@ public class ClubScreen extends GameScreenPanel {
             shelf.remove(panel);
             shelf.revalidate();
             shelf.repaint();
+
+            activesShelf.addPanel(athlete);
         }
     }
 
     private void selectAthleteForItem(ActionEvent event) {
         Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
                 "Select an athlete to use this item on", "Use Item", JOptionPane.PLAIN_MESSAGE,
-                null, GameManager.team.getActives(), "Choose athlete");
+                null, GameManager.team.getAll(), "Choose athlete");
 
         if (athlete != null) {
             Item item = (Item) ((PurchasablePanel) ((JButton) event.getSource()).getParent()).getPurchasable();
             GameManager.useItem(item, athlete);
+
+            itemsShelf.removePanel(item);
         }
     }
 }

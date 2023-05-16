@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class GameScreenPanel extends JPanel {
+public abstract class GameScreenPanel extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
@@ -59,4 +59,5 @@ public class GameScreenPanel extends JPanel {
         setVisible(true);
     }
 
+    public abstract void reload();
 }

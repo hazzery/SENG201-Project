@@ -10,6 +10,14 @@ public class StadiumScreen extends GameScreenPanel {
         contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
     }
 
+    /**
+     *
+     */
+    @Override
+    public void reload() {
+
+    }
+
 
     public StadiumScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.STADIUM, gameScreen);

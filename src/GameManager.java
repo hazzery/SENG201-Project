@@ -150,6 +150,8 @@ public class GameManager {
         bankBalance -= athlete.getContractPrice();
         team.addAthlete(athlete, false);
 
+        WindowManager.gameScreen.updateTeamInfo();
+
         for (PurchasablesShelf shelf : team.activesSubscribers)
             shelf.addPanel(athlete);
     }
@@ -157,6 +159,8 @@ public class GameManager {
     public static void sellAthlete(Athlete athlete) {
         bankBalance += athlete.getSellBackPrice();
         team.removeAthlete(athlete);
+
+        WindowManager.gameScreen.updateTeamInfo();
 
         for (PurchasablesShelf shelf : team.activesSubscribers)
             shelf.removePanel(athlete);
@@ -175,6 +179,8 @@ public class GameManager {
         }
         bankBalance -= item.getContractPrice();
         items.add(item);
+
+        WindowManager.gameScreen.updateTeamInfo();
     }
 
     public static void useItem(Item item, Athlete athlete) {

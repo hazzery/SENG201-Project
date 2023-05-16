@@ -84,13 +84,12 @@ public class Team {
         return true;
     }
 
-    public boolean setReserve(Athlete athlete) throws IllegalStateException {
+    public void setReserve(Athlete athlete) throws IllegalStateException {
         if (this.reserves.size() >= MAX_RESERVES) {
             throw new IllegalStateException("Cannot have more than " + MAX_RESERVES + " reserves");
         }
         this.reserves.add(athlete);
         actives.remove(athlete);
-        return true;
     }
 
     Athlete[] getAll() {
@@ -119,11 +118,8 @@ public class Team {
     }
 
     public void removeAthlete(Athlete athlete) {
-        try {
-            this.actives.remove(athlete);
-        } catch (Exception e) {
-            this.reserves.remove(athlete);
-        }
+        this.actives.remove(athlete);
+        this.reserves.remove(athlete);
     }
 
     public void addActivesSubscriber(PurchasablesShelf shelf) {

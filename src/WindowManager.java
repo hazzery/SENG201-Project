@@ -5,7 +5,7 @@ public class WindowManager {
     private static JFrame mainWindow;
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
-    private static GameScreen gameScreen;
+    static GameScreen gameScreen;
 
     /**
      * Initialises the main window

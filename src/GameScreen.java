@@ -14,9 +14,9 @@ public class GameScreen extends JPanel {
             private JLabel currentWeekLabel;
             private JLabel remainingWeeksLabel;
     private JPanel centrePanel;
-        private JPanel clubScreen;
-        private JPanel marketScreen;
-        private JPanel stadiumScreen;
+        private ClubScreen clubScreen;
+        private MarketScreen marketScreen;
+        private StadiumScreen stadiumScreen;
     private JPanel FooterPanel;
         private JButton nextWeekButton;
 
@@ -56,6 +56,10 @@ public class GameScreen extends JPanel {
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
         seasonPanel.revalidate();
         seasonPanel.repaint();
+
+        marketScreen.updateWeeklyPool();
+        marketScreen.reload();
+        stadiumScreen.reload();
     }
 
     /**
@@ -66,9 +70,18 @@ public class GameScreen extends JPanel {
         centrePanel.removeAll();
 
         switch (screen) {
-            case CLUB -> centrePanel.add(clubScreen);
-            case MARKET -> centrePanel.add(marketScreen);
-            case STADIUM -> centrePanel.add(stadiumScreen);
+            case CLUB -> {
+                clubScreen.reload();
+                centrePanel.add(clubScreen);
+            }
+            case MARKET -> {
+                marketScreen.reload();
+                centrePanel.add(marketScreen);
+            }
+            case STADIUM -> {
+                stadiumScreen.reload();
+                centrePanel.add(stadiumScreen);
+            }
         }
 
         centrePanel.revalidate();
