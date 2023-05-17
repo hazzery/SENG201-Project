@@ -65,7 +65,7 @@ public class InitScreen extends JPanel {
             athlete.setNickname(nickName);
             selectedAthletes.add(athlete);
 
-            selectedAthletesShelf.addPanel(athlete);
+            selectedAthletesShelf.addPanel(athlete, "Remove", this::unselectAthlete);
         }
     }
 
@@ -180,12 +180,14 @@ public class InitScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Select", this::selectAthlete);
+        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), false);
+//        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Select", this::selectAthlete);
         buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Unselect", this::unselectAthlete);
+        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), true);
+//        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Unselect", this::unselectAthlete);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
         FooterPanel = new JPanel();

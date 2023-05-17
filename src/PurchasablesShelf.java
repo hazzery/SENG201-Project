@@ -4,11 +4,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PurchasablesShelf extends JPanel {
-    private final String buttonText;
-    private final ActionListener actionListener;
+    private String buttonText = null;
+    private ActionListener actionListener = null;
+    private boolean isOwned;
+
 
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
+    public PurchasablesShelf(Purchasable[] purchasables, boolean isOwned) {
+        this.isOwned = isOwned;
+
+        setBorder(marginBorder);
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        for (Purchasable purchasable : purchasables)
+            addPanel(purchasable);
+
+        setVisible(true);
+    }
 
     public PurchasablesShelf(Purchasable[] purchasables, String buttonText, ActionListener actionListener) {
         setBorder(marginBorder);
@@ -18,7 +30,7 @@ public class PurchasablesShelf extends JPanel {
         this.actionListener = actionListener;
 
         for (Purchasable purchasable : purchasables)
-            addPanel(purchasable);
+            addPanel(purchasable, buttonText, actionListener);
 
         setVisible(true);
     }
@@ -37,7 +49,20 @@ public class PurchasablesShelf extends JPanel {
 
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);
-        panel.addButton(buttonText, actionListener);
+
+        if (isOwned)
+            panel.withSellButton();
+        else
+            panel.withPurchaseButton();
+
+        add(panel);
+        revalidate();
+        repaint();
+    }
+
+    public void addPanel(Purchasable purchasable, String buttonText, ActionListener actionListener) {
+        PurchasablePanel panel = new PurchasablePanel(purchasable);
+        panel.withCustomButton(buttonText, actionListener);
         add(panel);
         revalidate();
         repaint();
@@ -51,8 +76,12 @@ public class PurchasablesShelf extends JPanel {
     public void reload(Purchasable[] purchasables) {
         removeAll();
         for (Purchasable purchasable : purchasables) {
-            if (purchasable != null)
-                addPanel(purchasable);
+            if (purchasable != null) {
+                if (buttonText != null)
+                    addPanel(purchasable, buttonText, actionListener);
+                else
+                    addPanel(purchasable);
+            }
         }
     }
 }

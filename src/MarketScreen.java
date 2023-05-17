@@ -37,7 +37,7 @@ public class MarketScreen extends GameScreenPanel {
         activeAthletesLabel = new JLabel("Athletes ");
         athletesWrapperPanel.add(activeAthletesLabel);
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Purchase", this::purchase);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, false);
         athletesWrapperPanel.add(athletesShelf);
 
         itemsWrapperPanel = new JPanel();
@@ -48,7 +48,7 @@ public class MarketScreen extends GameScreenPanel {
         itemsLabel = new JLabel("Items    ");
         itemsWrapperPanel.add(itemsLabel);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Purchase", this::purchase);
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, false);
         itemsWrapperPanel.add(itemsShelf);
 
         teamWrapperPanel = new JPanel();
@@ -59,7 +59,7 @@ public class MarketScreen extends GameScreenPanel {
         teamLabel = new JLabel("Inventory");
         teamWrapperPanel.add(teamLabel);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", this::sell);
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), true);
         GameManager.team.addActivesSubscriber(teamShelf);
         GameManager.team.addReservesSubscriber(teamShelf);
         teamWrapperPanel.add(teamShelf);

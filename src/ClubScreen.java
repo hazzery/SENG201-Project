@@ -102,7 +102,7 @@ public class ClubScreen extends GameScreenPanel {
         shelf.revalidate();
         shelf.repaint();
 
-        reservesShelf.addPanel(athlete);
+        reservesShelf.addPanel(athlete, "Activate", this::activateAthlete);
     }
 
     private void activateAthlete(ActionEvent event) {
@@ -126,7 +126,7 @@ public class ClubScreen extends GameScreenPanel {
             shelf.revalidate();
             shelf.repaint();
 
-            activesShelf.addPanel(athlete);
+            activesShelf.addPanel(athlete, "Reserve", this::reserveAthlete);
         }
     }
 
