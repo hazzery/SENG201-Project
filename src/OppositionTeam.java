@@ -1,54 +1,70 @@
-/*
- * UNTESTED CODE
- *
- * The idea around this code is to extend the already created
- * team class and to be able to scale stats based off of
- * difficulty and round number ect.
+import java.util.Scanner;
+import java.util.Stack;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+/**
+ * Class the models a Opposition team
  */
-
-
-import java.util.ArrayList;
-
 public class OppositionTeam {
-    private final String name;
-    static ArrayList<Athlete> oppositionAthletes = new ArrayList<>(4);
-    
-    public OppositionTeam(String name, ArrayList<Athlete> oppositionAthletes) {
-        this.name = name;
-        initializeOppositionAthletes();
-        OppositionTeam.oppositionAthletes = oppositionAthletes;
-    }
 
-    
-    public static int opp_num_min = 60;
-    public static int opp_num_max = 80;
+    private static int numberOfAthletes = 4;
 
     /**
-     * Creates a random opposition Athletes when initializeOppositionAthletes() is called upon
-     *  
+     * Creates the a {@link Athlete} array to be used for the opposition team
      */
-    public static void initializeOppositionAthletes() {
-        for (int i = 0; i < 4; i++) {
-            Athlete oppositionAthlete = new Athlete();
-            oppositionAthletes.add(oppositionAthlete);
-          }
-    }
+    static Athlete[] oppositionAthletes = createTeam();
+    static private boolean nameScannerIsInitialised = false;
+    static private Scanner nameScanner;
+    static private Stack<String> oppositionNames;
 
+    private static String name;
+    
+    
     /**
-	 * Gets the name of the team
-	 *
-	 * @return The team's name
-	 */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Gets the name of the opposition team
-     * @return the name of the opposition team
+     * Returns the name of the Opposition Team 
+     * Done by collecting a name from {@link OppositionNames.txt} through the {@link initOppositionNameReader()} method
+     * 
+     * @return the name of the Opposition Team
      */
-    public Athlete getOppAthlete(int index) {
-        return OppositionTeam.oppositionAthletes.get(index);
+    public static String getName() {
+        initOppositionNameReader();
+        name = oppositionNames.pop();
+        return name;
+    }
+
+
+    /**
+     * Collects a name from the OppositionNames.txt file and returns it
+     *
+     */
+    private static void initOppositionNameReader() {
+        if (nameScannerIsInitialised) return;
+
+        oppositionNames = new Stack<String>();
+        try {
+            File myObj = new File("Resources/OppositionNames.txt");
+            nameScanner = new Scanner(myObj);
+            while (nameScanner.hasNextLine()) {
+                oppositionNames.push(nameScanner.nextLine());
+            }
+            nameScanner.close();
+            nameScannerIsInitialised = true;
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates an array of athletes with randomised stats
+     */
+    public static Athlete[] createTeam() {
+        Athlete[] athletes = new Athlete[numberOfAthletes];
+        for (int i = 0; i < numberOfAthletes; i++) {
+            athletes[i] = new Athlete();
+        }
+        return athletes;
     }
 }
 
