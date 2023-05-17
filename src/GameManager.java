@@ -136,55 +136,45 @@ public class GameManager {
             items.add(new Item());
     }
 
-    /**
-     * Purchases the provided athlete if the player has enough money.
-     * Removes the athlete's contract price from the player's bank balance
-     * and adds the athlete to the player's team
-     * @param athlete the athlete to purchase
-     * @throws IllegalStateException if the player does not have enough money to purchase the athlete
-     */
-    public static void purchaseAthlete(Athlete athlete) throws IllegalStateException {
-        if (bankBalance < athlete.getContractPrice()) {
-            throw new IllegalStateException("Not enough money to purchase athlete");
-        }
-        bankBalance -= athlete.getContractPrice();
-        team.addAthlete(athlete, false);
-
-        WindowManager.gameScreen.updateTeamInfo();
-
-        for (PurchasablesShelf shelf : team.activesSubscribers)
-            shelf.addPanel(athlete);
-    }
-
-    public static void sellAthlete(Athlete athlete) {
-        bankBalance += athlete.getSellBackPrice();
-        team.removeAthlete(athlete);
-
-        WindowManager.gameScreen.updateTeamInfo();
-
-        for (PurchasablesShelf shelf : team.activesSubscribers)
-            shelf.removePanel(athlete);
-    }
-
-    /**
-     * Purchases the provided item if the player has enough money.
-     * Removes the item's contract price from the player's bank balance
-     * and adds the item to the player's items
-     * @param item the item to purchase
-     * @throws IllegalStateException if the player does not have enough money to purchase the item
-     */
-    public static void purchaseItem(Item item) throws IllegalArgumentException {
-        if (bankBalance < item.getContractPrice()) {
-            throw new IllegalStateException("Not enough money to purchase item");
-        }
-        bankBalance -= item.getContractPrice();
-        items.add(item);
-
-        WindowManager.gameScreen.updateTeamInfo();
-    }
-
     public static void useItem(Item item, Athlete athlete) {
         athlete.applyItem(item);
         items.remove(item);
+    }
+
+    /**
+     * Purchases the provided purchasable if the player has enough money.
+     * Removes the purchasable's contract price from the player's bank balance
+     * and adds the purchasable to the player's inventory
+     * @param purchasable the purchasable to purchase
+     * @throws IllegalStateException if the player does not have enough money to purchase the athlete
+     */
+    public static void purchase(Purchasable purchasable) throws IllegalStateException {
+        if (bankBalance < purchasable.getContractPrice())
+            throw new IllegalStateException("Insufficient money to make purchase");
+
+        bankBalance -= purchasable.getContractPrice();
+
+        if (purchasable instanceof Athlete athlete)
+            team.addAthlete(athlete, false);
+
+        else if (purchasable instanceof Item item)
+            items.add(item);
+
+        WindowManager.gameScreen.updateTeamInfo();
+    }
+
+    /**
+     * Sells the provided purchasable and adds the sell back price to the player's bank balance
+     * @param purchasable the purchasable to sell
+     */
+    public static void sell(Purchasable purchasable) {
+        bankBalance += purchasable.getSellBackPrice();
+        WindowManager.gameScreen.updateTeamInfo();
+
+        if (purchasable instanceof Athlete athlete)
+            team.removeAthlete(athlete);
+
+        else if (purchasable instanceof Item item)
+            items.remove(item);
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 public class PurchasablePanel extends JPanel {
     private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
     private final HashMap<String, JLabel> statLabels;
-    private Purchasable purchasable;
+    private final Purchasable purchasable;
 
     public PurchasablePanel(Purchasable purchasable) {
         this.purchasable = purchasable;

@@ -1,21 +1,24 @@
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.Arrays;
 
 public class MarketScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
   //protected JPanel contentPanel
-        private PurchasablesShelf athletesShelf;
-        private PurchasablesShelf itemsShelf;
-        private PurchasablesShelf teamShelf;
+        private JPanel athletesWrapperPanel;
+            private JLabel activeAthletesLabel;
+            private PurchasablesShelf athletesShelf;
+        private JPanel itemsWrapperPanel;
+            private JLabel itemsLabel;
+            private PurchasablesShelf itemsShelf;
+        private JPanel teamWrapperPanel;
+            private JLabel teamLabel;
+            private PurchasablesShelf teamShelf;
 
 
     private final int WEEKLY_POOL_SIZE = 5;
-//    private Athlete[] weeklyAthletePool =  new Athlete[WEEKLY_POOL_SIZE];
-//    private Item[] weeklyItemPool =  new Item[WEEKLY_POOL_SIZE];
     private Athlete[] weeklyAthletePool;
     private Item[] weeklyItemPool;
 
@@ -26,64 +29,82 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Purchase", this::purchaseAthlete);
-        contentPanel.add(athletesShelf);
+        athletesWrapperPanel = new JPanel();
+        athletesWrapperPanel.setBorder(marginBorder);
+        athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
+        contentPanel.add(athletesWrapperPanel);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Purchase", this::purchaseItem);
-        contentPanel.add(itemsShelf);
+        activeAthletesLabel = new JLabel("Athletes ");
+        athletesWrapperPanel.add(activeAthletesLabel);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", this::sellAthlete);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Purchase", this::purchase);
+        athletesWrapperPanel.add(athletesShelf);
+
+        itemsWrapperPanel = new JPanel();
+        itemsWrapperPanel.setBorder(marginBorder);
+        itemsWrapperPanel.setLayout(new BoxLayout(itemsWrapperPanel, BoxLayout.X_AXIS));
+        contentPanel.add(itemsWrapperPanel);
+
+        itemsLabel = new JLabel("Items    ");
+        itemsWrapperPanel.add(itemsLabel);
+
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Purchase", this::purchase);
+        itemsWrapperPanel.add(itemsShelf);
+
+        teamWrapperPanel = new JPanel();
+        teamWrapperPanel.setBorder(marginBorder);
+        teamWrapperPanel.setLayout(new BoxLayout(teamWrapperPanel, BoxLayout.X_AXIS));
+        contentPanel.add(teamWrapperPanel);
+
+        teamLabel = new JLabel("Inventory");
+        teamWrapperPanel.add(teamLabel);
+
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", this::sell);
         GameManager.team.addActivesSubscriber(teamShelf);
         GameManager.team.addReservesSubscriber(teamShelf);
-        contentPanel.add(teamShelf);
+        teamWrapperPanel.add(teamShelf);
     }
-
 
     public MarketScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.MARKET, gameScreen);
     }
 
-    private void purchaseItem(ActionEvent e) {
-        System.out.println("purchaseItem");
+    private void purchase(ActionEvent e)  {
+        System.out.println("purchase");
         PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
-        Item item = (Item) panel.getPurchasable();
+        Purchasable purchasable = panel.getPurchasable();
 
-        boolean success = false;
         try {
-            GameManager.purchaseItem(item);
-            success = true;
+            GameManager.purchase(purchasable);
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(this, error.getMessage());
+            return;
         }
 
-        if (success) {
-            PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-            shelf.remove(panel);
-            shelf.revalidate();
-            shelf.repaint();
+        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
+        shelf.remove(panel);
+        shelf.revalidate();
+        shelf.repaint();
+
+        for (int i = 0; i < weeklyAthletePool.length; i++) {
+            if (weeklyAthletePool[i] == purchasable) {
+                weeklyAthletePool[i] = null;
+                break;
+            }
         }
     }
 
-    private void purchaseAthlete(ActionEvent e)  {
-        System.out.println("purchaseAthlete");
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
+    private void sell(ActionEvent event) {
+        System.out.println("sell");
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
+        Purchasable purchasable = panel.getPurchasable();
 
-        try {
-            GameManager.purchaseAthlete(athlete);
-            panel.getParent().remove(panel);
-        } catch (IllegalStateException error) {
-            JOptionPane.showMessageDialog(this, error.getMessage());
-        }
-    }
+        GameManager.sell(purchasable);
 
-
-    private void sellAthlete(ActionEvent e) {
-        System.out.println("sellAthlete");
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
-
-        GameManager.sellAthlete(athlete);
+        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
+        shelf.remove(panel);
+        shelf.revalidate();
+        shelf.repaint();
     }
 
     public void updateWeeklyPool() {

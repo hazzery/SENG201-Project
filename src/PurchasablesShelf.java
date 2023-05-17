@@ -43,10 +43,16 @@ public class PurchasablesShelf extends JPanel {
         repaint();
     }
 
+    public void reload(ArrayList<? extends Purchasable> purchasables) {
+        reload(purchasables.toArray(new Purchasable[0]));
+    }
+
+
     public void reload(Purchasable[] purchasables) {
         removeAll();
         for (Purchasable purchasable : purchasables) {
-            addPanel(purchasable);
+            if (purchasable != null)
+                addPanel(purchasable);
         }
     }
 }

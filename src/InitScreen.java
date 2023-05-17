@@ -1,5 +1,6 @@
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
@@ -22,10 +23,12 @@ public class InitScreen extends JPanel {
     private JPanel athleteSelectionPanel;
         private JLabel selectAthletesLabel;
         private JPanel buttonsWrapperPanel;
-            private JPanel allAthleteButtonsPanel;
-                private JButton[] allAthleteButtons;
-            private JPanel selectedAthleteButtonsPanel;
-                private JButton[] selectedAthleteButtons;
+//            private JPanel allAthleteButtonsPanel;
+//                private JButton[] allAthleteButtons;
+//            private JPanel selectedAthleteButtonsPanel;
+//                private JButton[] selectedAthleteButtons;
+            private PurchasablesShelf selectableAthletesShelf;
+            private PurchasablesShelf selectedAthletesShelf;
     private JPanel FooterPanel;
         private JButton resetAthletesButton;
         private JButton acceptAthletesButton;
@@ -42,9 +45,12 @@ public class InitScreen extends JPanel {
 
     /**
      * Add an athlete to the selected athletes list and update the GUI
-     * @param athlete the athlete to add to the selected athletes list
+     * @param event The action event that triggered this method
      */
-    private void selectAthlete(Athlete athlete) {
+    private void selectAthlete(ActionEvent event) {
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getPurchasable();
+
         if (!selectedAthletes.contains(athlete)) {
             final int athleteIndex = selectedAthletes.size();
 
@@ -53,37 +59,28 @@ public class InitScreen extends JPanel {
                 GameManager.validateName(nickName, true);
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-                selectAthlete(athlete);
                 return;
             }
 
             athlete.setNickname(nickName);
             selectedAthletes.add(athlete);
 
-            selectedAthleteButtons[athleteIndex] = new JButton();
-            String athleteButtonText = HTMLString.multiLine(athlete.getName(), athlete.getNickname());
-            selectedAthleteButtons[athleteIndex].setText(athleteButtonText);
-            selectedAthleteButtonsPanel.add(selectedAthleteButtons[athleteIndex]);
-
-            selectedAthleteButtonsPanel.revalidate();
-            selectedAthleteButtonsPanel.repaint();
-
-            selectedAthleteButtons[athleteIndex].addActionListener(e -> unselectAthlete(athlete, athleteIndex));
+            selectedAthletesShelf.addPanel(athlete);
         }
     }
 
     /**
      * Remove an athlete from the selected athletes list and update the GUI
-     * @param athlete the athlete to remove from the selected athletes list
-     * @param athleteIndex the index of the athlete in the selected athletes list
+     * @param event The action event that triggered this method
      */
-    private void unselectAthlete(Athlete athlete, int athleteIndex) {
-        if (selectedAthletes.contains(athlete)) {
-            selectedAthletes.remove(athlete);
-            selectedAthleteButtonsPanel.remove(selectedAthleteButtons[athleteIndex]);
-            selectedAthleteButtonsPanel.revalidate();
-            selectedAthleteButtonsPanel.repaint();
-        }
+    private void unselectAthlete(ActionEvent event) {
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getPurchasable();
+
+        selectedAthletes.remove(athlete);
+        selectedAthletesShelf.remove(panel);
+        selectableAthletesShelf.revalidate();
+        selectableAthletesShelf.repaint();
     }
 
     /**
@@ -91,9 +88,9 @@ public class InitScreen extends JPanel {
      */
     private void resetAthletes() {
         selectedAthletes.clear();
-        selectedAthleteButtonsPanel.removeAll();
-        selectedAthleteButtonsPanel.revalidate();
-        selectedAthleteButtonsPanel.repaint();
+        selectedAthletesShelf.removeAll();
+        selectedAthletesShelf.revalidate();
+        selectedAthletesShelf.repaint();
     }
 
     /**
@@ -183,33 +180,13 @@ public class InitScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-
-        allAthleteButtonsPanel = new JPanel();
-        allAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        allAthleteButtonsPanel.setLayout(new GridLayout(2, 4, 0, 0));
-        buttonsWrapperPanel.add(allAthleteButtonsPanel);
+        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Select", this::selectAthlete);
+        buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        allAthleteButtons = new JButton[GameManager.NUM_ALL_ATHLETES];
-        for (int i = 0; i < allAthleteButtons.length; i++) {
-            allAthleteButtons[i] = new JButton();
-
-            String text = HTMLString.multiLine(GameManager.athletes.get(i).getName(), "lmao");
-//                    GameManager.athletes.get(i).getDescription());
-            allAthleteButtons[i].setText(text);
-
-            final int finalI = i;
-            allAthleteButtons[i].addActionListener(e -> this.selectAthlete(GameManager.athletes.get(finalI)));
-            allAthleteButtonsPanel.add(allAthleteButtons[i]);
-        }
-
-        selectedAthleteButtonsPanel = new JPanel();
-        selectedAthleteButtonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        selectedAthleteButtonsPanel.setLayout(new GridLayout(1, 8, 0, 0));
-        buttonsWrapperPanel.add(selectedAthleteButtonsPanel);
-
-        selectedAthleteButtons = new JButton[GameManager.NUM_ALL_ATHLETES];
+        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Unselect", this::unselectAthlete);
+        buttonsWrapperPanel.add(selectedAthletesShelf);
 
         FooterPanel = new JPanel();
         FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
@@ -226,8 +203,4 @@ public class InitScreen extends JPanel {
         acceptAthletesButton.addActionListener(e -> acceptTeam());
         FooterPanel.add(acceptAthletesButton);
     }
-
-//    teamNameText.getText()
-//    seasonLengthSlider.getValue()
-//    JOptionPane.showMessageDialog(frame, output)
 }
