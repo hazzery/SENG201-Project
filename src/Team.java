@@ -5,7 +5,7 @@ import java.util.stream.Stream;
  * Class the models a team
  */
 public class Team {
-    public static final int MIN_SIZE = 4;
+    public static final int TEAM_SIZE = 5;
     public static final int MAX_RESERVES = 5;
     private final String name;
     private final ArrayList<Athlete> actives;
@@ -17,13 +17,11 @@ public class Team {
 	 * Creates a team with the given name
      * 
      * @param name A name for the team
-     * @param athletes All athletes to be put in the team
 	 */
-    public Team(String name, ArrayList<Athlete> athletes) {
+    public Team(String name) {
         this.name = name;
-        this.actives = new ArrayList<>(athletes.size());
-        this.actives.addAll(athletes);
-        this.reserves = new ArrayList<>(5);
+        this.actives = new ArrayList<>(TEAM_SIZE);
+        this.reserves = new ArrayList<>(MAX_RESERVES);
     }
 
      /**
@@ -73,7 +71,7 @@ public class Team {
         return this.reserves.get(index);
     }
 
-    public boolean setActive(Athlete athlete) throws IllegalStateException {
+    public void setActive(Athlete athlete) throws IllegalStateException {
         if (reserves.contains(athlete)) {
             reserves.remove(athlete);
             actives.add(athlete);
@@ -81,7 +79,6 @@ public class Team {
         else {
             throw new IllegalStateException("Cannot activate an athlete that is not a reserve");
         }
-        return true;
     }
 
     public void setReserve(Athlete athlete) throws IllegalStateException {

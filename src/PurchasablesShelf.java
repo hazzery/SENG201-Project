@@ -2,23 +2,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class PurchasablesShelf extends JPanel {
-    private final String buttonText;
-    private final ActionListener actionListener;
+    private Function<Purchasable, String> getButtonText = null;
+    private ActionListener actionListener = null;
+    private boolean isOwned;
+
 
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
-
-    public PurchasablesShelf(Purchasable[] purchasables, String buttonText, ActionListener actionListener) {
+    public PurchasablesShelf(Purchasable[] purchasables, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
         setBorder(marginBorder);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        this.buttonText = buttonText;
+        this.getButtonText = getButtonText;
         this.actionListener = actionListener;
 
-        for (Purchasable purchasable : purchasables)
+        for (Purchasable purchasable : purchasables) {
             addPanel(purchasable);
+        }
 
         setVisible(true);
     }
@@ -37,7 +40,8 @@ public class PurchasablesShelf extends JPanel {
 
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);
-        panel.addButton(buttonText, actionListener);
+        String buttonText = getButtonText.apply((Purchasable) purchasable);
+        panel.withCustomButton(buttonText, actionListener);
         add(panel);
         revalidate();
         repaint();
@@ -51,8 +55,10 @@ public class PurchasablesShelf extends JPanel {
     public void reload(Purchasable[] purchasables) {
         removeAll();
         for (Purchasable purchasable : purchasables) {
-            if (purchasable != null)
+            if (purchasable != null) {
+                String buttonText = getButtonText.apply((Purchasable) purchasable);
                 addPanel(purchasable);
+            }
         }
     }
 }
