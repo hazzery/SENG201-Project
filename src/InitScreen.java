@@ -6,32 +6,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InitScreen extends JPanel {
-    private static final int BORDER_WIDTH = 0;
-
-    private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.MIN_SIZE);
-
+    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;
+        private JLabel headerLabel;
+    private JPanel mainPanel;
         private JPanel teamNamePanel;
             private JLabel enterTeamNameLabel;
             private JTextField teamNameText;
         private JPanel seasonLengthPanel;
             private JLabel enterSeasonLengthLabel;
             private JSlider seasonLengthSlider;
-        private JCheckBox difficultyButton;
-    private JPanel athleteSelectionPanel;
-        private JLabel selectAthletesLabel;
-        private JPanel buttonsWrapperPanel;
-//            private JPanel allAthleteButtonsPanel;
-//                private JButton[] allAthleteButtons;
-//            private JPanel selectedAthleteButtonsPanel;
-//                private JButton[] selectedAthleteButtons;
-            private PurchasablesShelf selectableAthletesShelf;
-            private PurchasablesShelf selectedAthletesShelf;
-    private JPanel FooterPanel;
-        private JButton resetAthletesButton;
-        private JButton acceptAthletesButton;
+        private JPanel difficultyPanel;
+            private JCheckBox difficultyButton;
+    private JPanel footerPanel;
+        private JButton confirmButton;
+        private JButton cancelButton;
+
 
 
 
@@ -43,64 +35,11 @@ public class InitScreen extends JPanel {
         setVisible(true);
     }
 
-    /**
-     * Add an athlete to the selected athletes list and update the GUI
-     * @param event The action event that triggered this method
-     */
-    private void selectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
-
-        if (!selectedAthletes.contains(athlete)) {
-            final int athleteIndex = selectedAthletes.size();
-
-            String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
-            try {
-                GameManager.validateName(nickName, true);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-                return;
-            }
-
-            athlete.setNickname(nickName);
-            selectedAthletes.add(athlete);
-
-            selectedAthletesShelf.addPanel(athlete);
-        }
-    }
-
-    /**
-     * Remove an athlete from the selected athletes list and update the GUI
-     * @param event The action event that triggered this method
-     */
-    private void unselectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
-
-        selectedAthletes.remove(athlete);
-        selectedAthletesShelf.remove(panel);
-        selectableAthletesShelf.revalidate();
-        selectableAthletesShelf.repaint();
-    }
-
-    /**
-     * Remove all athletes from the selected athletes list and update the GUI
-     */
-    private void resetAthletes() {
-        selectedAthletes.clear();
-        selectedAthletesShelf.removeAll();
-        selectedAthletesShelf.revalidate();
-        selectedAthletesShelf.repaint();
-    }
-
-    /**
-     * Confirm the selected athletes and move to the next screen
-     */
-    private void acceptTeam() {
+    public void confirm() {
         String teamName = teamNameText.getText();
 
         try {
-            GameManager.validateName(teamName, false);
+            Utilities.validateName(teamName, false);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             return;
@@ -108,15 +47,13 @@ public class InitScreen extends JPanel {
 
         int seasonLength = seasonLengthSlider.getValue();
 
-        if (selectedAthletes.size() < Team.MIN_SIZE) {
-            JOptionPane.showMessageDialog(this, "You must select at least " + Team.MIN_SIZE + " athletes");
-            return;
-        }
-
         boolean hardMode = difficultyButton.isSelected();
 
-        GameManager.startGame(teamName, seasonLength, selectedAthletes, hardMode);
+        GameManager.setConfiguration(teamName, seasonLength, hardMode);
+        WindowManager.showTeamSelection();
     }
+
+
 
     /**
      * Initialize the contents of the frame.
@@ -126,14 +63,23 @@ public class InitScreen extends JPanel {
         this.setBorder(new EmptyBorder(75, 75, 75, 75));
 
         headerPanel = new JPanel();
-        headerPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        headerPanel.setBorder(marginBorder);
         headerPanel.setLayout(new GridLayout(1, 2, 0, 0));
         this.add(headerPanel, BorderLayout.NORTH);
 
+        headerLabel = new JLabel();
+        headerLabel.setText("Welcome to Cool Ski Game!");
+        headerPanel.add(headerLabel);
+
+        mainPanel = new JPanel();
+        mainPanel.setBorder(marginBorder);
+        mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
+        this.add(mainPanel, BorderLayout.CENTER);
+
         teamNamePanel = new JPanel();
-        teamNamePanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        teamNamePanel.setBorder(marginBorder);
         teamNamePanel.setLayout(new BoxLayout(teamNamePanel, BoxLayout.X_AXIS));
-        headerPanel.add(teamNamePanel);
+        mainPanel.add(teamNamePanel);
 
         enterTeamNameLabel = new JLabel();
         enterTeamNameLabel.setText("Enter team name:");
@@ -144,9 +90,9 @@ public class InitScreen extends JPanel {
         teamNamePanel.add(teamNameText);
 
         seasonLengthPanel = new JPanel();
-        seasonLengthPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
+        seasonLengthPanel.setBorder(marginBorder);
         seasonLengthPanel.setLayout(new BoxLayout(seasonLengthPanel, BoxLayout.X_AXIS));
-        headerPanel.add(seasonLengthPanel);
+        mainPanel.add(seasonLengthPanel);
 
         enterSeasonLengthLabel = new JLabel();
         enterSeasonLengthLabel.setText("Choose season length in weeks:");
@@ -163,44 +109,21 @@ public class InitScreen extends JPanel {
 
         difficultyButton = new JCheckBox();
         difficultyButton.setText("Hard Mode");
-        seasonLengthPanel.add(difficultyButton);
+        mainPanel.add(difficultyButton);
 
+        footerPanel = new JPanel();
+        footerPanel.setBorder(marginBorder);
+        footerPanel.setLayout(new GridLayout(1, 0, 0, 0));
+        this.add(footerPanel, BorderLayout.SOUTH);
 
-        athleteSelectionPanel = new JPanel();
-        athleteSelectionPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        athleteSelectionPanel.setLayout(new BorderLayout(0, 0));
-        this.add(athleteSelectionPanel, BorderLayout.CENTER);
+        cancelButton = new JButton();
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(e -> {});
+        footerPanel.add(cancelButton);
 
-        selectAthletesLabel = new JLabel();
-        selectAthletesLabel.setText("Select athletes from the below options:");
-        athleteSelectionPanel.add(selectAthletesLabel, BorderLayout.NORTH);
-
-        buttonsWrapperPanel = new JPanel();
-        buttonsWrapperPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
-        athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
-
-        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Select", this::selectAthlete);
-        buttonsWrapperPanel.add(selectableAthletesShelf);
-
-        buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
-
-        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Unselect", this::unselectAthlete);
-        buttonsWrapperPanel.add(selectedAthletesShelf);
-
-        FooterPanel = new JPanel();
-        FooterPanel.setBorder(new LineBorder(new Color(0, 0, 0), BORDER_WIDTH));
-        FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        this.add(FooterPanel, BorderLayout.SOUTH);
-
-        resetAthletesButton = new JButton();
-        resetAthletesButton.setText("Reset team");
-        resetAthletesButton.addActionListener(e -> resetAthletes());
-        FooterPanel.add(resetAthletesButton);
-
-        acceptAthletesButton = new JButton();
-        acceptAthletesButton.setText("Accept team and continue");
-        acceptAthletesButton.addActionListener(e -> acceptTeam());
-        FooterPanel.add(acceptAthletesButton);
+        confirmButton = new JButton();
+        confirmButton.setText("Confirm");
+        confirmButton.addActionListener(e -> confirm());
+        footerPanel.add(confirmButton);
     }
 }

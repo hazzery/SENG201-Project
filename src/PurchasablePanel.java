@@ -9,6 +9,8 @@ public class PurchasablePanel extends JPanel {
     private final HashMap<String, JLabel> statLabels;
     private final Purchasable purchasable;
 
+    private boolean hasButton = false;
+
     public PurchasablePanel(Purchasable purchasable) {
         this.purchasable = purchasable;
 
@@ -33,7 +35,10 @@ public class PurchasablePanel extends JPanel {
         }
     }
 
-    public void addButton(String buttonText, ActionListener actionListener) {
+    public void withCustomButton(String buttonText, ActionListener actionListener) throws IllegalStateException {
+        if (hasButton)
+            throw new IllegalStateException("This panel already has a purchase button.");
+
         JButton button = new JButton(buttonText);
         button.addActionListener(actionListener);
         this.add(button);

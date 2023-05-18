@@ -5,6 +5,7 @@ public class WindowManager {
     private static JFrame mainWindow;
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
+    private static TeamSelectScreen teamSelectScreen;
     static GameScreen gameScreen;
 
     /**
@@ -47,6 +48,11 @@ public class WindowManager {
     public static void showInitScreen() {
         initScreen = new InitScreen();
         setScreen(initScreen);
+    }
+
+    public static void showTeamSelection() {
+        teamSelectScreen = new TeamSelectScreen();
+        setScreen(teamSelectScreen);
     }
 
     /**

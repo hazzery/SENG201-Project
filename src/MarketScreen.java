@@ -37,7 +37,7 @@ public class MarketScreen extends GameScreenPanel {
         activeAthletesLabel = new JLabel("Athletes ");
         athletesWrapperPanel.add(activeAthletesLabel);
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Purchase", this::purchase);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, Utilities::purchaseButtonText, this::purchase);
         athletesWrapperPanel.add(athletesShelf);
 
         itemsWrapperPanel = new JPanel();
@@ -48,7 +48,7 @@ public class MarketScreen extends GameScreenPanel {
         itemsLabel = new JLabel("Items    ");
         itemsWrapperPanel.add(itemsLabel);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Purchase", this::purchase);
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, Utilities::purchaseButtonText, this::purchase);
         itemsWrapperPanel.add(itemsShelf);
 
         teamWrapperPanel = new JPanel();
@@ -59,19 +59,24 @@ public class MarketScreen extends GameScreenPanel {
         teamLabel = new JLabel("Inventory");
         teamWrapperPanel.add(teamLabel);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Sell", this::sell);
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), Utilities::sellButtonText, this::sell);
         GameManager.team.addActivesSubscriber(teamShelf);
         GameManager.team.addReservesSubscriber(teamShelf);
         teamWrapperPanel.add(teamShelf);
+
     }
 
     public MarketScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.MARKET, gameScreen);
     }
 
-    private void purchase(ActionEvent e)  {
+    /**
+     * Event handler to make a market purchase
+     * @param event the event that triggered the purchase
+     */
+    private void purchase(ActionEvent event)  {
         System.out.println("purchase");
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) e.getSource()).getParent();
+        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Purchasable purchasable = panel.getPurchasable();
 
         try {
@@ -86,10 +91,21 @@ public class MarketScreen extends GameScreenPanel {
         shelf.revalidate();
         shelf.repaint();
 
-        for (int i = 0; i < weeklyAthletePool.length; i++) {
-            if (weeklyAthletePool[i] == purchasable) {
-                weeklyAthletePool[i] = null;
-                break;
+        // Delete the purchasable from the weekly pool
+        if (purchasable instanceof Athlete athlete) {
+            for (int i = 0; i < weeklyAthletePool.length; i++) {
+                if (weeklyAthletePool[i] == athlete) {
+                    weeklyAthletePool[i] = null;
+                    break;
+                }
+            }
+        }
+        else if (purchasable instanceof Item item) {
+            for (int i = 0; i < weeklyItemPool.length; i++) {
+                if (weeklyItemPool[i] == item) {
+                    weeklyItemPool[i] = null;
+                    break;
+                }
             }
         }
     }

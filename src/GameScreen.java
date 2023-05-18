@@ -44,7 +44,7 @@ public class GameScreen extends JPanel {
     }
 
     void updateTeamInfo() {
-        teamNameLabel.setText(GameManager.getTeamName());
+        teamNameLabel.setText(GameManager.team.getName());
         bankBalanceLabel.setText("$" + GameManager.getBankBalance());
         teamInfoPanel.revalidate();
         teamInfoPanel.repaint();
@@ -106,7 +106,7 @@ public class GameScreen extends JPanel {
         headerPanel.add(teamInfoPanel);
 
         teamNameLabel = new JLabel();
-        teamNameLabel.setText(GameManager.getTeamName());
+        teamNameLabel.setText(GameManager.team.getName());
         teamInfoPanel.add(teamNameLabel);
 
         teamInfoPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(20, 0)));
@@ -155,6 +155,7 @@ public class GameScreen extends JPanel {
         GameManager.initializeAthletes();
         GameManager.initializeItems();
         WindowManager.initializeMainWindow();
-        GameManager.startGame("HarryTeam", 10, GameManager.athletes, false);
+        GameManager.setConfiguration("HarrysTeam", 12, false);
+        GameManager.startGame(GameManager.athletes);
     }
 }
