@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ClubScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
@@ -36,7 +35,7 @@ public class ClubScreen extends GameScreenPanel {
         activeAthletesLabel.setOpaque(true);
         athletesWrapperPanel.add(activeAthletesLabel);
 
-        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Reserve", this::reserveAthlete);
+        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), p->"Reserve", this::reserveAthlete);
         GameManager.team.addActivesSubscriber(activesShelf);
         athletesWrapperPanel.add(activesShelf);
 
@@ -48,7 +47,7 @@ public class ClubScreen extends GameScreenPanel {
         reservedAthletesLabel = new JLabel("Reserved");
         reservesWrapperPanel.add(reservedAthletesLabel);
 
-        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Activate", this::activateAthlete);
+        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), p->"Activate", this::activateAthlete);
         GameManager.team.addReservesSubscriber(reservesShelf);
         reservesWrapperPanel.add(reservesShelf);
 
@@ -60,7 +59,7 @@ public class ClubScreen extends GameScreenPanel {
         itemsLabel = new JLabel("Inventory");
         itemsWrapperPanel.add(itemsLabel);
 
-        itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Use", this::selectAthleteForItem);
+        itemsShelf = new PurchasablesShelf(GameManager.getItems(), p->"Use", this::selectAthleteForItem);
         itemsWrapperPanel.add(itemsShelf);
     }
 
@@ -102,7 +101,7 @@ public class ClubScreen extends GameScreenPanel {
         shelf.revalidate();
         shelf.repaint();
 
-        reservesShelf.addPanel(athlete, "Activate", this::activateAthlete);
+        reservesShelf.addPanel(athlete);
     }
 
     private void activateAthlete(ActionEvent event) {
@@ -111,23 +110,21 @@ public class ClubScreen extends GameScreenPanel {
 
         System.out.println("Activating " + athlete.getName());
 
-        boolean successfullyActivated = false;
 
         try {
-            successfullyActivated = GameManager.team.setActive(athlete);
+            GameManager.team.setActive(athlete);
             System.out.println("Successfully reserved " + athlete.getName());
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(null, error.getMessage());
+            return;
         }
 
-        if (successfullyActivated) {
-            PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-            shelf.remove(panel);
-            shelf.revalidate();
-            shelf.repaint();
+        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
+        shelf.remove(panel);
+        shelf.revalidate();
+        shelf.repaint();
 
-            activesShelf.addPanel(athlete, "Reserve", this::reserveAthlete);
-        }
+        activesShelf.addPanel(athlete);
     }
 
     private void selectAthleteForItem(ActionEvent event) {

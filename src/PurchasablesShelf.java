@@ -2,35 +2,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class PurchasablesShelf extends JPanel {
-    private String buttonText = null;
+    private Function<Purchasable, String> getButtonText = null;
     private ActionListener actionListener = null;
     private boolean isOwned;
 
 
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
-    public PurchasablesShelf(Purchasable[] purchasables, boolean isOwned) {
-        this.isOwned = isOwned;
-
-        setBorder(marginBorder);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        for (Purchasable purchasable : purchasables)
-            addPanel(purchasable);
-
-        setVisible(true);
-    }
-
-    public PurchasablesShelf(Purchasable[] purchasables, String buttonText, ActionListener actionListener) {
+    public PurchasablesShelf(Purchasable[] purchasables, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
         setBorder(marginBorder);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        this.buttonText = buttonText;
+        this.getButtonText = getButtonText;
         this.actionListener = actionListener;
 
-        for (Purchasable purchasable : purchasables)
-            addPanel(purchasable, buttonText, actionListener);
+        for (Purchasable purchasable : purchasables) {
+            addPanel(purchasable);
+        }
 
         setVisible(true);
     }
@@ -49,19 +40,7 @@ public class PurchasablesShelf extends JPanel {
 
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);
-
-        if (isOwned)
-            panel.withSellButton();
-        else
-            panel.withPurchaseButton();
-
-        add(panel);
-        revalidate();
-        repaint();
-    }
-
-    public void addPanel(Purchasable purchasable, String buttonText, ActionListener actionListener) {
-        PurchasablePanel panel = new PurchasablePanel(purchasable);
+        String buttonText = getButtonText.apply((Purchasable) purchasable);
         panel.withCustomButton(buttonText, actionListener);
         add(panel);
         revalidate();
@@ -77,10 +56,8 @@ public class PurchasablesShelf extends JPanel {
         removeAll();
         for (Purchasable purchasable : purchasables) {
             if (purchasable != null) {
-                if (buttonText != null)
-                    addPanel(purchasable, buttonText, actionListener);
-                else
-                    addPanel(purchasable);
+                String buttonText = getButtonText.apply((Purchasable) purchasable);
+                addPanel(purchasable);
             }
         }
     }

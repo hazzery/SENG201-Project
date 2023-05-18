@@ -35,40 +35,6 @@ public class PurchasablePanel extends JPanel {
         }
     }
 
-    public void withPurchaseButton() throws IllegalStateException {
-        if (hasButton)
-            throw new IllegalStateException("This panel already has a purchase button.");
-
-        String buttonText = HTMLString.multiLine("Purchase", String.valueOf(purchasable.getContractPrice()));
-        JButton button = new JButton(buttonText);
-        button.addActionListener(e -> {
-            try {
-                GameManager.purchase(purchasable);
-            }
-            catch (IllegalStateException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-                return;
-            }
-            getParent().remove(this);
-        });
-        hasButton = true;
-        this.add(button);
-    }
-
-    public void withSellButton() throws IllegalStateException {
-        if (hasButton)
-            throw new IllegalStateException("This panel already has a purchase button.");
-
-        String buttonText = HTMLString.multiLine("Sell", String.valueOf(purchasable.getSellBackPrice()));
-        JButton button = new JButton(buttonText);
-        button.addActionListener(e -> {
-            GameManager.sell(purchasable);
-            getParent().remove(this);
-        });
-        hasButton = true;
-        this.add(button);
-    }
-
     public void withCustomButton(String buttonText, ActionListener actionListener) throws IllegalStateException {
         if (hasButton)
             throw new IllegalStateException("This panel already has a purchase button.");
