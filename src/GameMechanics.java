@@ -13,7 +13,6 @@ public class GameMechanics<ActionListener> {
     private static ArrayList<Athlete> oppositionAthletes;
     private static ArrayList<Athlete> athleteList;
 
-
     public static int indexer ;
 
     public static int athIndex;
