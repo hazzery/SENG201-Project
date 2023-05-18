@@ -36,16 +36,9 @@ public class GameManager {
     //Need to discuss implementation of the method,
     //The method will pull a name for a team as well as a list of athletes for the team
     //Athlete list is complete and are of the Athlete Objects.
-    public static void initializeOpposition() {
-        String name = OppositionTeam.getName();
-        Athlete[] list = OppositionTeam.createTeam();
-
-        //Used for testing with main(String[] args) code calling initializeOpposition()
-        //This works, so name and list are valid things, however will need to be renamed 
-        System.out.println("Opposition Team: " + name);
-        for (Athlete athlete : list) {
-            System.out.println(athlete);
-        }
+    public static ArrayList<Athlete> getOpposition() {     
+        ArrayList<Athlete> oppositionTeam = OppositionTeam.createTeam();        
+        return oppositionTeam;  
     }
 
     /**

@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Class the models a Opposition team
@@ -10,10 +11,8 @@ public class OppositionTeam {
 
     private static int numberOfAthletes = 4;
 
-    /**
-     * Creates the a {@link Athlete} array to be used for the opposition team
-     */
-    static Athlete[] oppositionAthletes = createTeam();
+    
+    static ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>(numberOfAthletes);
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
     static private Stack<String> oppositionNames;
@@ -32,7 +31,6 @@ public class OppositionTeam {
         name = oppositionNames.pop();
         return name;
     }
-
 
     /**
      * Collects a name from the OppositionNames.txt file and returns it
@@ -59,12 +57,20 @@ public class OppositionTeam {
     /**
      * Creates an array of athletes with randomised stats
      */
-    public static Athlete[] createTeam() {
-        Athlete[] athletes = new Athlete[numberOfAthletes];
+    public static ArrayList<Athlete> createTeam() {
         for (int i = 0; i < numberOfAthletes; i++) {
-            athletes[i] = new Athlete();
+            oppositionAthletes.add(new Athlete());
         }
-        return athletes;
+        return oppositionAthletes;
     }
+
+    public static String size() {
+        return oppositionAthletes.size() + "";
+    }
+
+    public String getOppositionAthletes() {
+        return null;
+    }
+
 }
 
