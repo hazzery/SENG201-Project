@@ -17,7 +17,7 @@ public class Athlete implements Purchasable {
     private int stamina;
     private int offence;
     private int defence;
-    private int current_health;
+    public int current_health;
 
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
