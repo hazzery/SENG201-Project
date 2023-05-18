@@ -11,7 +11,7 @@ public class Run {
             athleteList.add(new Athlete());
         }
         
-        Team team = new Team("Team", athleteList);
+        Team team = new Team("Team");
         OppositionTeam oppositionTeam = new OppositionTeam();
         GameManager gameManager = new GameManager();
         GameManager.initializeAthletes();
@@ -24,5 +24,13 @@ public class Run {
         int currentRoundTest = 0;
         System.out.println("PLAY GAME");
         GameMechanics gameMechanics = new GameMechanics(currentRoundTest, athleteList, oppositionAthletes);
+
+        for (int i = 0; i < athleteList.size(); i++){
+            System.out.println(athleteList.get(i).getCurrentHealth());
+        }
+        System.out.println("OPPOSITION");
+        for (int i = 0; i < oppositionAthletes.size(); i++){
+            System.out.println(oppositionAthletes.get(i).getCurrentHealth());
+        }
     }
 }

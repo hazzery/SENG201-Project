@@ -20,31 +20,84 @@ public class GameMechanics<ActionListener> {
     public static int oppIndex;
     public static int currentRound;
 
+    public static int attackType;
+
     public static boolean isPlayerTurn = true; 
     public static boolean isGameOver = false;
+    public static boolean isGameHard = false;
 
     GameMechanics(int currentRound, ArrayList<Athlete> athleteList, ArrayList<Athlete>oppositionAthletes){
         this.oppositionAthletes = oppositionAthletes;
         this.athleteList = athleteList;
         this.currentRound = currentRound;
-        playRound();
+        playMatch();
+    }
+
+    public static double gameHard(){
+        if (isGameHard == true){
+            return 1.5;
+        } 
+        return 1;
     }
 
     //This code is scuffed for testing purposes
-    public static void playRound(){
+    public static void playMatch(){
         if (isGameOver == false){
+
+            
+            //below is testing code to test for functionality
             for (int i = 0; i < 30; i++){
                 endGameCondition();
                 if (isGameOver == true){
                     break;
                 }
                 playTurn();
+                endGameCondition();
             }
         } else {
             System.out.println("Game Over");
         }    
     }
 
+    public static int attackType(){
+        
+        //In GUI a player will click a button which will call attackType with the index of button pressed
+        //0: light attack, 1: Heavy Attack, 2:Heal
+
+        return 0;
+    }
+
+
+    public static void playTurn(){
+        if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
+            
+            //Testing code
+            System.out.println();
+            System.out.println("Athlete " + athIndex + " attacks");
+            System.out.println("Opposition " + oppIndex + " has " + oppositionAthletes.get(oppIndex).getCurrentHealth() + " health");
+            //Testing code
+
+            attackType = attackType();
+            if (attackType == 0){
+                double damage = attackLight(athIndex, oppIndex);
+                updateOpposition(damage * gameHard());
+            } else if (attackType == 1){
+                double damage = attackHeavy(athIndex, oppIndex);
+                updateOpposition(damage * gameHard());
+            } else if (attackType == 2){
+                double damage = heal(athIndex);
+                updateOpposition(damage);
+            }
+            
+            
+        } else {
+            oppIndex++;
+            playTurn();
+        }
+        oppositionPlayTurn();
+    }
+
+    
     public static void endGameCondition(){
         boolean deadAthletes = athleteList.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
         boolean deadOpposition = oppositionAthletes.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
@@ -55,34 +108,9 @@ public class GameMechanics<ActionListener> {
             } else {
                 System.out.println("Athletes Win");
             }
-            
         }
-        
-        
-
     }
 
-    public static void playTurn(){
-        if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
-            System.out.println();
-            
-            // code which will scan for attack type then call the appropriate attack
-            // ScannerCODE to find which attack is used, then calls attackOpposition(AttackType attackType)
-            System.out.println("Athlete " + athIndex + " attacks");
-            double damage = attackLight(athIndex, oppIndex);
-            updateOpposition(damage);     
-            
-        } else {
-            oppIndex++;
-            playTurn();
-        }
-        oppositionPlayTurn();
-    }
-
-    /**
-     * 
-     * @param damage
-     */
     public static void updateOpposition(double damage){
         if (damage >= 0){
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage");
@@ -107,45 +135,43 @@ public class GameMechanics<ActionListener> {
 
     public static void oppositionPlayTurn(){ 
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
+
+            //Testing code
             System.out.println();  
             System.out.println("Opposition " + oppIndex + " attacks");
+            System.out.println("Athlete " + athIndex + " has " + athleteList.get(athIndex).getCurrentHealth() + " health");
+            //Testing code
+
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
 
-            if (oppositionAttack < 25){
+            
+            if (oppositionAttack < 35){
                 double damage = attackLight(oppIndex, athIndex);
-                updateAthlete(damage);
+                updateAthlete(damage * gameHard());
 
-            } else if (oppositionAttack >= 25 && oppositionAttack < 40){
+            } else if (oppositionAttack >= 35 && oppositionAttack < 40){
                 double damage = attackHeavy(oppIndex, athIndex);
-                updateAthlete(damage);
+                updateAthlete(damage * gameHard());
 
             } else {
                 double damage =  heal(oppIndex);
-                updateAthlete(damage);
+                updateAthlete(damage * gameHard());
             }
         } else {
             athIndex++;
             oppositionPlayTurn();
         }
+        playTurn();
     }
 
-    /**
-     * 
-     * @param i index of the attacking athlete in a team
-     * @param j index of the attacked athlete in the opposite team
-     */
+    
     public static double attackLight(int i, int j){
         double factor1 = athleteList.get(i).getStamina() / 15;
         double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence())+1;
         double factor3 = 1 + (100 - athleteList.get(j).getDefence())/10;
         return (factor1 * factor2 *  factor3 + ThreadLocalRandom.current().nextInt(10, 20));
     }
-
-    /**
-     * 
-     * @param i index of the attacking athlete in a team
-     * @param j index of the attacked athlete in the opposite team
-     */
+   
     public static double attackHeavy(int i, int j){
         double factorA = (athleteList.get(i).getStamina()/10);
         double factorB = (athleteList.get(i).getOffence() / athleteList.get(j).getDefence());
@@ -153,11 +179,6 @@ public class GameMechanics<ActionListener> {
         return (factorA * factorB * factorC);
     }   
 
-
-    /**
-     * 
-     * @param i index of the affected athlete in a team
-     */
     public static double heal(int i){
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
