@@ -4,6 +4,7 @@
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.JOptionPane;
 
 public class GameMechanics<ActionListener> {
 
@@ -31,7 +32,7 @@ public class GameMechanics<ActionListener> {
         this.oppositionAthletes = oppositionAthletes;
         this.athleteList = athleteList;
         this.currentRound = currentRound;
-        playMatch();
+        playCMD();
     }
 
     public static double gameHard(){
@@ -42,46 +43,72 @@ public class GameMechanics<ActionListener> {
     }
 
     //This code is scuffed for testing purposes
-    public static void playMatch(){
-        if (isGameOver == false){
-            isNextTurnAble = false;
-            //below is testing code to test for functionality
-            for (int i = 0; i < 30; i++){
-                endGameCondition();
-                if (isGameOver == true){
-                    break;
-                }
-                playTurn();
-                endGameCondition();
-            }
-        } else {
-            System.out.println("Game Over");
-        }    
-    }
+    // public static void playMatch(){
+    //     if (isGameOver == false){
+    //         isNextTurnAble = false;
+    //         //below is testing code to test for functionality
+    //         for (int i = 0; i < 30; i++){
+    //             endGameCondition();
+    //             if (isGameOver == true){
+    //                 break;
+    //             }
+    //             playTurn(attackType);
+    //             endGameCondition();
+    //         }
+    //     } else {
+    //         System.out.println("Game Over");
+    //     }    
+    // }
 
-    public static void endTurn(){
-        //method called at the end of a turn between athlete n opposition
-        isNextTurnAble = true;
-    }
+    public static void playCMD() {
+        // Display the popup box with three buttons
+        int result = JOptionPane.showOptionDialog(null,
+                "Choose an Attack:",
+                "ATTACK!!!!",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new String[]{"Light Attack", "Heavy Attack", "Heal"},
+                null);
 
-
-
-    public static int attackType(){
-        //In GUI a player will click a button which will call attackType with the index of button pressed
-        //0: light attack, 1: Heavy Attack, 2:Heal
-        if (attackType == 0){
-            return 0;
-        } else if (attackType == 1){
-            return 1;
-        } else if (attackType == 2){
-            return 2;
+        // Check which button was clicked and perform corresponding action
+        switch (result) {
+            case 0:
+                playTurn(0);
+                break;
+            case 1:
+                playTurn(1);
+                break;
+            case 2:
+                playTurn(2);
+                break;
         }
-        return 0;
-
     }
 
+    // public static void endTurn(){
+    //     //method called at the end of a turn between athlete n opposition
+    //     isNextTurnAble = true;
+    // }
 
-    public static void playTurn(){
+
+
+    // public static int attackType(){
+    //     //In GUI a player will click a button which will call attackType with the index of button pressed
+    //     //0: light attack, 1: Heavy Attack, 2:Heal
+    //     if (attackType == 0){
+    //         return 0;
+    //     } else if (attackType == 1){
+    //         return 1;
+    //     } else if (attackType == 2){
+    //         return 2;
+    //     }
+    //     return 0;
+
+    // }
+
+
+    public static void playTurn(int attackType){
+        if (oppIndex + 1 >= oppositionAthletes.size()){return;}
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
             
             //Testing code
@@ -90,7 +117,7 @@ public class GameMechanics<ActionListener> {
             System.out.println("Opposition " + oppIndex + " has " + oppositionAthletes.get(oppIndex).getCurrentHealth() + " health");
             //Testing code
 
-            attackType = attackType();
+            //attackType = attackType();
             if (attackType == 0){
                 double damage = attackLight(athIndex, oppIndex);
                 updateOpposition(damage * gameHard());
@@ -103,8 +130,9 @@ public class GameMechanics<ActionListener> {
             }
         } else {
             oppIndex++;
-            playTurn();
+            playTurn(attackType);
         }
+        endGameCondition();
         oppositionPlayTurn();
     }
     
@@ -144,6 +172,7 @@ public class GameMechanics<ActionListener> {
     }
 
     public static void oppositionPlayTurn(){ 
+        if (athIndex >= athleteList.size()){return;}
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
 
             //Testing code
@@ -169,24 +198,28 @@ public class GameMechanics<ActionListener> {
             athIndex++;
             oppositionPlayTurn();
         }
-        endTurn();
+        endGameCondition();
+        playCMD();
     }
     
     public static double attackLight(int i, int j){
+        System.out.println("Light Attack");
         double factor1 = athleteList.get(i).getStamina() / 15;
-        double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence())+1;
+        double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence()+1)+1;
         double factor3 = 1 + (100 - athleteList.get(j).getDefence())/10;
         return (factor1 * factor2 *  factor3 + ThreadLocalRandom.current().nextInt(10, 20));
     }
    
     public static double attackHeavy(int i, int j){
-        double factorA = (athleteList.get(i).getStamina()/10);
-        double factorB = (athleteList.get(i).getOffence() / athleteList.get(j).getDefence());
+        System.out.println("Heavy Attack");
+        double factorA = (athleteList.get(i).getStamina()/10) + 1;
+        double factorB = (athleteList.get(i).getOffence() / athleteList.get(j).getDefence()) + 1;
         double factorC = ThreadLocalRandom.current().nextDouble(0.1, 3) * 7;
         return (factorA * factorB * factorC);
     }   
 
     public static double heal(int i){
+        System.out.println("Heal Attack");
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
     }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.JOptionPane;
 
 /**
  * A class that represents a Random Event
@@ -15,7 +16,6 @@ public class RandomEvent {
     public RandomEvent() {
         randomEvent();
     }
-
 
     public static void randomEvent() {
         int chance = ThreadLocalRandom.current().nextInt(0, 15);
