@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.JOptionPane;
 
 /**
  * A class that represents a Random Event
@@ -15,7 +16,6 @@ public class RandomEvent {
     public RandomEvent() {
         randomEvent();
     }
-
 
     public static void randomEvent() {
         int chance = ThreadLocalRandom.current().nextInt(0, 15);
@@ -35,13 +35,13 @@ public class RandomEvent {
         int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
         int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
         if (statIndex == 0) {
-            team.getActive(athleteIndex).stamina += statIncrease;
+            team.actives.get(athleteIndex).stamina += statIncrease;
         } else if (statIndex == 1) {
-            team.getActive(athleteIndex).offence += statIncrease;
+            team.actives.get(athleteIndex).offence += statIncrease;
         } else if (statIndex == 2) {
-            team.getActive(athleteIndex).defence += statIncrease;
+            team.actives.get(athleteIndex).defence += statIncrease;
         }
-        System.out.println("Random Event: " + team.getActive(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
+        System.out.println("Random Event: " + team.actives.get(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
     }
 
     public static void randomNewAthlete() {

@@ -9,8 +9,8 @@ public class Team {
     public static final int MAX_RESERVES = 5;
     public static final int MAXIMUM_SIZE = TEAM_SIZE + MAX_RESERVES;
     private final String name;
-    private final ArrayList<Athlete> actives;
-    private final ArrayList<Athlete> reserves;
+    public final ArrayList<Athlete> actives;
+    public final ArrayList<Athlete> reserves;
 
     /**
 	 * Creates a team with the given name
