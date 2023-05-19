@@ -68,7 +68,7 @@ public class GameMechanics<ActionListener> {
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,
-                new String[]{"Light Attack", "Heavy Attack", "Heal"},
+                new String[]{"Light Attack", "Heavy Attack", "Heal", "End Game"},
                 null);
 
         // Check which button was clicked and perform corresponding action
@@ -81,6 +81,9 @@ public class GameMechanics<ActionListener> {
                 break;
             case 2:
                 playTurn(2);
+                break;
+            case 3:
+                System.exit(0);
                 break;
         }
     }

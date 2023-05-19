@@ -59,6 +59,10 @@ public class OppositionTeam {
         ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>();
         for (int i = 0; i < numberOfAthletes; i++) {
             oppositionAthletes.add(new Athlete());
+            //Crude State increase based on difficulty
+            oppositionAthletes.get(i).stamina += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            oppositionAthletes.get(i).offence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            oppositionAthletes.get(i).defence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
         }
         return oppositionAthletes;
     }

@@ -55,6 +55,15 @@ public class GameManager {
         WindowManager.showGameScreen();
     }
 
+    public static double isGameHard() {
+        if (hardMode) {
+            return 1.5;
+        } else {
+            return 1;
+        }
+        
+    }
+
     /**
      * Gets the player's current bank balance
      *
