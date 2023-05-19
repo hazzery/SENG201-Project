@@ -84,7 +84,7 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
-        RandomEvent.randomEvent(); //If everything is breaking this is it cheif (Note to self: this is not it cheif)
+        
         currentWeek++;
     }
 
