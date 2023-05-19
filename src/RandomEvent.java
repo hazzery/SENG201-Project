@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomEvent {
     public int chance;
 
-    public GameManager GameManager;
+    public static GameManager gameManager;
     public static Athlete athlete;
 
     public static Team team;
@@ -45,6 +45,10 @@ public class RandomEvent {
     }
 
     public static void randomNewAthlete() {
+        if (team.numActive() + team.numReserves() >= team.MAXIMUM_SIZE){
+            System.out.println("Random Event: An Athlete tried to join your team but its full");
+            return;
+        }
         athlete = new Athlete();
         try {
             team.addAthlete(athlete, false);
@@ -54,6 +58,16 @@ public class RandomEvent {
     }
 
     public static void randomQuitAthlete() {
+        if (team.numActive() == 0){
+            System.out.println("Random Event: An Athlete tried to quit your team but you have no active athletes");
+            return;
+        }
+        if (team.numActive() + team.numReserves() < 5 && GameManager.getBankBalance() < 1000){
+            System.out.println("Random Event: An Athlete quit your team but you have less than 5 athletes and no money!!!");
+            //gameManager.gameOver(); //Gameover call (Not implemented yet)
+            return;
+        }
+
         team.removeAthlete(athlete);
     }
 }
