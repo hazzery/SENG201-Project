@@ -108,9 +108,10 @@ public class MarketScreen extends GameScreenPanel {
 
         if (GameManager.team.size() >= Team.MAXIMUM_SIZE) {
             JOptionPane.showMessageDialog(this,
-                    "You have too many athletes, you must sell one to purchase another+");
+                    "You have too many athletes, you must sell one to purchase another");
             return;
         }
+
         boolean willBeActive = false;
         int activateNewAthlete = JOptionPane.showConfirmDialog(this,
                 "Would you like to place" + athlete.getName() + " as an active athlete?",
@@ -125,7 +126,7 @@ public class MarketScreen extends GameScreenPanel {
 
             if (swap == null) {
                 JOptionPane.showMessageDialog(this,
-                        "Must reserve an athlete to place this athlete as active");
+                        "Must reserve an athlete to place new athlete in active team");
                 return;
             }
 

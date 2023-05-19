@@ -63,6 +63,7 @@ public class Team {
     }
 
     public void swapAthletes(Athlete currentlyActive, Athlete currentlyReserved) {
+        System.out.println("Swapping " + currentlyActive.getName() + " with " + currentlyReserved.getName());
         if (!this.actives.contains(currentlyActive) || !this.reserves.contains(currentlyReserved))
             throw new IllegalArgumentException("Cannot swap these athletes");
 
@@ -73,6 +74,8 @@ public class Team {
     }
 
     public void setActive(Athlete athlete) throws IllegalStateException {
+        System.out.println("Setting " + athlete.getName() + " as active");
+
         if (!reserves.contains(athlete))
             throw new IllegalStateException("Cannot activate an athlete that is not a reserve");
 
@@ -81,13 +84,14 @@ public class Team {
     }
 
     public void setReserve(Athlete athlete) throws IllegalStateException {
+        System.out.println("Setting " + athlete.getName() + " as reserve");
+
         if (!actives.contains(athlete))
             throw new IllegalStateException("Cannot reserve an athlete that is not active");
 
         if (this.reserves.size() >= MAX_RESERVES)
             throw new IllegalStateException("Cannot have more than " + MAX_RESERVES + " reserves");
 
-        reserves.add(athlete);
         actives.remove(athlete);
         reserves.add(athlete);
     }
@@ -110,5 +114,9 @@ public class Team {
     public void removeAthlete(Athlete athlete) {
         this.actives.remove(athlete);
         this.reserves.remove(athlete);
+    }
+
+    public Athlete getActive(int index) {
+        return this.actives.get(index);
     }
 }
