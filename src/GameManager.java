@@ -9,7 +9,7 @@ public class GameManager {
     private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
-    public static final int NUM_ALL_ATHLETES = 12;
+    public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
     private static ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
@@ -122,11 +122,12 @@ public class GameManager {
      * and adds the purchasable to the player's inventory
      *
      * @param purchasable        the purchasable to purchase
-     * @param activateNewAthlete
+     * @param activateNewAthlete If true, and the purchasable is an athlete, the athlete will be placed in the active team
      * @throws IllegalStateException if the player does not have enough money to purchase the athlete
      */
     public static void purchase(Purchasable purchasable, boolean activateNewAthlete) throws IllegalStateException {
         System.out.println("Purchasing " + purchasable.getName());
+
         if (bankBalance < purchasable.getContractPrice())
             throw new IllegalStateException("Insufficient money to make purchase");
 
@@ -134,7 +135,7 @@ public class GameManager {
         WindowManager.gameScreen.updateTeamInfo();
 
         if (purchasable instanceof Athlete athlete)
-            team.addAthlete(athlete, activateNewAthlete);
+            team.addAthlete(athlete, !activateNewAthlete);
 
         else if (purchasable instanceof Item item)
             items.add(item);
@@ -153,7 +154,7 @@ public class GameManager {
             if (GameManager.team.size() <= Team.TEAM_SIZE)
                 throw new IllegalStateException("Cannot sell athlete, must have at least " + Team.TEAM_SIZE + " athletes");
 
-            if (GameManager.team.numActive() <= Team.TEAM_SIZE) // Should be if athlete is active
+            if (GameManager.team.isActive(athlete) && GameManager.team.numActive() <= Team.TEAM_SIZE)
                 throw new MustSwapReserveException("Must swap in a reserve athlete before selling an active athlete");
 
             team.removeAthlete(athlete);
