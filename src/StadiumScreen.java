@@ -7,12 +7,14 @@ public class StadiumScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
     private JPanel mainPanel;
+        private JPanel oppositionWrapperPanel;
+            private JPanel oppositionCollection;
+                private JLabel oppositionAthletesLabel;
+                private JPanel oppositionShelf;
         private JPanel athletesWrapperPanel;
             private JLabel activeAthletesLabel;
             private JPanel activesShelf;
-        private JPanel oppositionWrapperPanel;
-            private JLabel oppositionAthletesLabel;
-            private JPanel oppositionShelf;
+        
         private JPanel FooterPanel;
             private JButton startMatchButton;
 
@@ -25,6 +27,23 @@ public class StadiumScreen extends GameScreenPanel {
         mainPanel.setBorder(marginBorder);
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);
+
+        oppositionWrapperPanel = new JPanel();
+        oppositionWrapperPanel.setBorder(marginBorder);
+        oppositionWrapperPanel.setLayout(new BoxLayout(oppositionWrapperPanel, BoxLayout.X_AXIS));
+        mainPanel.add(oppositionWrapperPanel);
+
+        oppositionCollection = new JPanel();
+        oppositionCollection.setBorder(marginBorder);
+        oppositionCollection.setLayout(new GridLayout(1, 4, 0, 0));
+
+        oppositionAthletesLabel = new JLabel("Opposition");
+        oppositionWrapperPanel.add(oppositionAthletesLabel);
+        
+        //SOMETHING TODO WITH OPPOSITION ATHLETES
+        oppositionShelf = new JPanel();
+        oppositionShelf.setBorder(marginBorder);
+        oppositionShelf.setLayout(new BoxLayout(oppositionShelf, BoxLayout.X_AXIS));
 
         athletesWrapperPanel = new JPanel();
         athletesWrapperPanel.setBorder(marginBorder);
@@ -40,18 +59,6 @@ public class StadiumScreen extends GameScreenPanel {
         activesShelf.setBorder(marginBorder);
         activesShelf.setLayout(new BoxLayout(activesShelf, BoxLayout.X_AXIS));
 
-        oppositionWrapperPanel = new JPanel();
-        oppositionWrapperPanel.setBorder(marginBorder);
-        oppositionWrapperPanel.setLayout(new BoxLayout(oppositionWrapperPanel, BoxLayout.X_AXIS));
-        mainPanel.add(oppositionWrapperPanel);
-
-        oppositionAthletesLabel = new JLabel("Opposition");
-        oppositionWrapperPanel.add(oppositionAthletesLabel);
-        
-        //SOMETHING TODO WITH OPPOSITION ATHLETES
-        oppositionShelf = new JPanel();
-        oppositionShelf.setBorder(marginBorder);
-        oppositionShelf.setLayout(new BoxLayout(oppositionShelf, BoxLayout.X_AXIS));
     
         FooterPanel = new JPanel();
         FooterPanel.setBorder(marginBorder);

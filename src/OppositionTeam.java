@@ -68,9 +68,7 @@ public class OppositionTeam {
         return oppositionAthletes.size() + "";
     }
 
-    public String getOppositionAthletes() {
-        return null;
-    }
+    
 
 }
 
