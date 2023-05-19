@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Run {
     public static void main(String[] args) {
         ArrayList<Athlete> athleteList = new ArrayList<Athlete>(4);
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 5; i++){
             athleteList.add(new Athlete());
         }
         

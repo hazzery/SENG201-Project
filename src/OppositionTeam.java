@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class OppositionTeam {
 
-    private static int numberOfAthletes = 4;
+    private static int numberOfAthletes = 5;
 
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
