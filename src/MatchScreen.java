@@ -1,32 +1,31 @@
 import javax.swing.*;
+import javax.swing.text.AbstractDocument.Content;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class MatchScreen extends GameScreenPanel {
+
+public class MatchScreen {
     
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
     
     private JPanel mainPanel;
-        private JPanel oppositionWrapperPanel;
-            //TODO add opposition related stuff here
-        private JPanel athletesWrapperPanel;
-            //TODO add athlete related stuff here
-        private JPanel FooterPanel;
-            private JButton attackLightButton;
-            private JButton attackHeavyButton;
-            private JButton healButton;
-            private JButton nextTurnButton;
+    private JPanel oppositionWrapperPanel;
+        //TODO add opposition related stuff here
+    private JPanel athletesWrapperPanel;
+        //TODO add athlete related stuff here
+    private JPanel FooterPanel;
+        private JButton attackLightButton;
+        private JButton attackHeavyButton;
+        private JButton healButton;
+        private JButton nextTurnButton;
 
     protected void initialize() {
-        super.initialize();
-        contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
-    
         mainPanel = new JPanel();
         mainPanel.setBorder(marginBorder);
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
-        this.add(mainPanel, BorderLayout.CENTER);
 
         oppositionWrapperPanel = new JPanel();
         oppositionWrapperPanel.setBorder(marginBorder);
@@ -64,18 +63,6 @@ public class MatchScreen extends GameScreenPanel {
         FooterPanel.add(nextTurnButton);
         
 
-    }
-
-    MatchScreen(GameScreen gameScreen) {
-        super(GameScreen.Screen.STADIUM, gameScreen);
-        //TODO Auto-generated constructor stub
-    }
-
-
-    @Override
-    public void reload() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reload'");
     }
 
 

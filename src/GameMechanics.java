@@ -44,7 +44,6 @@ public class GameMechanics<ActionListener> {
     //This code is scuffed for testing purposes
     public static void playMatch(){
         if (isGameOver == false){
-
             isNextTurnAble = false;
             //below is testing code to test for functionality
             for (int i = 0; i < 30; i++){
@@ -62,17 +61,14 @@ public class GameMechanics<ActionListener> {
 
     public static void endTurn(){
         //method called at the end of a turn between athlete n opposition
-
         isNextTurnAble = true;
     }
 
 
 
     public static int attackType(){
-        
         //In GUI a player will click a button which will call attackType with the index of button pressed
         //0: light attack, 1: Heavy Attack, 2:Heal
-
         return 0;
     }
 
@@ -97,15 +93,12 @@ public class GameMechanics<ActionListener> {
                 double damage = heal(athIndex);
                 updateOpposition(damage);
             }
-            
-            
         } else {
             oppIndex++;
             playTurn();
         }
         oppositionPlayTurn();
     }
-
     
     public static void endGameCondition(){
         boolean deadAthletes = athleteList.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
@@ -170,7 +163,6 @@ public class GameMechanics<ActionListener> {
         }
         endTurn();
     }
-
     
     public static double attackLight(int i, int j){
         double factor1 = athleteList.get(i).getStamina() / 15;
