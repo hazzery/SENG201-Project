@@ -14,9 +14,9 @@ import java.io.File;
 public class Athlete implements Purchasable {
     private final String name;
     private String nickName;
-    private int stamina;
-    private int offence;
-    private int defence;
+    public int stamina;
+    public int offence;
+    public int defence;
     public int current_health;
 
     static private boolean nameScannerIsInitialised = false;
