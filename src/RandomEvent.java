@@ -35,13 +35,13 @@ public class RandomEvent {
         int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
         int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
         if (statIndex == 0) {
-            team.actives.get(athleteIndex).stamina += statIncrease;
+            team.getActive(athleteIndex).stamina += statIncrease;
         } else if (statIndex == 1) {
-            team.actives.get(athleteIndex).offence += statIncrease;
+            team.getActive(athleteIndex).offence += statIncrease;
         } else if (statIndex == 2) {
-            team.actives.get(athleteIndex).defence += statIncrease;
+            team.getActive(athleteIndex).defence += statIncrease;
         }
-        System.out.println("Random Event: " + team.actives.get(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
+        System.out.println("Random Event: " + team.getActive(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
     }
 
     public static void randomNewAthlete() {
