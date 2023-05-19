@@ -35,13 +35,6 @@ public class GameMechanics<ActionListener> {
         playCMD();
     }
 
-    public static double gameHard(){
-        if (isGameHard == true){
-            return 1.5;
-        } 
-        return 1;
-    }
-
     //This code is scuffed for testing purposes
     // public static void playMatch(){
     //     if (isGameOver == false){
@@ -123,10 +116,10 @@ public class GameMechanics<ActionListener> {
             //attackType = attackType();
             if (attackType == 0){
                 double damage = attackLight(athIndex, oppIndex);
-                updateOpposition(damage * gameHard());
+                updateOpposition(damage * gameManager.isGameHard());
             } else if (attackType == 1){
                 double damage = attackHeavy(athIndex, oppIndex);
-                updateOpposition(damage * gameHard());
+                updateOpposition(damage * gameManager.isGameHard());
             } else if (attackType == 2){
                 double damage = heal(athIndex);
                 updateOpposition(damage);
@@ -150,6 +143,7 @@ public class GameMechanics<ActionListener> {
                 System.out.println("Athletes Win");
             }
         }
+        afterMatchReward();
     }
 
     public static void updateOpposition(double damage){
@@ -187,17 +181,18 @@ public class GameMechanics<ActionListener> {
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
                 double damage = attackLight(oppIndex, athIndex);
-                updateAthlete(damage * gameHard());
+                updateAthlete(damage * gameManager.isGameHard());
 
             } else if (oppositionAttack >= 35 && oppositionAttack < 40){
                 double damage = attackHeavy(oppIndex, athIndex);
-                updateAthlete(damage * gameHard());
+                updateAthlete(damage * gameManager.isGameHard());
 
             } else {
                 double damage =  heal(oppIndex);
-                updateAthlete(damage * gameHard());
+                updateAthlete(damage * gameManager.isGameHard());
             }
         } else {
+            playerInjury();
             athIndex++;
             oppositionPlayTurn();
         }
@@ -226,4 +221,24 @@ public class GameMechanics<ActionListener> {
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
     }
+
+    public static double getOppDiff(){
+        int oppositionDiff = 0;
+        for (int i = 0; i < oppositionAthletes.size(); i++){
+            oppositionDiff += oppositionAthletes.get(i).getOffence() + oppositionAthletes.get(i).getDefence() + oppositionAthletes.get(i).getStamina();
+        }
+        return oppositionDiff / (oppositionAthletes.size() * 3);
+    }
+
+    public static void afterMatchReward(){
+        GameManager.bankBalance +=  10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound);
+    }
+
+    public static void playerInjury(){
+        //Take Player Stanima off
+        athleteList.get(athIndex).stamina -= 0.5 * getOppDiff();
+    }
+
+
+
 }

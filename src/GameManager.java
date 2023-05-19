@@ -6,7 +6,7 @@ public class GameManager {
     public static Team team;
 
 
-    private static int bankBalance = 10000;
+    public static int bankBalance = 10000;
     private static int currentWeek = 1;
 
     public static OppositionTeam oppositionTeam;
