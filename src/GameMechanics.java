@@ -26,7 +26,7 @@ public class GameMechanics<ActionListener> {
     public static boolean isGameOver = false;
     public static boolean isGameHard = false;
 
-    public static boolean isNextTurnAble = true;
+    //public static boolean isNextTurnAble = true;
 
     GameMechanics(int currentRound, ArrayList<Athlete> athleteList, ArrayList<Athlete>oppositionAthletes){
         this.oppositionAthletes = oppositionAthletes;
@@ -66,7 +66,7 @@ public class GameMechanics<ActionListener> {
                 "Choose an Attack:",
                 "ATTACK!!!!",
                 JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.WARNING_MESSAGE,
                 null,
                 new String[]{"Light Attack", "Heavy Attack", "Heal"},
                 null);
