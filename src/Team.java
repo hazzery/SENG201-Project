@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 public class Team {
     public static final int TEAM_SIZE = 5;
     public static final int MAX_RESERVES = 5;
+    public static final int MAXIMUM_SIZE = TEAM_SIZE + MAX_RESERVES;
     private final String name;
     private final ArrayList<Athlete> actives;
     private final ArrayList<Athlete> reserves;
@@ -71,22 +72,38 @@ public class Team {
         return this.reserves.get(index);
     }
 
+    public void swapAthletes(Athlete currentlyActive, Athlete currentlyReserved) {
+        if (!this.actives.contains(currentlyActive) || !this.reserves.contains(currentlyReserved))
+            throw new IllegalArgumentException("Cannot swap these athletes");
+
+        this.actives.remove(currentlyActive);
+        this.reserves.remove(currentlyReserved);
+        this.actives.add(currentlyReserved);
+        this.reserves.add(currentlyActive);
+
+//        for (PurchasablesShelf shelf : this.activesSubscribers) {
+//            shelf.update();
+//        }
+    }
+
     public void setActive(Athlete athlete) throws IllegalStateException {
-        if (reserves.contains(athlete)) {
-            reserves.remove(athlete);
-            actives.add(athlete);
-        }
-        else {
+        if (!reserves.contains(athlete))
             throw new IllegalStateException("Cannot activate an athlete that is not a reserve");
-        }
+
+        reserves.remove(athlete);
+        actives.add(athlete);
     }
 
     public void setReserve(Athlete athlete) throws IllegalStateException {
-        if (this.reserves.size() >= MAX_RESERVES) {
+        if (!actives.contains(athlete))
+            throw new IllegalStateException("Cannot reserve an athlete that is not active");
+
+        if (this.reserves.size() >= MAX_RESERVES)
             throw new IllegalStateException("Cannot have more than " + MAX_RESERVES + " reserves");
-        }
-        this.reserves.add(athlete);
+
+        reserves.add(athlete);
         actives.remove(athlete);
+        reserves.add(athlete);
     }
 
     Athlete[] getAll() {

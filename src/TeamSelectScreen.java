@@ -99,7 +99,7 @@ public class TeamSelectScreen extends JPanel {
             return;
         }
         if (!selectedAthletes.contains(athlete)) {
-            String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
+            String nickName = JOptionPane.showInputDialog("Choose a nickname for" + athlete.getName() + ":");
             if (nickName.length() > 0) {
                 try {
                     Utilities.validateName(nickName, true);
