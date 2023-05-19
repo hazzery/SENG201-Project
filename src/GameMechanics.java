@@ -69,7 +69,15 @@ public class GameMechanics<ActionListener> {
     public static int attackType(){
         //In GUI a player will click a button which will call attackType with the index of button pressed
         //0: light attack, 1: Heavy Attack, 2:Heal
+        if (attackType == 0){
+            return 0;
+        } else if (attackType == 1){
+            return 1;
+        } else if (attackType == 2){
+            return 2;
+        }
         return 0;
+
     }
 
 
