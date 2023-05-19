@@ -231,7 +231,7 @@ public class GameMechanics<ActionListener> {
     }
 
     public static void afterMatchReward(){
-        GameManager.bankBalance +=  10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound);
+        GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
     }
 
     public static void playerInjury(){
