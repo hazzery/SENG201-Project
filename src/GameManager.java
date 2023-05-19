@@ -13,7 +13,6 @@ public class GameManager {
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
     private static ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
-    private static ArrayList<PurchasablesShelf> itemSubscribers = new ArrayList<>();
 
 
     //THESE NUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
@@ -27,8 +26,8 @@ public class GameManager {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
             athletes.add(new Athlete());
     }
-    
-    public static void initializeOpposition(){
+
+    public static void initializeOpposition() {
         OppositionTeam.generateOpposition();
     }
 
@@ -56,6 +55,7 @@ public class GameManager {
 
     /**
      * Gets the player's current bank balance
+     *
      * @return the player's current bank balance
      */
     public static int getBankBalance() {
@@ -64,6 +64,7 @@ public class GameManager {
 
     /**
      * Gets the current week within the season
+     *
      * @return the current week
      */
     public static int currentWeek() {
@@ -72,6 +73,7 @@ public class GameManager {
 
     /**
      * Gets the length of the season
+     *
      * @return the length of the season
      */
     public static int getSeasonLength() {
@@ -130,23 +132,16 @@ public class GameManager {
         bankBalance -= purchasable.getContractPrice();
         WindowManager.gameScreen.updateTeamInfo();
 
-        if (purchasable instanceof Athlete athlete) {
+        if (purchasable instanceof Athlete athlete)
             team.addAthlete(athlete, activateNewAthlete);
-//            for (PurchasablesShelf shelf : team.activesSubscribers)
-//                shelf.addPanel(athlete);
-        }
 
-        else if (purchasable instanceof Item item) {
+        else if (purchasable instanceof Item item)
             items.add(item);
-            for (PurchasablesShelf shelf : itemSubscribers) {
-//                shelf.addPanel(item);
-                System.out.println("Adding " + item.getName() + " to " + shelf.getName());
-            }
-        }
     }
 
     /**
      * Sells the provided purchasable and adds the sell back price to the player's bank balance
+     *
      * @param purchasable the purchasable to sell
      * @throws IllegalStateException if the player does not have enough athletes to spare when selling an athlete
      */
@@ -162,7 +157,6 @@ public class GameManager {
 
             team.removeAthlete(athlete);
         }
-
         else if (purchasable instanceof Item item)
             items.remove(item);
 
@@ -174,10 +168,5 @@ public class GameManager {
         GameManager.seasonLength = seasonLength;
         GameManager.team = new Team(teamName);
         GameManager.hardMode = hardMode;
-    }
-
-    public static void registerItemSubscriber(PurchasablesShelf shelf) {
-        System.out.println("Registering item subscriber");
-        itemSubscribers.add(shelf);
     }
 }

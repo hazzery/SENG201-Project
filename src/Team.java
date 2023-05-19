@@ -11,8 +11,6 @@ public class Team {
     private final String name;
     private final ArrayList<Athlete> actives;
     private final ArrayList<Athlete> reserves;
-    public ArrayList<PurchasablesShelf> activesSubscribers = new ArrayList<>();
-    public ArrayList<PurchasablesShelf> reservesSubscribers = new ArrayList<>();
 
     /**
 	 * Creates a team with the given name
@@ -64,14 +62,6 @@ public class Team {
         return this.reserves.toArray(new Athlete[0]);
     }
 
-    public Athlete getActive(int index) {
-        return this.actives.get(index);
-    }
-
-    public Athlete getReserve(int index) {
-        return this.reserves.get(index);
-    }
-
     public void swapAthletes(Athlete currentlyActive, Athlete currentlyReserved) {
         if (!this.actives.contains(currentlyActive) || !this.reserves.contains(currentlyReserved))
             throw new IllegalArgumentException("Cannot swap these athletes");
@@ -80,10 +70,6 @@ public class Team {
         this.reserves.remove(currentlyReserved);
         this.actives.add(currentlyReserved);
         this.reserves.add(currentlyActive);
-
-//        for (PurchasablesShelf shelf : this.activesSubscribers) {
-//            shelf.update();
-//        }
     }
 
     public void setActive(Athlete athlete) throws IllegalStateException {
@@ -106,22 +92,12 @@ public class Team {
         reserves.add(athlete);
     }
 
-    Athlete[] getAll() {
-        return Stream.concat(actives.stream(), reserves.stream()).toArray(Athlete[]::new);
+    public boolean isActive(Athlete athlete) {
+        return this.actives.contains(athlete);
     }
 
-    /**
-	 * Determines if the team contains the given athlete
-	 *
-     * @param athlete An Athlete to check membership of
-	 * @return `true` if the team contains the athlete, `false` otherwise
-     */
-    public boolean contains(Athlete athlete) {
-        for (Athlete a : this.getAll()) {
-            if (a.equals(athlete))
-                return true;
-        }
-        return false;
+    Athlete[] getAll() {
+        return Stream.concat(actives.stream(), reserves.stream()).toArray(Athlete[]::new);
     }
 
     public void addAthlete(Athlete athlete, boolean reserve) {
@@ -134,13 +110,5 @@ public class Team {
     public void removeAthlete(Athlete athlete) {
         this.actives.remove(athlete);
         this.reserves.remove(athlete);
-    }
-
-    public void addActivesSubscriber(PurchasablesShelf shelf) {
-        this.activesSubscribers.add(shelf);
-    }
-
-    public void addReservesSubscriber(PurchasablesShelf shelf) {
-        this.reservesSubscribers.add(shelf);
     }
 }

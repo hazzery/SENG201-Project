@@ -21,15 +21,12 @@ public class ClubScreen extends GameScreenPanel {
         this.add(mainPanel, BorderLayout.CENTER);
 
         activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Activated", p->"Reserve", this::reserveAthlete);
-        GameManager.team.addActivesSubscriber(activesShelf);
         mainPanel.add(activesShelf);
 
         reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Reserved", p->"Activate", this::activateAthlete);
-        GameManager.team.addReservesSubscriber(reservesShelf);
         mainPanel.add(reservesShelf);
 
         itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Inventory", p->"Use", this::selectAthleteForItem);
-        GameManager.registerItemSubscriber(itemsShelf);
         mainPanel.add(itemsShelf);
     }
 

@@ -30,8 +30,6 @@ public class MarketScreen extends GameScreenPanel {
         contentPanel.add(itemsShelf);
 
         teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Inventory", Utilities::sellButtonText, this::sell);
-        GameManager.team.addActivesSubscriber(teamShelf);
-        GameManager.team.addReservesSubscriber(teamShelf);
         contentPanel.add(teamShelf);
 
     }

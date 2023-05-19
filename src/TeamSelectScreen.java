@@ -62,7 +62,6 @@ public class TeamSelectScreen extends JPanel {
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
         selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
-//        GameManager.team.addActivesSubscriber(selectedAthletesShelf);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
         FooterPanel = new JPanel();
