@@ -6,7 +6,7 @@ public class GameManager {
     public static Team team;
 
 
-    private static int bankBalance = 7500;
+    private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
     public static final int NUM_ALL_ATHLETES = 12;
@@ -43,11 +43,12 @@ public class GameManager {
     /**
      * Starts the game with the provided parameters
      */
-    public static void startGame(ArrayList<Athlete> selectedAthletes) {
-        for (int i = 0; i < team.TEAM_SIZE; i++) {
+    public static void startGame(ArrayList<Athlete> selectedAthletes, int bankBalance) {
+        GameManager.bankBalance = bankBalance;
+        for (int i = 0; i < Team.TEAM_SIZE; i++) {
             team.addAthlete(selectedAthletes.get(i), false);
         }
-        for (int i = team.TEAM_SIZE; i < selectedAthletes.size(); i++) {
+        for (int i = Team.TEAM_SIZE; i < selectedAthletes.size(); i++) {
             team.addAthlete(selectedAthletes.get(i), true);
         }
         WindowManager.showGameScreen();
@@ -116,46 +117,57 @@ public class GameManager {
      * Purchases the provided purchasable if the player has enough money.
      * Removes the purchasable's contract price from the player's bank balance
      * and adds the purchasable to the player's inventory
-     * @param purchasable the purchasable to purchase
+     *
+     * @param purchasable        the purchasable to purchase
+     * @param activateNewAthlete
      * @throws IllegalStateException if the player does not have enough money to purchase the athlete
      */
-    public static void purchase(Purchasable purchasable) throws IllegalStateException {
+    public static void purchase(Purchasable purchasable, boolean activateNewAthlete) throws IllegalStateException {
         System.out.println("Purchasing " + purchasable.getName());
         if (bankBalance < purchasable.getContractPrice())
             throw new IllegalStateException("Insufficient money to make purchase");
 
         bankBalance -= purchasable.getContractPrice();
+        WindowManager.gameScreen.updateTeamInfo();
 
         if (purchasable instanceof Athlete athlete) {
-            team.addAthlete(athlete, false);
-            for (PurchasablesShelf shelf : team.activesSubscribers)
-                shelf.addPanel(athlete);
+            team.addAthlete(athlete, activateNewAthlete);
+//            for (PurchasablesShelf shelf : team.activesSubscribers)
+//                shelf.addPanel(athlete);
         }
 
         else if (purchasable instanceof Item item) {
             items.add(item);
             for (PurchasablesShelf shelf : itemSubscribers) {
-                shelf.addPanel(item);
+//                shelf.addPanel(item);
                 System.out.println("Adding " + item.getName() + " to " + shelf.getName());
             }
         }
-
-//        WindowManager.gameScreen.updateTeamInfo();
     }
 
     /**
      * Sells the provided purchasable and adds the sell back price to the player's bank balance
      * @param purchasable the purchasable to sell
+     * @throws IllegalStateException if the player does not have enough athletes to spare when selling an athlete
      */
-    public static void sell(Purchasable purchasable) {
-        bankBalance += purchasable.getSellBackPrice();
-        WindowManager.gameScreen.updateTeamInfo();
+    public static void sell(Purchasable purchasable) throws IllegalStateException {
+        System.out.println("Selling " + purchasable.getName());
 
-        if (purchasable instanceof Athlete athlete)
+        if (purchasable instanceof Athlete athlete) {
+            if (GameManager.team.size() <= Team.TEAM_SIZE)
+                throw new IllegalStateException("Cannot sell athlete, must have at least " + Team.TEAM_SIZE + " athletes");
+
+            if (GameManager.team.numActive() <= Team.TEAM_SIZE) // Should be if athlete is active
+                throw new MustSwapReserveException("Must swap in a reserve athlete before selling an active athlete");
+
             team.removeAthlete(athlete);
+        }
 
         else if (purchasable instanceof Item item)
             items.remove(item);
+
+        bankBalance += purchasable.getSellBackPrice();
+        WindowManager.gameScreen.updateTeamInfo();
     }
 
     public static void setConfiguration(String teamName, int seasonLength, boolean hardMode) {

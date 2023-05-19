@@ -62,9 +62,9 @@ public class Athlete implements Purchasable {
 
         this.name = athleteNames.pop();
         this.nickName = this.name;
-        this.stamina = ThreadLocalRandom.current().nextInt(40, 101);
-        this.offence = ThreadLocalRandom.current().nextInt(40, 101);
-        this.defence = ThreadLocalRandom.current().nextInt(40, 101);
+        this.stamina = ThreadLocalRandom.current().nextInt(0, 101);
+        this.offence = ThreadLocalRandom.current().nextInt(0, 101);
+        this.defence = ThreadLocalRandom.current().nextInt(0, 101);
         this.current_health = 100;
     }
 
@@ -92,7 +92,7 @@ public class Athlete implements Purchasable {
 	 */
     @Override
     public String getName() {
-        return this.name;
+        return this.nickName;
     }
 
     @Override

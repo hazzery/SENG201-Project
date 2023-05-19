@@ -7,15 +7,9 @@ public class MarketScreen extends GameScreenPanel {
 
     // Indentation of components below shows hierarchy of elements on the screen
   //protected JPanel contentPanel
-        private JPanel athletesWrapperPanel;
-            private JLabel activeAthletesLabel;
-            private PurchasablesShelf athletesShelf;
-        private JPanel itemsWrapperPanel;
-            private JLabel itemsLabel;
-            private PurchasablesShelf itemsShelf;
-        private JPanel teamWrapperPanel;
-            private JLabel teamLabel;
-            private PurchasablesShelf teamShelf;
+        private PurchasablesShelf athletesShelf;
+        private PurchasablesShelf itemsShelf;
+        private PurchasablesShelf teamShelf;
 
 
     private final int WEEKLY_POOL_SIZE = 5;
@@ -29,40 +23,16 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesWrapperPanel = new JPanel();
-        athletesWrapperPanel.setBorder(marginBorder);
-        athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(athletesWrapperPanel);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", Utilities::purchaseButtonText, this::purchase);
+        contentPanel.add(athletesShelf);
 
-        activeAthletesLabel = new JLabel("Athletes ");
-        athletesWrapperPanel.add(activeAthletesLabel);
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", Utilities::purchaseButtonText, this::purchase);
+        contentPanel.add(itemsShelf);
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, Utilities::purchaseButtonText, this::purchase);
-        athletesWrapperPanel.add(athletesShelf);
-
-        itemsWrapperPanel = new JPanel();
-        itemsWrapperPanel.setBorder(marginBorder);
-        itemsWrapperPanel.setLayout(new BoxLayout(itemsWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(itemsWrapperPanel);
-
-        itemsLabel = new JLabel("Items    ");
-        itemsWrapperPanel.add(itemsLabel);
-
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, Utilities::purchaseButtonText, this::purchase);
-        itemsWrapperPanel.add(itemsShelf);
-
-        teamWrapperPanel = new JPanel();
-        teamWrapperPanel.setBorder(marginBorder);
-        teamWrapperPanel.setLayout(new BoxLayout(teamWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(teamWrapperPanel);
-
-        teamLabel = new JLabel("Inventory");
-        teamWrapperPanel.add(teamLabel);
-
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), Utilities::sellButtonText, this::sell);
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Inventory", Utilities::sellButtonText, this::sell);
         GameManager.team.addActivesSubscriber(teamShelf);
         GameManager.team.addReservesSubscriber(teamShelf);
-        teamWrapperPanel.add(teamShelf);
+        contentPanel.add(teamShelf);
 
     }
 
@@ -76,36 +46,29 @@ public class MarketScreen extends GameScreenPanel {
      */
     private void purchase(ActionEvent event)  {
         System.out.println("purchase");
+
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Purchasable purchasable = panel.getPurchasable();
 
+        if (purchasable instanceof Athlete athlete) {
+            purchaseAthlete(athlete);
+            return;
+        }
+
         try {
-            GameManager.purchase(purchasable);
+            GameManager.purchase(purchasable, true);
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(this, error.getMessage());
             return;
         }
 
-        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-        shelf.remove(panel);
-        shelf.revalidate();
-        shelf.repaint();
+        panel.getShelf().removePanel(panel);
 
         // Delete the purchasable from the weekly pool
-        if (purchasable instanceof Athlete athlete) {
-            for (int i = 0; i < weeklyAthletePool.length; i++) {
-                if (weeklyAthletePool[i] == athlete) {
-                    weeklyAthletePool[i] = null;
-                    break;
-                }
-            }
-        }
-        else if (purchasable instanceof Item item) {
-            for (int i = 0; i < weeklyItemPool.length; i++) {
-                if (weeklyItemPool[i] == item) {
-                    weeklyItemPool[i] = null;
-                    break;
-                }
+        for (int i = 0; i < weeklyItemPool.length; i++) {
+            if (weeklyItemPool[i] == purchasable) {
+                weeklyItemPool[i] = null;
+                break;
             }
         }
     }
@@ -115,12 +78,79 @@ public class MarketScreen extends GameScreenPanel {
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Purchasable purchasable = panel.getPurchasable();
 
-        GameManager.sell(purchasable);
+        try {
+            GameManager.sell(purchasable);
+        } catch (IllegalStateException error) {
+            JOptionPane.showMessageDialog(this, error.getMessage());
+            return;
+        } catch (MustSwapReserveException error) {
+            Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
+                HTMLString.multiLine("Must maintain at least " + Team.TEAM_SIZE + " athletes." +
+                                "Select a reserve to take" + purchasable.getName() + "'s position"),
+                    "Swap Athlete", JOptionPane.PLAIN_MESSAGE,null, GameManager.team.getReserves(), "Choose athlete");
 
-        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-        shelf.remove(panel);
-        shelf.revalidate();
-        shelf.repaint();
+            if (swap == null) {
+                JOptionPane.showMessageDialog(this, "Must swap reserve to sell athlete");
+                return;
+            }
+
+            GameManager.team.setActive(swap);
+            GameManager.sell(purchasable);
+        }
+
+        panel.getShelf().removePanel(panel);
+    }
+
+    private void purchaseAthlete(Athlete athlete) {
+        if (GameManager.getBankBalance() < athlete.getContractPrice()) {
+            JOptionPane.showMessageDialog(this,
+                    "Insufficient funds to purchase " + athlete.getName());
+            return;
+        }
+
+        if (GameManager.team.size() >= Team.MAXIMUM_SIZE) {
+            JOptionPane.showMessageDialog(this,
+                    "You have too many athletes, you must sell one to purchase another+");
+            return;
+        }
+        boolean willBeActive = false;
+        int activateNewAthlete = JOptionPane.showConfirmDialog(this,
+                "Would you like to place" + athlete.getName() + " as an active athlete?",
+                "Swap Athlete", JOptionPane.YES_NO_OPTION);
+
+        if (activateNewAthlete == JOptionPane.YES_OPTION) {
+            willBeActive = true;
+            Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
+                    "Which active athlete would you like to reserve to activate" + athlete.getName() + '?',
+                    "Reserve athlete", JOptionPane.PLAIN_MESSAGE,
+                    null, GameManager.team.getActives(), null);
+
+            if (swap == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Must reserve an athlete to place this athlete as active");
+                return;
+            }
+
+            try {
+                GameManager.team.setReserve(swap);
+            } catch (IllegalStateException error) {
+                JOptionPane.showMessageDialog(this, error.getMessage());
+                return;
+            }
+        }
+
+        try {
+            GameManager.purchase(athlete, willBeActive);
+        } catch (IllegalStateException error) {
+            JOptionPane.showMessageDialog(this, error.getMessage());
+        }
+
+        for (int i = 0; i < weeklyAthletePool.length; i++) {
+            if (weeklyAthletePool[i] == athlete) {
+                weeklyAthletePool[i] = null;
+                break;
+            }
+        }
     }
 
     public void updateWeeklyPool() {

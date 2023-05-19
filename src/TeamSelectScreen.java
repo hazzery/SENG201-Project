@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 public class TeamSelectScreen extends JPanel {
 
-    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
-    private static final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
+    private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    private final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
+
+    private int bankBalance = 8500;
 
     private JPanel headerPanel;
-        private JLabel headerLabel;
+        private JLabel bankBalanceLabel;
     private JPanel athleteSelectionPanel;
         private JLabel selectAthletesLabel;
         private JPanel buttonsWrapperPanel;
@@ -36,9 +38,9 @@ public class TeamSelectScreen extends JPanel {
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
         this.add(headerPanel, BorderLayout.NORTH);
 
-        headerLabel = new JLabel();
-        headerLabel.setText("You Have: $" + GameManager.getBankBalance());
-        headerPanel.add(headerLabel);
+        bankBalanceLabel = new JLabel();
+        bankBalanceLabel.setText("You Have: $" + bankBalance);
+        headerPanel.add(bankBalanceLabel);
 
         athleteSelectionPanel = new JPanel();
         athleteSelectionPanel.setBorder(marginBorder);
@@ -54,13 +56,13 @@ public class TeamSelectScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), this::selectButtonText, this::selectAthlete);
+        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Available", this::selectButtonText, this::selectAthlete);
         buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), this::unselectButtonText, this::unselectAthlete);
-        GameManager.team.addActivesSubscriber(selectedAthletesShelf);
+        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
+//        GameManager.team.addActivesSubscriber(selectedAthletesShelf);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
         FooterPanel = new JPanel();
@@ -81,8 +83,9 @@ public class TeamSelectScreen extends JPanel {
     }
 
     private String selectButtonText (Purchasable purchasable) {
-        return HTMLString.multiLine("Select", "- $" + purchasable.getContractPrice());
+        return HTMLString.multiLine("Select", "$" + purchasable.getContractPrice());
     }
+
     private String unselectButtonText (Purchasable purchasable) {
         return HTMLString.multiLine("Unselect", "+ $" + purchasable.getContractPrice());
     }
@@ -91,23 +94,32 @@ public class TeamSelectScreen extends JPanel {
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Athlete athlete = (Athlete) panel.getPurchasable();
 
+        if (bankBalance < athlete.getContractPrice()) {
+            JOptionPane.showMessageDialog(this, "You cannot afford this athlete");
+            return;
+        }
         if (!selectedAthletes.contains(athlete)) {
-            String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
-            try {
-                Utilities.validateName(nickName, true);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-                return;
+            String nickName = JOptionPane.showInputDialog("Choose a nickname for" + athlete.getName() + ":");
+            if (nickName.length() > 0) {
+                try {
+                    Utilities.validateName(nickName, true);
+                    athlete.setNickname(nickName);
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                    return;
+                }
             }
 
-            athlete.setNickname(nickName);
+            bankBalance -= athlete.getContractPrice();
+            bankBalanceLabel.setText("You Have: $" + bankBalance);
+
             selectedAthletes.add(athlete);
             selectedAthletesShelf.addPanel(athlete);
 
-            PurchasablesShelf parent = (PurchasablesShelf) panel.getParent();
-            parent.remove(panel);
-            parent.revalidate();
-            parent.repaint();
+            selectableAthletesShelf.removePanel(panel);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "You have already selected this athlete");
         }
     }
 
@@ -119,10 +131,12 @@ public class TeamSelectScreen extends JPanel {
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Athlete athlete = (Athlete) panel.getPurchasable();
 
+        bankBalance += athlete.getContractPrice();
+        bankBalanceLabel.setText("You Have: $" + bankBalance);
+
         selectedAthletes.remove(athlete);
-        selectedAthletesShelf.remove(panel);
-        selectableAthletesShelf.revalidate();
-        selectableAthletesShelf.repaint();
+        selectedAthletesShelf.removePanel(panel);
+        selectableAthletesShelf.addPanel(athlete);
     }
 
     /**
@@ -145,7 +159,6 @@ public class TeamSelectScreen extends JPanel {
             return;
         }
 
-        GameManager.startGame(selectedAthletes);
+        GameManager.startGame(selectedAthletes, bankBalance);
     }
-
 }

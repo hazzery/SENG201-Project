@@ -24,7 +24,7 @@ public class Item implements Purchasable {
         initItemNameReader();
         this.name = itemNames.pop();
         this.statType = Athlete.StatType.values()[ThreadLocalRandom.current().nextInt(0, 3)];
-        this.improvementAmount = ThreadLocalRandom.current().nextInt(0, 101);
+        this.improvementAmount = ThreadLocalRandom.current().nextInt(1, 101);
     }
 
     private void initItemNameReader() {
