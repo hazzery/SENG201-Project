@@ -9,13 +9,13 @@ import java.util.ArrayList;
  */
 public class OppositionTeam {
 
-    private static int numberOfAthletes = 5;
+    private int numberOfAthletes = 5;
 
-    static private boolean nameScannerIsInitialised = false;
-    static private Scanner nameScanner;
-    static private Stack<String> oppositionNames;
+    private boolean nameScannerIsInitialised = false;
+    private Scanner nameScanner;
+    private Stack<String> oppositionNames;
 
-    private static String name;
+    private String name;
     
     
     /**
@@ -24,9 +24,9 @@ public class OppositionTeam {
      * 
      * @return the name of the Opposition Team
      */
-    public static String getName() {
-        initOppositionNameReader();
-        name = oppositionNames.pop();
+    public String getName() {
+        this.initOppositionNameReader();
+        this.name = oppositionNames.pop();
         return name;
     }
 
@@ -34,7 +34,7 @@ public class OppositionTeam {
      * Collects a name from the OppositionNames.txt file and returns it
      *
      */
-    private static void initOppositionNameReader() {
+    private void initOppositionNameReader() {
         if (nameScannerIsInitialised) return;
 
         oppositionNames = new Stack<String>();
@@ -55,7 +55,7 @@ public class OppositionTeam {
     /**
      * Creates an array of athletes with randomised stats
      */
-    public static ArrayList<Athlete> createOppTeam() {
+    public ArrayList<Athlete> createOppTeam() {
         ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>();
         for (int i = 0; i < numberOfAthletes; i++) {
             oppositionAthletes.add(new Athlete());
@@ -63,18 +63,13 @@ public class OppositionTeam {
         return oppositionAthletes;
     }
 
-    public static ArrayList<ArrayList<Athlete>> generateOpposition(){
+    public ArrayList<ArrayList<Athlete>> generateOpposition(){
         ArrayList<ArrayList<Athlete>> teams = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             ArrayList<Athlete> team = createOppTeam();
             teams.add(team);
         }
         return teams;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<ArrayList<Athlete>> teams = generateOpposition();
-        System.out.println(teams);
     }
 }
 

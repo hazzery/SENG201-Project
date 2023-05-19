@@ -9,6 +9,8 @@ public class GameManager {
     private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
+    public static OppositionTeam oppositionTeam;
+
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
@@ -28,7 +30,7 @@ public class GameManager {
     }
 
     public static void initializeOpposition() {
-        OppositionTeam.generateOpposition();
+        oppositionTeam.generateOpposition();
     }
 
     /**

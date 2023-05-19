@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.swing.JOptionPane;
 
 /**
  * A class that represents a Random Event
@@ -8,16 +6,16 @@ import javax.swing.JOptionPane;
 public class RandomEvent {
     public int chance;
 
-    public static GameManager gameManager;
-    public static Athlete athlete;
+    public GameManager gameManager;
+    public Athlete athlete;
 
-    public static Team team;
+    public Team team;
 
     public RandomEvent() {
         randomEvent();
     }
 
-    public static void randomEvent() {
+    public void randomEvent() {
         int chance = ThreadLocalRandom.current().nextInt(0, 15);
         if (chance < 10) {
             randomStatIncrease();
@@ -30,7 +28,7 @@ public class RandomEvent {
         }
     }
 
-    public static void randomStatIncrease() {
+    public void randomStatIncrease() {
         int athleteIndex = ThreadLocalRandom.current().nextInt(0, team.numActive());
         int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
         int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
@@ -44,7 +42,7 @@ public class RandomEvent {
         System.out.println("Random Event: " + team.getActive(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
     }
 
-    public static void randomNewAthlete() {
+    public void randomNewAthlete() {
         if (team.numActive() + team.numReserves() >= team.MAXIMUM_SIZE){
             System.out.println("Random Event: An Athlete tried to join your team but its full");
             return;
@@ -57,7 +55,7 @@ public class RandomEvent {
         }
     }
 
-    public static void randomQuitAthlete() {
+    public void randomQuitAthlete() {
         if (team.numActive() == 0){
             System.out.println("Random Event: An Athlete tried to quit your team but you have no active athletes");
             return;

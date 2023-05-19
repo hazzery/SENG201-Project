@@ -13,9 +13,8 @@ public class Run {
         
         Team team = new Team("Team");
         OppositionTeam oppositionTeam = new OppositionTeam();
-        GameManager gameManager = new GameManager();
         GameManager.initializeAthletes();
-        ArrayList<Athlete> oppositionAthletes = OppositionTeam.createOppTeam();
+        ArrayList<Athlete> oppositionAthletes = oppositionTeam.createOppTeam();
          
         
         System.out.println(athleteList);
