@@ -7,15 +7,9 @@ public class MarketScreen extends GameScreenPanel {
 
     // Indentation of components below shows hierarchy of elements on the screen
   //protected JPanel contentPanel
-        private JPanel athletesWrapperPanel;
-            private JLabel activeAthletesLabel;
-            private PurchasablesShelf athletesShelf;
-        private JPanel itemsWrapperPanel;
-            private JLabel itemsLabel;
-            private PurchasablesShelf itemsShelf;
-        private JPanel teamWrapperPanel;
-            private JLabel teamLabel;
-            private PurchasablesShelf teamShelf;
+        private PurchasablesShelf athletesShelf;
+        private PurchasablesShelf itemsShelf;
+        private PurchasablesShelf teamShelf;
 
 
     private final int WEEKLY_POOL_SIZE = 5;
@@ -29,40 +23,16 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesWrapperPanel = new JPanel();
-        athletesWrapperPanel.setBorder(marginBorder);
-        athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(athletesWrapperPanel);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", Utilities::purchaseButtonText, this::purchase);
+        contentPanel.add(athletesShelf);
 
-        activeAthletesLabel = new JLabel("Athletes ");
-        athletesWrapperPanel.add(activeAthletesLabel);
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", Utilities::purchaseButtonText, this::purchase);
+        contentPanel.add(itemsShelf);
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, Utilities::purchaseButtonText, this::purchase);
-        athletesWrapperPanel.add(athletesShelf);
-
-        itemsWrapperPanel = new JPanel();
-        itemsWrapperPanel.setBorder(marginBorder);
-        itemsWrapperPanel.setLayout(new BoxLayout(itemsWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(itemsWrapperPanel);
-
-        itemsLabel = new JLabel("Items    ");
-        itemsWrapperPanel.add(itemsLabel);
-
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, Utilities::purchaseButtonText, this::purchase);
-        itemsWrapperPanel.add(itemsShelf);
-
-        teamWrapperPanel = new JPanel();
-        teamWrapperPanel.setBorder(marginBorder);
-        teamWrapperPanel.setLayout(new BoxLayout(teamWrapperPanel, BoxLayout.X_AXIS));
-        contentPanel.add(teamWrapperPanel);
-
-        teamLabel = new JLabel("Inventory");
-        teamWrapperPanel.add(teamLabel);
-
-        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), Utilities::sellButtonText, this::sell);
+        teamShelf = new PurchasablesShelf(GameManager.team.getAll(), "Inventory", Utilities::sellButtonText, this::sell);
         GameManager.team.addActivesSubscriber(teamShelf);
         GameManager.team.addReservesSubscriber(teamShelf);
-        teamWrapperPanel.add(teamShelf);
+        contentPanel.add(teamShelf);
 
     }
 
@@ -86,10 +56,7 @@ public class MarketScreen extends GameScreenPanel {
             return;
         }
 
-        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-        shelf.remove(panel);
-        shelf.revalidate();
-        shelf.repaint();
+        panel.getShelf().removePanel(panel);
 
         // Delete the purchasable from the weekly pool
         if (purchasable instanceof Athlete athlete) {
@@ -117,10 +84,7 @@ public class MarketScreen extends GameScreenPanel {
 
         GameManager.sell(purchasable);
 
-        PurchasablesShelf shelf = (PurchasablesShelf) panel.getParent();
-        shelf.remove(panel);
-        shelf.revalidate();
-        shelf.repaint();
+        panel.getShelf().removePanel(panel);
     }
 
     public void updateWeeklyPool() {

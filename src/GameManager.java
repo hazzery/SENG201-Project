@@ -6,7 +6,7 @@ public class GameManager {
     public static Team team;
 
 
-    private static int bankBalance = 7500;
+    private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
     public static final int NUM_ALL_ATHLETES = 12;
@@ -43,11 +43,12 @@ public class GameManager {
     /**
      * Starts the game with the provided parameters
      */
-    public static void startGame(ArrayList<Athlete> selectedAthletes) {
-        for (int i = 0; i < team.TEAM_SIZE; i++) {
+    public static void startGame(ArrayList<Athlete> selectedAthletes, int bankBalance) {
+        GameManager.bankBalance = bankBalance;
+        for (int i = 0; i < Team.TEAM_SIZE; i++) {
             team.addAthlete(selectedAthletes.get(i), false);
         }
-        for (int i = team.TEAM_SIZE; i < selectedAthletes.size(); i++) {
+        for (int i = Team.TEAM_SIZE; i < selectedAthletes.size(); i++) {
             team.addAthlete(selectedAthletes.get(i), true);
         }
         WindowManager.showGameScreen();
@@ -125,22 +126,21 @@ public class GameManager {
             throw new IllegalStateException("Insufficient money to make purchase");
 
         bankBalance -= purchasable.getContractPrice();
+        WindowManager.gameScreen.updateTeamInfo();
 
         if (purchasable instanceof Athlete athlete) {
             team.addAthlete(athlete, false);
-            for (PurchasablesShelf shelf : team.activesSubscribers)
-                shelf.addPanel(athlete);
+//            for (PurchasablesShelf shelf : team.activesSubscribers)
+//                shelf.addPanel(athlete);
         }
 
         else if (purchasable instanceof Item item) {
             items.add(item);
             for (PurchasablesShelf shelf : itemSubscribers) {
-                shelf.addPanel(item);
+//                shelf.addPanel(item);
                 System.out.println("Adding " + item.getName() + " to " + shelf.getName());
             }
         }
-
-//        WindowManager.gameScreen.updateTeamInfo();
     }
 
     /**

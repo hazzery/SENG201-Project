@@ -52,4 +52,8 @@ public class PurchasablePanel extends JPanel {
     public Purchasable getPurchasable() {
         return purchasable;
     }
+
+    public PurchasablesShelf getShelf() {
+        return (PurchasablesShelf) getParent().getParent();
+    }
 }
