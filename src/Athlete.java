@@ -92,7 +92,7 @@ public class Athlete implements Purchasable {
 	 */
     @Override
     public String getName() {
-        return this.name;
+        return this.nickName;
     }
 
     @Override

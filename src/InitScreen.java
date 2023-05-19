@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InitScreen extends JPanel {
-    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
+    private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel headerPanel;
@@ -60,7 +60,7 @@ public class InitScreen extends JPanel {
      */
     private void initialize() {
         this.setLayout(new BorderLayout(100, 0));
-        this.setBorder(new EmptyBorder(75, 75, 75, 75));
+        this.setBorder(new EmptyBorder(75, 75, 50, 75));
 
         headerPanel = new JPanel();
         headerPanel.setBorder(marginBorder);

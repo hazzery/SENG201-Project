@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class SplashScreen extends JPanel {
 
-	private static final int BORDER_WIDTH = 2;
+	private static final int BORDER_WIDTH = 0;
 
 	/**
 	 * Create the application.

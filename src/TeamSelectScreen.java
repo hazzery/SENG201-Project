@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class TeamSelectScreen extends JPanel {
 
-    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
+    private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
     private final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
 
     private int bankBalance = 8500;
@@ -100,17 +100,19 @@ public class TeamSelectScreen extends JPanel {
         }
         if (!selectedAthletes.contains(athlete)) {
             String nickName = JOptionPane.showInputDialog("Choose a nickname for " + athlete.getName() + ":");
-            try {
-                Utilities.validateName(nickName, true);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-                return;
+            if (nickName.length() > 0) {
+                try {
+                    Utilities.validateName(nickName, true);
+                    athlete.setNickname(nickName);
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                    return;
+                }
             }
 
             bankBalance -= athlete.getContractPrice();
             bankBalanceLabel.setText("You Have: $" + bankBalance);
 
-            athlete.setNickname(nickName);
             selectedAthletes.add(athlete);
             selectedAthletesShelf.addPanel(athlete);
 
