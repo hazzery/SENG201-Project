@@ -57,7 +57,6 @@ public class OppositionTeam {
      */
     public static ArrayList<Athlete> createOppTeam() {
         ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>();
-        oppositionAthletes.clear();
         for (int i = 0; i < numberOfAthletes; i++) {
             oppositionAthletes.add(new Athlete());
         }
@@ -71,6 +70,11 @@ public class OppositionTeam {
             teams.add(team);
         }
         return teams;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Athlete>> teams = generateOpposition();
+        System.out.println(teams);
     }
 }
 

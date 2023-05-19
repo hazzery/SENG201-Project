@@ -62,7 +62,7 @@ public class StadiumScreen extends GameScreenPanel {
         FooterPanel = new JPanel();
         FooterPanel.setBorder(marginBorder);
         FooterPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        this.add(FooterPanel, BorderLayout.SOUTH);
+        this.add(FooterPanel);
 
         startMatchButton = new JButton();
         startMatchButton.setText("Start Match");
