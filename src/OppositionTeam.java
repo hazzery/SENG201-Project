@@ -11,8 +11,6 @@ public class OppositionTeam {
 
     private static int numberOfAthletes = 4;
 
-    
-    static ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>(numberOfAthletes);
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
     static private Stack<String> oppositionNames;
@@ -57,18 +55,22 @@ public class OppositionTeam {
     /**
      * Creates an array of athletes with randomised stats
      */
-    public static ArrayList<Athlete> createTeam() {
+    public static ArrayList<Athlete> createOppTeam() {
+        ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>();
+        oppositionAthletes.clear();
         for (int i = 0; i < numberOfAthletes; i++) {
             oppositionAthletes.add(new Athlete());
         }
         return oppositionAthletes;
     }
 
-    public static String size() {
-        return oppositionAthletes.size() + "";
+    public static ArrayList<ArrayList<Athlete>> generateOpposition(){
+        ArrayList<ArrayList<Athlete>> teams = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            ArrayList<Athlete> team = createOppTeam();
+            teams.add(team);
+        }
+        return teams;
     }
-
-    
-
 }
 

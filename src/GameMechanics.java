@@ -25,6 +25,8 @@ public class GameMechanics<ActionListener> {
     public static boolean isGameOver = false;
     public static boolean isGameHard = false;
 
+    public static boolean isNextTurnAble = true;
+
     GameMechanics(int currentRound, ArrayList<Athlete> athleteList, ArrayList<Athlete>oppositionAthletes){
         this.oppositionAthletes = oppositionAthletes;
         this.athleteList = athleteList;
@@ -43,7 +45,7 @@ public class GameMechanics<ActionListener> {
     public static void playMatch(){
         if (isGameOver == false){
 
-            
+            isNextTurnAble = false;
             //below is testing code to test for functionality
             for (int i = 0; i < 30; i++){
                 endGameCondition();
@@ -57,6 +59,14 @@ public class GameMechanics<ActionListener> {
             System.out.println("Game Over");
         }    
     }
+
+    public static void endTurn(){
+        //method called at the end of a turn between athlete n opposition
+
+        isNextTurnAble = true;
+    }
+
+
 
     public static int attackType(){
         
@@ -142,8 +152,6 @@ public class GameMechanics<ActionListener> {
             //Testing code
 
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
-
-            
             if (oppositionAttack < 35){
                 double damage = attackLight(oppIndex, athIndex);
                 updateAthlete(damage * gameHard());
@@ -160,7 +168,7 @@ public class GameMechanics<ActionListener> {
             athIndex++;
             oppositionPlayTurn();
         }
-        playTurn();
+        endTurn();
     }
 
     

@@ -8,15 +8,23 @@ public class StadiumScreen extends GameScreenPanel {
 
     private JPanel mainPanel;
         private JPanel oppositionWrapperPanel;
-            private JPanel oppositionCollection;
-                private JLabel oppositionAthletesLabel;
-                private JPanel oppositionShelf;
+
+            //Opposition team GUI Elements
+            //TODO: Add Opposition Team GUI Elements
+            //Formate of a card with a team label (name), a team gen rating, and a button to select the team
+            private JLabel oppositionTeamLabel;
+            private JPanel oppositionShelf;
+            private JButton selectOppositionButton;
+
         private JPanel athletesWrapperPanel;
             private JLabel activeAthletesLabel;
             private JPanel activesShelf;
         
         private JPanel FooterPanel;
             private JButton startMatchButton;
+
+
+    private OppositionTeam[] oppositionTeams;
 
     @Override
     protected void initialize() {
@@ -33,32 +41,23 @@ public class StadiumScreen extends GameScreenPanel {
         oppositionWrapperPanel.setLayout(new BoxLayout(oppositionWrapperPanel, BoxLayout.X_AXIS));
         mainPanel.add(oppositionWrapperPanel);
 
-        oppositionCollection = new JPanel();
-        oppositionCollection.setBorder(marginBorder);
-        oppositionCollection.setLayout(new GridLayout(1, 4, 0, 0));
+        //TODO 4 Opposition teams are presented each with
 
-        oppositionAthletesLabel = new JLabel("Opposition");
-        oppositionWrapperPanel.add(oppositionAthletesLabel);
-        
-        //SOMETHING TODO WITH OPPOSITION ATHLETES
-        oppositionShelf = new JPanel();
-        oppositionShelf.setBorder(marginBorder);
-        oppositionShelf.setLayout(new BoxLayout(oppositionShelf, BoxLayout.X_AXIS));
+        //0: Name of team, just call OppositionTeam.getName()
+        //1: Quick Athlete Stats
+        //2: A button to select the team, then calls selectedOppositionTeam(OppositionTeam team)
+
+
 
         athletesWrapperPanel = new JPanel();
         athletesWrapperPanel.setBorder(marginBorder);
         athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
         mainPanel.add(athletesWrapperPanel);
 
-        activeAthletesLabel = new JLabel("Activated");
-        activeAthletesLabel.setOpaque(true);
-        athletesWrapperPanel.add(activeAthletesLabel);
 
-        //SOMETHING TODO WITH ACTIVE ATHLETETS
-        activesShelf = new JPanel();
-        activesShelf.setBorder(marginBorder);
-        activesShelf.setLayout(new BoxLayout(activesShelf, BoxLayout.X_AXIS));
 
+        
+           
     
         FooterPanel = new JPanel();
         FooterPanel.setBorder(marginBorder);
@@ -69,27 +68,21 @@ public class StadiumScreen extends GameScreenPanel {
         startMatchButton.setText("Start Match");
         startMatchButton.addActionListener(e -> startGame());
         FooterPanel.add(startMatchButton);
-    
     }
 
-    private Object startGame() {
-        return null;
-    }
-
-    /**
-     *
-     */
     @Override
     public void reload() {
         //oppositionShelf.reload(GameManager.team.getActives());
         //activesShelf.reload(GameManager.opposition.createTeam()); //THis creates another team....
     }
 
-
     StadiumScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.STADIUM, gameScreen);
     }
 
     
-
+    //method which opens match screen JPanel when start match button is clicked
+    private void startGame() {
+        // TODO add your handling code here:
+    }
 }

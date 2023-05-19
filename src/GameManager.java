@@ -27,15 +27,9 @@ public class GameManager {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
             athletes.add(new Athlete());
     }
-
-    //NEED TO DISCUSSSSSS
-
-    //Need to discuss implementation of the method,
-    //The method will pull a name for a team as well as a list of athletes for the team
-    //Athlete list is complete and are of the Athlete Objects.
-    public static ArrayList<Athlete> getOpposition() {     
-        ArrayList<Athlete> oppositionTeam = OppositionTeam.createTeam();        
-        return oppositionTeam;  
+    
+    public static void initializeOpposition(){
+        OppositionTeam.generateOpposition();
     }
 
     /**
