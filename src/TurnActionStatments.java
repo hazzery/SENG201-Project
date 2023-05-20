@@ -14,7 +14,7 @@ public class TurnActionStatments{
 
         attackNames = new Stack<String>();
         try {
-            File myObj = new File("Resources/AthleteNames.txt");
+            File myObj = new File("Resources/SkierAttackOptions.txt");
             attackScanner = new Scanner(myObj);
             while (attackScanner.hasNextLine()) {
                 attackNames.push(attackScanner.nextLine());
@@ -27,6 +27,11 @@ public class TurnActionStatments{
         }
     }
 
+    public String getAttackName() {
+        initAttackNameReader();
+        return attackNames.pop();
+    }
+
     static private boolean defeatScannerIsInitialised = false;
     static private Scanner defeatScanner;
     static private Stack<String> defeatNames;
@@ -36,7 +41,7 @@ public class TurnActionStatments{
 
         defeatNames = new Stack<String>();
         try {
-            File myObj = new File("Resources/AthleteNames.txt");
+            File myObj = new File("Resources/SkierDefeatOptions.txt");
             defeatScanner = new Scanner(myObj);
             while (defeatScanner.hasNextLine()) {
                 defeatNames.push(defeatScanner.nextLine());
@@ -49,6 +54,11 @@ public class TurnActionStatments{
         }
     }
 
+    public String getDefeatName() {
+        initDefeatNameReader();
+        return defeatNames.pop();
+    }
+
     static private boolean healScannerIsInitialised = false;
     static private Scanner healScanner;
     static private Stack<String> healNames;
@@ -59,7 +69,7 @@ public class TurnActionStatments{
 
         healNames = new Stack<String>();
         try {
-            File myObj = new File("Resources/AthleteNames.txt");
+            File myObj = new File("Resources/SkierHealOptions.txt");
             healScanner = new Scanner(myObj);
             while (healScanner.hasNextLine()) {
                 healNames.push(healScanner.nextLine());
@@ -70,5 +80,10 @@ public class TurnActionStatments{
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public String getHealName() {
+        initHealNameReader();
+        return healNames.pop();
     }
 }
