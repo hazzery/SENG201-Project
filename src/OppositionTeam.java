@@ -9,22 +9,21 @@ import java.util.ArrayList;
  */
 public class OppositionTeam extends Team {
 
-    private boolean nameScannerIsInitialised = false;
-    private Stack<String> oppositionNames;
+    private static boolean nameScannerIsInitialised = false;
+    private static Stack<String> oppositionNames;
 
     public OppositionTeam() {
         this("Unnamed team");
-        this.initOppositionNameReader();
         this.name = oppositionNames.pop();
     }
 
     public OppositionTeam(String name) {
         super(name);
+        this.initOppositionNameReader();
         for (int i = 0; i < TEAM_SIZE; i++) {
             Athlete athlete = new Athlete();
 
             //Crude State increase based on difficulty
-            athlete.stamina += 10 + GameManager.currentWeek() * GameManager.isGameHard();
             athlete.offence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
             athlete.defence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
             //Daniel this almost made me cry why did you make all the variables public
@@ -56,13 +55,14 @@ public class OppositionTeam extends Team {
     private void initOppositionNameReader() {
         if (nameScannerIsInitialised) return;
 
-        oppositionNames = new Stack<String>();
+        oppositionNames = new Stack<>();
         try {
             File myObj = new File("Resources/OppositionNames.txt");
             Scanner nameScanner = new Scanner(myObj);
-            while (nameScanner.hasNextLine()) {
+
+            while (nameScanner.hasNextLine())
                 oppositionNames.push(nameScanner.nextLine());
-            }
+
             nameScanner.close();
             nameScannerIsInitialised = true;
         } catch (FileNotFoundException e) {

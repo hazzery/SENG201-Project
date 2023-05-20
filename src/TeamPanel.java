@@ -13,7 +13,7 @@ public class TeamPanel extends JPanel {
         private JLabel rewardLabel;
 
     private final Team team;
-    public TeamPanel (Team team) {
+    public TeamPanel(Team team) {
         this.team = team;
         initialize();
         setVisible(true);

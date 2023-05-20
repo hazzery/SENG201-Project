@@ -13,8 +13,8 @@ public class Item implements Purchasable {
     private final int improvementAmount;
 
 
-    static private boolean nameScannerIsInitialised = false;
-    static private Stack<String> itemNames;
+    private static boolean nameScannerIsInitialised = false;
+    private static Stack<String> itemNames;
 
 
     /**

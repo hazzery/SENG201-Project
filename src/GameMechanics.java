@@ -272,9 +272,6 @@ public class GameMechanics<ActionListener> {
         }
     }
 
-
-
-
     public static double afterMatchReward(){
         double increase =  10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound);
         GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
