@@ -3,10 +3,12 @@ import javax.swing.*;
 public class WindowManager {
 
     private static JFrame mainWindow;
+
     private static SplashScreen splashScreen;
     private static InitScreen initScreen;
     private static TeamSelectScreen teamSelectScreen;
     static GameScreen gameScreen;
+    private static MatchWindow matchScreen;
 
     /**
      * Initialises the main window
@@ -61,5 +63,10 @@ public class WindowManager {
     public static void showGameScreen() {
         gameScreen = new GameScreen();
         setScreen(gameScreen);
+    }
+
+    public static void showMatchScreen() {
+        matchScreen = new MatchWindow();
+    	setScreen(matchScreen);
     }
 }

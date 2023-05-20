@@ -1,26 +1,19 @@
-import java.awt.EventQueue;
-import javax.swing.JFrame;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.Dialog.ModalExclusionType;
-import javax.swing.JButton;
 
-public class MatchWindow {
-
-	private JFrame jFrame;
+public class MatchWindow extends JPanel {
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MatchWindow window = new MatchWindow();
-					window.jFrame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		GameManager.initializeAthletes();
+		GameManager.initializeItems();
+		WindowManager.initializeMainWindow();
+		GameManager.setConfiguration("DanielsTeam", 12, false);
+		GameManager.startGame(GameManager.athletes, 10000);
+		WindowManager.showMatchScreen();
 	}
 
 	/**
@@ -34,30 +27,24 @@ public class MatchWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		jFrame = new JFrame();
-		jFrame.setTitle("THE GAME!!!!");
-		jFrame.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		jFrame.setBounds(0, 0, 1920, 1080);
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.getContentPane().setLayout(null);
+		this.setLayout(new BorderLayout(0, 0));
 
         //BOTTOM BUTTONS
-		
 		JButton btnNewButton = new JButton("Light Attack");
 		btnNewButton.setBounds(150, 850, 200, 40);
-		jFrame.getContentPane().add(btnNewButton);
+		this.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Heavy Attack");
 		btnNewButton_1.setBounds(450, 850, 200, 40);
-		jFrame.getContentPane().add(btnNewButton_1);
+		this.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Heal");
 		btnNewButton_2.setBounds(750, 850, 200, 40);
-		jFrame.getContentPane().add(btnNewButton_2);
+		this.add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("Next Turn");
 		btnNewButton_2_1.setBounds(1050, 850, 200, 40);
-		jFrame.getContentPane().add(btnNewButton_2_1);
+		this.add(btnNewButton_2_1);
 
 		// mainPanel = new JPanel();
         // mainPanel.setBorder(marginBorder);
