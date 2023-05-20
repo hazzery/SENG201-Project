@@ -36,7 +36,7 @@ public class GameMechanics<ActionListener> {
         playCMD();
     }
 
-    //This code is scuffed for testing purposes
+    //This code is scuffed for testing purposes (AUTO PLAYS)
     // public static void playMatch(){
     //     if (isGameOver == false){
     //         isNextTurnAble = false;
@@ -54,6 +54,8 @@ public class GameMechanics<ActionListener> {
     //     }    
     // }
 
+
+    //CMD/Basic GUI Game Play
     public static void playCMD() {
         // Display the popup box with three buttons
         int result = JOptionPane.showOptionDialog(null,
@@ -82,13 +84,7 @@ public class GameMechanics<ActionListener> {
         }
     }
 
-    // public static void endTurn(){
-    //     //method called at the end of a turn between athlete n opposition
-    //     isNextTurnAble = true;
-    // }
-
-
-
+    
     // public static int attackType(){
     //     //In GUI a player will click a button which will call attackType with the index of button pressed
     //     //0: light attack, 1: Heavy Attack, 2:Heal
@@ -145,14 +141,13 @@ public class GameMechanics<ActionListener> {
                 System.out.println("Athletes Win");
                 didAthletesWin = true;
             }
+            
             endOfGame();
         }
         
     }
 
     public static void endOfGame(){
-        //This method is called at the end of a game
-        //It will update the bank balance and player stats
         System.out.println("End of Game");
 
         if (didAthletesWin == true){
@@ -169,23 +164,26 @@ public class GameMechanics<ActionListener> {
             if (athleteList.get(i).current_health <= 0){
                 athleteList.get(i).stamina -= (int) Math.ceil(0.5 * GameManager.isGameHard() * getOppDiff());
                 if (athleteList.get(i).stamina <= 0){
+
                     athleteList.get(i).stamina = 0;
                     athleteList.get(i).current_health = 0;
                     athleteList.get(i).isInjured = true;
+                } else {
+                    athleteList.get(i).current_health = 100;
                 }
             }
-            athleteList.get(i).current_health = 100;
-        }
 
-        for (int i = 0; i < oppositionAthletes.size(); i++){
             if (athleteList.get(i).current_health > 0){
                 oppositionAthletes.get(i).current_health = 100;
+                int statIndex = ThreadLocalRandom.current().nextInt(0, 2);
+                int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
+                if (statIndex == 0) {
+                    athleteList.get(i).defence += statIncrease;
+                } else if (statIndex == 1) {
+                    athleteList.get(i).offence += statIncrease;
+                } 
             }
         }
-        
-
-
-
     }
 
 
