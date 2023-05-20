@@ -86,7 +86,7 @@ public class GameMechanics<ActionListener> {
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,
-                new String[]{"Light Attack", "Heavy Attack", "Heal", "End Game"},
+                new String[]{"Light Attack (90%)", "Heavy Attack (25%)", "Heal", "End Game"},
                 null);
 
         // Check which button was clicked and perform corresponding action
@@ -286,8 +286,12 @@ public class GameMechanics<ActionListener> {
     }
 
     public static void updateOpposition(double damage){
-        if (damage >= 0){
-           
+        if (damage == 0){
+            JOptionPane.showMessageDialog(null, 
+            "Your attack on opposition " + oppositionAthletes.get(oppIndex).getName()  + " missed");
+        }
+        
+        if (damage >= 0){  
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
@@ -305,8 +309,11 @@ public class GameMechanics<ActionListener> {
     }
     
     public static void updateAthlete(double damage){
+        if (damage == 0){
+            JOptionPane.showMessageDialog(null, 
+            "The attack on your athlete " + athleteList.get(athIndex).getName()  + " missed");
+        }
         if (damage >= 0){
-            
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
@@ -325,18 +332,25 @@ public class GameMechanics<ActionListener> {
     
     public static double attackLight(int i, int j){
         System.out.println("Light Attack");
-        double factor1 = 100 / (5* (100 - athleteList.get(i).getStamina() + 1));
-        double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence() + 1) + 1;
-        return (factor1 * factor2 + ThreadLocalRandom.current().nextInt(15, 25));
+        int chance = ThreadLocalRandom.current().nextInt(0, 10);
+        if (chance >= 1){
+            double factor1 = 100 / (5* (100 - athleteList.get(i).getStamina() + 1));
+            double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence() + 1) + 1;
+            return (factor1 * factor2 + ThreadLocalRandom.current().nextInt(15, 25));
+        } else {
+            return 0;
+        }
+        
     }
    
     public static double attackHeavy(int i, int j){
         System.out.println("Heavy Attack");
-        // double factorA = (athleteList.get(i).getStamina()/10) + 1;
-        // double factorB = (athleteList.get(i).getOffence() / athleteList.get(j).getDefence()) + 1;
-        // double factorC = ThreadLocalRandom.current().nextDouble(0.1, 3) * 7;
-        // return (factorA * factorB * factorC);
-        return 101;
+        int chance = ThreadLocalRandom.current().nextInt(0, 4);
+        if (chance == 2){
+            return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + athleteList.get(i).getStamina()) / 10) ;
+        } else {
+            return 0;
+        }
     }   
 
     public static double heal(int i){
