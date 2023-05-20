@@ -5,29 +5,48 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
- * Class the models a Opposition team
+ * Class that models an opposition team
  */
-public class OppositionTeam {
-
-    private int numberOfAthletes = 5;
+public class OppositionTeam extends Team {
 
     private boolean nameScannerIsInitialised = false;
-    private Scanner nameScanner;
     private Stack<String> oppositionNames;
 
-    private String name;
-    
-    
-    /**
-     * Returns the name of the Opposition Team 
-     * Done by collecting a name from {@link OppositionNames.txt} through the {@link initOppositionNameReader()} method
-     * 
-     * @return the name of the Opposition Team
-     */
-    public String getName() {
+    public OppositionTeam() {
+        this("Unnamed team");
         this.initOppositionNameReader();
         this.name = oppositionNames.pop();
-        return name;
+    }
+
+    public OppositionTeam(String name) {
+        super(name);
+        for (int i = 0; i < TEAM_SIZE; i++) {
+            Athlete athlete = new Athlete();
+
+            //Crude State increase based on difficulty
+            athlete.stamina += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            athlete.offence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            athlete.defence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            //Daniel this almost made me cry why did you make all the variables public
+
+            actives.add(athlete);
+        }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int size() {
+        return actives.size();
+    }
+
+    /**
+     * @return 
+     */
+    @Override
+    public Athlete[] getAthletes() {
+        return actives.toArray(new Athlete[0]);
     }
 
     /**
@@ -40,7 +59,7 @@ public class OppositionTeam {
         oppositionNames = new Stack<String>();
         try {
             File myObj = new File("Resources/OppositionNames.txt");
-            nameScanner = new Scanner(myObj);
+            Scanner nameScanner = new Scanner(myObj);
             while (nameScanner.hasNextLine()) {
                 oppositionNames.push(nameScanner.nextLine());
             }
@@ -52,26 +71,10 @@ public class OppositionTeam {
         }
     }
 
-    /**
-     * Creates an array of athletes with randomised stats
-     */
-    public ArrayList<Athlete> createOppTeam() {
-        ArrayList<Athlete> oppositionAthletes = new ArrayList<Athlete>();
-        for (int i = 0; i < numberOfAthletes; i++) {
-            oppositionAthletes.add(new Athlete());
-            //Crude State increase based on difficulty
-            oppositionAthletes.get(i).stamina += 10 + GameManager.currentWeek() * GameManager.isGameHard();
-            oppositionAthletes.get(i).offence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
-            oppositionAthletes.get(i).defence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
-        }
-        return oppositionAthletes;
-    }
-
-    public ArrayList<ArrayList<Athlete>> generateOpposition(){
-        ArrayList<ArrayList<Athlete>> teams = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            ArrayList<Athlete> team = createOppTeam();
-            teams.add(team);
+    public static OppositionTeam[] generateOppositions(int number) {
+        OppositionTeam[] teams = new OppositionTeam[number];
+        for (int i = 0; i < number; i++) {
+            teams[i] = new OppositionTeam();
         }
         return teams;
     }

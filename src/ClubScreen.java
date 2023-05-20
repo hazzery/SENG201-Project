@@ -62,7 +62,7 @@ public class ClubScreen extends GameScreenPanel {
             System.out.println("Successfully reserved " + athlete.getName() + " and swapped with " + swap.getName());
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(null,
-                    "Cannot have more than " + Team.MAX_RESERVES + " reserves");
+                    "Cannot have more than " + PlayerTeam.MAX_RESERVES + " reserves");
             return;
         }
 
@@ -105,7 +105,7 @@ public class ClubScreen extends GameScreenPanel {
     private void selectAthleteForItem(ActionEvent event) {
         Athlete athlete = (Athlete) JOptionPane.showInputDialog(this,
                 "Select an athlete to use this item on", "Use Item", JOptionPane.PLAIN_MESSAGE,
-                null, GameManager.team.getAll(), null);
+                null, GameManager.team.getAthletes(), null);
 
         if (athlete != null) {
             Item item = (Item) ((PurchasablePanel) ((JButton) event.getSource()).getParent()).getPurchasable();
