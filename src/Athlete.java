@@ -228,4 +228,9 @@ public class Athlete implements Purchasable {
         this.stamina = 100;
         this.isInjured = false;
     }
+
+    public void trainAthlete(){
+        this.offence += 10;
+        this.defence += 10;
+    }
 }
