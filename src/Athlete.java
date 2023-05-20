@@ -24,7 +24,7 @@ public class Athlete implements Purchasable {
     static private Scanner nameScanner;
     static private Stack<String> athleteNames;
 
-    ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<PurchasablePanel>();
+    ArrayList<DisplayablePanel> displayablePanels = new ArrayList<DisplayablePanel>();
 
     /**
 	 * Represents the stats of an {@link Athlete}
@@ -34,6 +34,15 @@ public class Athlete implements Purchasable {
         OFFENCE,
         DEFENCE,
         CURRENT_HEALTH
+    }
+
+    public int getStat(StatType stat) {
+        return switch (stat) {
+            case STAMINA -> this.stamina;
+            case OFFENCE -> this.offence;
+            case DEFENCE -> this.defence;
+            case CURRENT_HEALTH -> this.current_health;
+        };
     }
 
 
@@ -209,13 +218,13 @@ public class Athlete implements Purchasable {
             default -> throw new IllegalStateException("Unexpected value: " + item.getStatType());
         }
 
-        for (PurchasablePanel panel : purchasablePanels) {
+        for (DisplayablePanel panel : displayablePanels) {
             panel.update(item.getStatType().name().toLowerCase(), newStatValue);
         }
     }
 
-    public void registerPanel(PurchasablePanel panel) {
-        purchasablePanels.add(panel);
+    public void registerPanel(DisplayablePanel panel) {
+        displayablePanels.add(panel);
     }
 
     public String toString() {

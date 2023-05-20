@@ -17,8 +17,8 @@ public class TeamSelectScreen extends JPanel {
     private JPanel athleteSelectionPanel;
         private JLabel selectAthletesLabel;
         private JPanel buttonsWrapperPanel;
-            private PurchasablesShelf selectableAthletesShelf;
-            private PurchasablesShelf selectedAthletesShelf;
+            private Shelf selectableAthletesShelf;
+            private Shelf selectedAthletesShelf;
     private JPanel FooterPanel;
         private JButton resetAthletesButton;
         private JButton acceptAthletesButton;
@@ -57,12 +57,12 @@ public class TeamSelectScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-        selectableAthletesShelf = new PurchasablesShelf(athletePool, "Available", this::selectButtonText, this::selectAthlete);
+        selectableAthletesShelf = new Shelf<>(athletePool, "Available", this::selectButtonText, this::selectAthlete);
         buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
+        selectedAthletesShelf = new Shelf<>(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
         FooterPanel = new JPanel();
@@ -91,8 +91,8 @@ public class TeamSelectScreen extends JPanel {
     }
 
     private void selectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         if (bankBalance < athlete.getContractPrice()) {
             JOptionPane.showMessageDialog(this, "You cannot afford this athlete");
@@ -131,8 +131,8 @@ public class TeamSelectScreen extends JPanel {
      * @param event The action event that triggered this method
      */
     private void unselectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         bankBalance += athlete.getContractPrice();
         bankBalanceLabel.setText("You Have: $" + bankBalance);

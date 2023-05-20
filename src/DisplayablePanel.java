@@ -4,23 +4,23 @@ import java.util.Map;
 import javax.swing.*;
 import java.awt.*;
 
-public class PurchasablePanel extends JPanel {
+public class DisplayablePanel extends JPanel {
     private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
     private final HashMap<String, JLabel> statLabels;
-    private final Purchasable purchasable;
+    private final Displayable displayable;
 
     private boolean hasButton = false;
 
-    public PurchasablePanel(Purchasable purchasable) {
-        this.purchasable = purchasable;
+    public DisplayablePanel(Displayable displayable) {
+        this.displayable = displayable;
 
-        if (purchasable instanceof Athlete athlete)
+        if (displayable instanceof Athlete athlete)
             athlete.registerPanel(this);
 
         this.setLayout(new GridLayout(0, 1, 0, 0));
         this.setBorder(marginBorder);
 
-        JLabel nameLabel = new JLabel(purchasable.getName());
+        JLabel nameLabel = new JLabel(displayable.getName());
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nameLabel.setOpaque(true);
         nameLabel.setBackground(Color.LIGHT_GRAY);
@@ -28,7 +28,7 @@ public class PurchasablePanel extends JPanel {
 
         statLabels = new HashMap<>();
 
-        for (Map.Entry<String, String> entry : purchasable.getStats().entrySet()) {
+        for (Map.Entry<String, String> entry : displayable.getStats().entrySet()) {
             statLabels.put(entry.getKey(), new JLabel(entry.getValue() + ' ' + entry.getKey()));
             statLabels.get(entry.getKey()).setHorizontalAlignment(SwingConstants.CENTER);
             this.add(statLabels.get(entry.getKey()));
@@ -49,16 +49,16 @@ public class PurchasablePanel extends JPanel {
         statLabels.get(titleCase).setText(value + ' ' + stat);
     }
 
-    public Purchasable getPurchasable() {
-        return purchasable;
+    public Displayable getDisplayable() {
+        return displayable;
     }
 
-    public PurchasablesShelf getShelf() {
-        return (PurchasablesShelf) getParent().getParent();
+    public Shelf<Displayable> getShelf() {
+        return (Shelf<>) getParent().getParent();
     }
 
     @Override
     public String toString() {
-        return "PurchasablePanel {" + purchasable + "}  ";
+        return "PurchasablePanel {" + displayable + "}  ";
     }
 }

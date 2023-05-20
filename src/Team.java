@@ -1,10 +1,13 @@
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.ArrayList;
 
 /**
  * Class the models a team
  */
-public class Team {
+public class Team implements Displayable{
     public static final int TEAM_SIZE = 5;
     public static final int MAX_RESERVES = 5;
     public static final int MAXIMUM_SIZE = TEAM_SIZE + MAX_RESERVES;
@@ -30,6 +33,17 @@ public class Team {
 	 */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * @return 
+     */
+    @Override
+    public Map<String, String> getStats() {
+        return Arrays.stream(Athlete.StatType.values())
+                .collect(Collectors.toMap(
+                String::valueOf,
+                value -> String.valueOf(averageStat(value))));
     }
 
     public int size() {
@@ -122,5 +136,9 @@ public class Team {
 
     public Athlete getActive(int index) {
         return this.actives.get(index);
+    }
+
+    protected double averageStat(Athlete.StatType stat) {
+        return this.actives.stream().mapToInt(athlete -> athlete.getStat(stat)).average().orElse(0);
     }
 }

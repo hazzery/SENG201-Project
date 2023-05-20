@@ -26,7 +26,7 @@ public class OppositionTeam {
      */
     public String getName() {
         this.initOppositionNameReader();
-        this.name = oppositionNames.pop();
+        this.name = oppositionNames.pop().trim();
         return name;
     }
 
@@ -37,7 +37,7 @@ public class OppositionTeam {
     private void initOppositionNameReader() {
         if (nameScannerIsInitialised) return;
 
-        oppositionNames = new Stack<String>();
+        oppositionNames = new Stack<>();
         try {
             File myObj = new File("Resources/OppositionNames.txt");
             nameScanner = new Scanner(myObj);
@@ -46,9 +46,9 @@ public class OppositionTeam {
             }
             nameScanner.close();
             nameScannerIsInitialised = true;
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+        } catch (FileNotFoundException error) {
+            System.out.println(error.getMessage());
+            error.printStackTrace();
         }
     }
 

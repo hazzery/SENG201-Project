@@ -1,9 +1,5 @@
-import java.util.Map;
-
-public interface Purchasable {
+public interface Purchasable extends Displayable {
     String getName();
-    Map<String, String> getStats();
-
     int getContractPrice();
     int getSellBackPrice();
 }

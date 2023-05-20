@@ -7,9 +7,9 @@ public class ClubScreen extends GameScreenPanel {
 
     // Indentation of components below shows hierarchy of elements on the screen
     private JPanel mainPanel;
-        private PurchasablesShelf activesShelf;
-        private PurchasablesShelf reservesShelf;
-        private PurchasablesShelf itemsShelf;
+        private Shelf activesShelf;
+        private Shelf reservesShelf;
+        private Shelf itemsShelf;
 
     @Override
     protected void initialize() {
@@ -20,13 +20,13 @@ public class ClubScreen extends GameScreenPanel {
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);
 
-        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Activated", p->"Reserve", this::reserveAthlete);
+        activesShelf = new Shelf(GameManager.team.getActives(), "Activated", p->"Reserve", this::reserveAthlete);
         mainPanel.add(activesShelf);
 
-        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Reserved", p->"Activate", this::activateAthlete);
+        reservesShelf = new Shelf(GameManager.team.getReserves(), "Reserved", p->"Activate", this::activateAthlete);
         mainPanel.add(reservesShelf);
 
-        itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Inventory", p->"Use", this::selectAthleteForItem);
+        itemsShelf = new Shelf(GameManager.getItems(), "Inventory", p->"Use", this::selectAthleteForItem);
         mainPanel.add(itemsShelf);
     }
 
@@ -52,8 +52,8 @@ public class ClubScreen extends GameScreenPanel {
         if (swap == null)
             return;
 
-        PurchasablePanel panel = (PurchasablePanel)(((JButton)event.getSource()).getParent());
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel)(((JButton)event.getSource()).getParent());
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         System.out.println("Reserving " + athlete.getName() + " and swapping with " + swap.getName());
 
@@ -82,8 +82,8 @@ public class ClubScreen extends GameScreenPanel {
         if (swap == null)
             return;
 
-        PurchasablePanel panel = (PurchasablePanel)(((JButton)event.getSource()).getParent());
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel)(((JButton)event.getSource()).getParent());
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         System.out.println("Activating " + athlete.getName() + " and swapping with " + swap.getName());
 
@@ -108,7 +108,7 @@ public class ClubScreen extends GameScreenPanel {
                 null, GameManager.team.getAll(), null);
 
         if (athlete != null) {
-            Item item = (Item) ((PurchasablePanel) ((JButton) event.getSource()).getParent()).getPurchasable();
+            Item item = (Item) ((DisplayablePanel) ((JButton) event.getSource()).getParent()).getDisplayable();
             GameManager.useItem(item, athlete);
 
             itemsShelf.removePanel(item);

@@ -1,15 +1,16 @@
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Function;
 
 public class MarketScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     // Indentation of components below shows hierarchy of elements on the screen
   //protected JPanel contentPanel
-        private PurchasablesShelf athletesShelf;
-        private PurchasablesShelf itemsShelf;
-        private PurchasablesShelf teamShelf;
+        private Shelf athletesShelf;
+        private Shelf itemsShelf;
+        private Shelf teamShelf;
 
     private final int WEEKLY_POOL_SIZE = 5;
     private Athlete[] weeklyAthletePool;
@@ -22,13 +23,13 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", Utilities::purchaseButtonText, this::purchase);
+        athletesShelf = new Shelf<>(weeklyAthletePool, "Athletes ", Utilities::purchaseButtonText, this::purchase);
         contentPanel.add(athletesShelf);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", Utilities::purchaseButtonText, this::purchase);
+        itemsShelf = new Shelf<>(weeklyItemPool, "Items    ", Utilities::purchaseButtonText, this::purchase);
         contentPanel.add(itemsShelf);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.athletesAndItems(), "Inventory", Utilities::sellButtonText, this::sell);
+        teamShelf = new Shelf<>(GameManager.team.athletesAndItems(), "Inventory", Utilities::sellButtonText, this::sell);
         contentPanel.add(teamShelf);
     }
 
@@ -43,8 +44,8 @@ public class MarketScreen extends GameScreenPanel {
     private void purchase(ActionEvent event)  {
         System.out.println("purchase");
 
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Purchasable purchasable = panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel) ((JButton) event.getSource()).getParent();
+        Purchasable purchasable = (Purchasable) panel.getDisplayable();
 
         if (purchasable instanceof Athlete athlete) {
             purchaseAthlete(athlete);
@@ -58,7 +59,7 @@ public class MarketScreen extends GameScreenPanel {
             return;
         }
 
-        panel.getShelf().removePanel(panel);
+        ((Shelf<Displayable>)panel.getParent().getParent()).removePanel(panel);
 
         // Delete the purchasable from the weekly pool
         for (int i = 0; i < weeklyItemPool.length; i++) {
@@ -71,8 +72,8 @@ public class MarketScreen extends GameScreenPanel {
 
     private void sell(ActionEvent event) {
         System.out.println("sell");
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Purchasable purchasable = panel.getPurchasable();
+        DisplayablePanel panel = (DisplayablePanel) ((JButton) event.getSource()).getParent();
+        Purchasable purchasable = (Purchasable) panel.getDisplayable();
 
         try {
             GameManager.sell(purchasable);

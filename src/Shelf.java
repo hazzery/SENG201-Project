@@ -1,12 +1,11 @@
 import java.awt.event.ActionListener;
 import java.util.function.Function;
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
-public class PurchasablesShelf extends JPanel {
+public class Shelf<DisplayableType extends Displayable> extends JPanel {
     private final String shelfName;
-    private Function<Purchasable, String> getButtonText = null;
+    private Function<DisplayableType, String> getButtonText = null;
     private ActionListener actionListener = null;
     private boolean isOwned;
     private final JPanel shelfPanel;
@@ -15,7 +14,7 @@ public class PurchasablesShelf extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
-    public PurchasablesShelf(Purchasable[] purchasables, String shelfName, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
+    public Shelf(DisplayableType[] displayables, String shelfName, Function<DisplayableType, String> getButtonText, ActionListener actionListener) {
         this.shelfName = shelfName;
         this.getButtonText = getButtonText;
         this.actionListener = actionListener;
@@ -35,16 +34,16 @@ public class PurchasablesShelf extends JPanel {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(shelfScrollPane);
 
-        for (Purchasable purchasable : purchasables) {
-            addPanel(purchasable);
+        for (DisplayableType displayable : displayables) {
+            addPanel(displayable);
         }
         setVisible(true);
     }
 
-    public void removePanel(Purchasable purchasable) {
+    public void removePanel(DisplayableType displayable) {
         for (Component component : shelfPanel.getComponents()) {
-            PurchasablePanel panel = (PurchasablePanel) component;
-            if (panel.getPurchasable().equals(purchasable)) {
+            DisplayablePanel panel = (DisplayablePanel) component;
+            if (panel.getDisplayable().equals(displayable)) {
                 shelfPanel.remove(panel);
                 shelfPanel.revalidate();
                 shelfPanel.repaint();
@@ -53,36 +52,32 @@ public class PurchasablesShelf extends JPanel {
         }
     }
 
-    public void removePanel(PurchasablePanel panel) {
+    public void removePanel(DisplayablePanel panel) {
         shelfPanel.remove(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();
     }
 
-    public void addPanel(Purchasable purchasable) {
-        PurchasablePanel panel = new PurchasablePanel(purchasable);
-        String buttonText = getButtonText.apply(purchasable);
+    public void addPanel(DisplayableType displayable) {
+        DisplayablePanel panel = new DisplayablePanel(displayable);
+        String buttonText = getButtonText.apply(displayable);
         panel.withCustomButton(buttonText, actionListener);
         shelfPanel.add(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();
     }
 
-    public void addPanel(PurchasablePanel panel) {
+    public void addPanel(DisplayablePanel panel) {
         shelfPanel.add(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();
     }
 
-    public void reload(ArrayList<? extends Purchasable> purchasables) {
-        reload(purchasables.toArray(new Purchasable[0]));
-    }
-
-    public void reload(Purchasable[] purchasables) {
+    public void reload(DisplayableType[] displayables) {
         shelfPanel.removeAll();
-        for (Purchasable purchasable : purchasables) {
-            if (purchasable != null) {
-                addPanel(purchasable);
+        for (DisplayableType displayable : displayables) {
+            if (displayable != null) {
+                addPanel(displayable);
             }
         }
     }
