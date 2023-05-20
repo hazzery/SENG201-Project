@@ -222,4 +222,10 @@ public class Athlete implements Purchasable {
     public String toString() {
         return this.nickName;
     }
+
+    public void byeWeek() {
+        this.current_health = 100;
+        this.stamina = 100;
+        this.isInjured = false;
+    }
 }

@@ -102,7 +102,10 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
-
+        for (int i = 0; i < Team.TEAM_SIZE; i++) {
+            team.getActive(i).byeWeek();
+        }
+        
         currentWeek++;
     }
 
