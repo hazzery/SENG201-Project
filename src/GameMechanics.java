@@ -191,7 +191,7 @@ public class GameMechanics<ActionListener> {
 
     public static double afterMatchReward(){
         double increase =  10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound);
-        GameManager.bankBalance += increase;
+        GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
         return increase;
     }
 
@@ -282,16 +282,4 @@ public class GameMechanics<ActionListener> {
         }
         return oppositionDiff / (oppositionAthletes.size() * 3);
     }
-
-    public static void afterMatchReward(){
-        GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
-    }
-
-    public static void playerInjury(){
-        //Take Player Stanima off
-        athleteList.get(athIndex).stamina -= 0.5 * getOppDiff();
-    }
-
-
-
 }
