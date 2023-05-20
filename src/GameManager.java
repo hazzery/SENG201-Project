@@ -4,13 +4,17 @@ import java.util.ArrayList;
 public class GameManager {
     private static int seasonLength;
     private static boolean hardMode;
+
     public static PlayerTeam team;
 
+    private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
 
     private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
     public static OppositionTeam oppositionTeam;
+    public static RandomEvent randomEvent;
+    public static Team team;
 
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
@@ -98,11 +102,25 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
-        for (int i = 0; i < Team.TEAM_SIZE; i++) {
-            team.getActive(i).byeWeek();
-        }
-        
+        addFunds((int) (300 - 100 * isGameHard()));
         currentWeek++;
+    }
+
+    /**
+     * 
+     */
+    //TODO IMPLEMENT THIS CODE 
+    public static void byeWeek(){
+        if (toTrain == true){
+            //TODO Add code which allows a Athlete to be trained
+            int j = 0; //This defult trains the first athlete in active list, however this should be changed to allow the user to select which athlete to train
+            team.getActive(j).trainAthlete();
+        } else {
+            for (int i = 0; i < Team.TEAM_SIZE; i++) {
+                team.getActive(i).byeWeek();
+            }
+        }
+        randomEvent.randomEvent();
     }
 
     public static void addFunds(int funds) {
