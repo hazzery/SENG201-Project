@@ -30,7 +30,7 @@ public class GameMechanics<ActionListener> {
     //public static boolean isNextTurnAble = true;
 
     public static void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
-        GameMechanics.oppositionAthletes = (ArrayList<Athlete>) Arrays.asList(oppositionAthletes); //
+        GameMechanics.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
         GameMechanics.athleteList = athleteList; //Team.getActives();
         GameMechanics.currentRound = currentRound; //GameManager.currentWeek();
         isGameOver = false;
