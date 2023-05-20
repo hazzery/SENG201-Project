@@ -11,7 +11,7 @@ public class Run {
             athleteList.add(new Athlete());
         }
         
-        Team team = new Team("Team");
+        new Team("Team");
         OppositionTeam oppositionTeam = new OppositionTeam();
         GameManager.initializeAthletes();
         ArrayList<Athlete> oppositionAthletes = oppositionTeam.createOppTeam();
