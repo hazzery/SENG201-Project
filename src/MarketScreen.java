@@ -11,7 +11,6 @@ public class MarketScreen extends GameScreenPanel {
         private PurchasablesShelf itemsShelf;
         private PurchasablesShelf teamShelf;
 
-
     private final int WEEKLY_POOL_SIZE = 5;
     private Athlete[] weeklyAthletePool;
     private Item[] weeklyItemPool;
@@ -31,7 +30,6 @@ public class MarketScreen extends GameScreenPanel {
 
         teamShelf = new PurchasablesShelf(GameManager.team.athletesAndItems(), "Inventory", Utilities::sellButtonText, this::sell);
         contentPanel.add(teamShelf);
-
     }
 
     public MarketScreen(GameScreen gameScreen) {
@@ -161,6 +159,6 @@ public class MarketScreen extends GameScreenPanel {
     public void reload() {
         athletesShelf.reload(weeklyAthletePool);
         itemsShelf.reload(weeklyItemPool);
-        teamShelf.reload(GameManager.team.getAll());
+        teamShelf.reload(GameManager.team.athletesAndItems());
     }
 }

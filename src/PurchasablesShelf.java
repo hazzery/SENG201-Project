@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PurchasablesShelf extends JPanel {
-    private String shelfName;
+    private final String shelfName;
     private Function<Purchasable, String> getButtonText = null;
     private ActionListener actionListener = null;
     private boolean isOwned;
@@ -29,7 +29,7 @@ public class PurchasablesShelf extends JPanel {
 
         shelfPanel = new JPanel();
         shelfPanel.setBorder(marginBorder);
-        shelfPanel.setLayout(new GridLayout(1, 0, 2,0));
+        shelfPanel.setLayout(new GridLayout(1, 0, 5,0));
 
         JScrollPane shelfScrollPane = new JScrollPane(shelfPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -59,6 +59,6 @@ public class PurchasablePanel extends JPanel {
 
     @Override
     public String toString() {
-        return "PurchasablePanel{" + purchasable + "}  ";
+        return "PurchasablePanel {" + purchasable + "}  ";
     }
 }
