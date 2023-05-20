@@ -12,6 +12,8 @@ public class GameMechanics<ActionListener> {
     public static Team team;
     public static GameManager gameManager;
     public static OppositionTeam oppositionTeam;
+    public static TurnActionStatments turnActionStatments = new TurnActionStatments();
+
     private static ArrayList<Athlete> oppositionAthletes;
     private static ArrayList<Athlete> athleteList;
 
@@ -145,9 +147,9 @@ public class GameMechanics<ActionListener> {
 
             //Testing code
             System.out.println();  
-            System.out.println("Opposition " + oppIndex + " attacks " + athIndex + "");
+            System.out.println("Opposition " + oppIndex + turnActionStatments.getAttackName() + athIndex + "");
             //Testing code
-            JOptionPane.showMessageDialog(null, "Opposition " + oppositionAthletes.get(oppIndex).getName() + " attacks " + athleteList.get(athIndex).getName() + "");
+            JOptionPane.showMessageDialog(null, "Opposition " + oppositionAthletes.get(oppIndex).getName() + turnActionStatments.getAttackName() + athleteList.get(athIndex).getName() + "");
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
                 double damage = attackLight(oppIndex, athIndex);
@@ -193,13 +195,13 @@ public class GameMechanics<ActionListener> {
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
             System.out.println("Athlete " + athIndex + " is dead");
-            JOptionPane.showMessageDialog(null, "Athlete " + athleteList.get(athIndex).getName() + " is dead");
+            JOptionPane.showMessageDialog(null, "Athlete " + athleteList.get(athIndex).getName() + turnActionStatments.getDefeatName());
             
             athIndex++;
         }
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() <= 0){
             System.out.println("Opposition " + oppIndex + " is dead");
-            JOptionPane.showMessageDialog(null, "Opposition " + oppositionAthletes.get(oppIndex).getName() + " is dead");
+            JOptionPane.showMessageDialog(null, "Opposition " + oppositionAthletes.get(oppIndex).getName() + turnActionStatments.getDefeatName());
             
             oppIndex++;
         }
@@ -289,14 +291,14 @@ public class GameMechanics<ActionListener> {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
-            "Opposition " + oppositionAthletes.get(oppIndex).getName() + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
+            "Opposition " + oppositionAthletes.get(oppIndex).getName() + turnActionStatments.getAttackName() + " and " + damage + " damage was delt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
             );
         } else {
             
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
-            "Athlete " + athleteList.get(athIndex).getName() + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
+            "Athlete " + athleteList.get(athIndex).getName() + turnActionStatments.getHealName() + " and " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
             );
         }
         
@@ -311,14 +313,14 @@ public class GameMechanics<ActionListener> {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
-            "Athlete " + athleteList.get(athIndex).getName() + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
+            "Athlete " + athleteList.get(athIndex).getName() + turnActionStatments.getAttackName() + " and " + damage + " damage was delt" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
             );
         } else {
             
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " heals " + damage + " health" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             JOptionPane.showMessageDialog(null, 
-            "Opposition " + oppositionAthletes.get(oppIndex).getName() + " heals " + damage + " health" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
+            "Opposition " + oppositionAthletes.get(oppIndex).getName() + turnActionStatments.getHealName() + " and " + damage + " damage was reversed" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
             );
         }
         
