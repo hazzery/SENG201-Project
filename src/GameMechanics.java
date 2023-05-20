@@ -116,7 +116,7 @@ public class GameMechanics<ActionListener> {
 
     
     public static void oppositionPlayTurn(){ 
-        // if (isGameOver == true){return;}
+        if (isGameOver == true){return;}
         // if (athIndex >= athleteList.size()){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
 
@@ -150,7 +150,27 @@ public class GameMechanics<ActionListener> {
         }
         System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
         endGameCondition();
-        playCMD();
+        nextTurn();
+    }
+
+    public static void nextTurn(){
+        int result = JOptionPane.showOptionDialog(null,
+                "Next Turn or Quit:",
+                "Turn???",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Next Turn", "Quit"},
+                null);
+
+        switch (result){
+            case 0:
+                playCMD();
+                break;
+            case 1:
+                System.exit(0);
+                break;
+        }
     }
 
     public static void checkHealth(){
