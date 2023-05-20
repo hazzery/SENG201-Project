@@ -1,3 +1,4 @@
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.function.Function;
 import java.util.ArrayList;
@@ -15,6 +16,14 @@ public class PurchasablesShelf extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
+    /**
+     * Initialise a new "shelf" to display a group of {@link Purchasable}s
+     * @param purchasables The {@link Purchasable}s to display
+     * @param shelfName A name for the "shelf" to display next to the {@link PurchasablePanel}s
+     * @param getButtonText A function to get the text for the button on each {@link PurchasablePanel}
+     * @param actionListener A function that takes an {@link ActionEvent} as its only parameter.
+     *                       Called when a button on a {@link PurchasablePanel} is pressed
+     */
     public PurchasablesShelf(Purchasable[] purchasables, String shelfName, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
         this.shelfName = shelfName;
         this.getButtonText = getButtonText;
@@ -31,7 +40,7 @@ public class PurchasablesShelf extends JPanel {
         shelfPanel.setBorder(marginBorder);
         shelfPanel.setLayout(new GridLayout(1, 0, 5,0));
 
-        JScrollPane shelfScrollPane = new JScrollPane(shelfPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
+        JScrollPane shelfScrollPane = new JScrollPane(shelfPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(shelfScrollPane);
 
@@ -41,6 +50,10 @@ public class PurchasablesShelf extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Removes the {@link PurchasablePanel} that displays the given {@link Purchasable}
+     * @param purchasable The {@link Purchasable} whose {@link PurchasablePanel} should be removed
+     */
     public void removePanel(Purchasable purchasable) {
         for (Component component : shelfPanel.getComponents()) {
             PurchasablePanel panel = (PurchasablePanel) component;
@@ -53,12 +66,20 @@ public class PurchasablesShelf extends JPanel {
         }
     }
 
+    /**
+     * Removes the given {@link PurchasablePanel} from the shelf
+     * @param panel The {@link PurchasablePanel} to remove
+     */
     public void removePanel(PurchasablePanel panel) {
         shelfPanel.remove(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();
     }
 
+    /**
+     * Adds a {@link PurchasablePanel} to the shelf to display the given {@link Purchasable}
+     * @param purchasable The {@link Purchasable} to display
+     */
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);
         String buttonText = getButtonText.apply(purchasable);
@@ -68,16 +89,28 @@ public class PurchasablesShelf extends JPanel {
         shelfPanel.repaint();
     }
 
+    /**
+     * Places the provided {@link PurchasablePanel} on the shelf
+     * @param panel The {@link PurchasablePanel} to add
+     */
     public void addPanel(PurchasablePanel panel) {
         shelfPanel.add(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();
     }
 
+    /**
+     * Reloads the shelf to display the given {@link Purchasable}s
+     * @param purchasables The {@link Purchasable}s to display
+     */
     public void reload(ArrayList<? extends Purchasable> purchasables) {
         reload(purchasables.toArray(new Purchasable[0]));
     }
 
+    /**
+     * Reloads the shelf to display the given {@link Purchasable}s
+     * @param purchasables The {@link Purchasable}s to display
+     */
     public void reload(Purchasable[] purchasables) {
         shelfPanel.removeAll();
         for (Purchasable purchasable : purchasables) {

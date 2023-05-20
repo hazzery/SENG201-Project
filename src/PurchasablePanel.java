@@ -11,6 +11,10 @@ public class PurchasablePanel extends JPanel {
 
     private boolean hasButton = false;
 
+    /**
+     * Initialise a new panel to provide a visual representation of a {@link Purchasable}
+     * @param purchasable The {@link Purchasable} to represent
+     */
     public PurchasablePanel(Purchasable purchasable) {
         this.purchasable = purchasable;
 
@@ -35,6 +39,12 @@ public class PurchasablePanel extends JPanel {
         }
     }
 
+    /**
+     * Adds a button to the bottom of the panel
+     * @param buttonText the text to display on the button
+     * @param actionListener the action to perform when the button is clicked
+     * @throws IllegalStateException if this panel already has a button
+     */
     public void withCustomButton(String buttonText, ActionListener actionListener) throws IllegalStateException {
         if (hasButton)
             throw new IllegalStateException("This panel already has a purchase button.");
@@ -44,19 +54,37 @@ public class PurchasablePanel extends JPanel {
         this.add(button);
     }
 
+    /**
+     * Updates the value of a stat label on the GUI
+     * @param stat the particular stat to update
+     * @param value the new value of the stat
+     */
     public void update(String stat, String value) {
         String titleCase = stat.substring(0, 1).toUpperCase() + stat.substring(1);
         statLabels.get(titleCase).setText(value + ' ' + stat);
     }
 
+    /**
+     * Gets the {@link Purchasable} that this panel represents.
+     * @return the {@link Purchasable} that this panel represents
+     */
     public Purchasable getPurchasable() {
         return purchasable;
     }
 
+    /**
+     * Gets the {@link PurchasablesShelf} that this panel is a part of.
+     * @return the {@link PurchasablesShelf} that this panel sits within
+     */
     public PurchasablesShelf getShelf() {
-        return (PurchasablesShelf) getParent().getParent();
+        // PurchasablePanel -> JPanel -> JScrollPane -> JPanel -> PurchasablesShelf
+        return (PurchasablesShelf) this.getParent().getParent().getParent().getParent();
     }
 
+    /**
+     * Creates a nicely formatted string representation of this object.
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         return "PurchasablePanel {" + purchasable + "}  ";

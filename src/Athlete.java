@@ -24,7 +24,7 @@ public class Athlete implements Purchasable {
     static private Scanner nameScanner;
     static private Stack<String> athleteNames;
 
-    ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<PurchasablePanel>();
+    ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
 
     /**
 	 * Represents the stats of an {@link Athlete}
@@ -36,7 +36,10 @@ public class Athlete implements Purchasable {
         CURRENT_HEALTH
     }
 
-
+    /**
+     * Run a scanner to read the athlete names from the AthleteNames.txt file
+     * and store them in a stack
+     */
     private void initAthleteNameReader() {
         if (nameScannerIsInitialised) return;
 
@@ -96,6 +99,10 @@ public class Athlete implements Purchasable {
         return this.nickName;
     }
 
+    /**
+     * Gets a dictionary mapping each of the athletes stat value names to their value
+     * @return A map of each of the athletes stat value names and its  value
+     */
     @Override
     public Map<String, String> getStats() {
         return Map.of(
@@ -215,20 +222,34 @@ public class Athlete implements Purchasable {
         }
     }
 
+    /**
+     * Registers a purchasable panel as a listener for when the athlete's stats change
+     * @param panel The panel to register as a listener
+     */
     public void registerPanel(PurchasablePanel panel) {
         purchasablePanels.add(panel);
     }
 
+    /**
+     * Generates a string representation of the athlete
+     * @return A string representation of the athlete
+     */
     public String toString() {
         return this.nickName;
     }
 
+    /**
+     * Resets the athletes health/stamina to full and removes any injuries
+     */
     public void byeWeek() {
         this.current_health = 100;
         this.stamina = 100;
         this.isInjured = false;
     }
 
+    /**
+     * Improves the athlete's stats by 10
+     */
     public void trainAthlete(){
         this.offence += 10;
         this.defence += 10;

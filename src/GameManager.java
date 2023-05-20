@@ -25,7 +25,7 @@ public class GameManager {
     public static int maximumStatValue;
 
     /**
-     * Fills the `athletes` array with `NUM_ALL_ATHLETES` random athletes
+     * Fills the athletes array with {@code NUM_ALL_ATHLETES} random athletes
      */
     public static void initializeAthletes() {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
@@ -33,7 +33,7 @@ public class GameManager {
     }
 
     /**
-     * Fills the items array with `NUM_ALL_ITEMS` random items
+     * Fills the items array with {@code NUM_ALL_ITEMS} random items
      */
     public static void initializeItems() {
         for (int i = 0; i < NUM_ALL_ITEMS; i++)
@@ -42,6 +42,9 @@ public class GameManager {
 
     /**
      * Starts the game with the provided parameters
+     *
+     * @param selectedAthletes the athletes selected by the player
+     * @param bankBalance the player's starting bank balance
      */
     public static void startGame(ArrayList<Athlete> selectedAthletes, int bankBalance) {
         GameManager.bankBalance = bankBalance;
@@ -54,6 +57,10 @@ public class GameManager {
         WindowManager.showGameScreen();
     }
 
+    /**
+     * Gets the game difficulty modifier
+     * @return the game difficulty modifier
+     */
     public static double isGameHard() {
         if (hardMode) {
             return 1.5;
@@ -105,13 +112,12 @@ public class GameManager {
     }
 
     /**
-     * 
+     * Tells all athletes to train for the week, instead of playing a game
      */
-    //TODO IMPLEMENT THIS CODE 
     public static void byeWeek(){
-        if (toTrain == true){
+        if (toTrain){
             //TODO Add code which allows a Athlete to be trained
-            int j = 0; //This defult trains the first athlete in active list, however this should be changed to allow the user to select which athlete to train
+            int j = 0; //This default trains the first athlete in active list, however this should be changed to allow the user to select which athlete to train
             team.getActive(j).trainAthlete();
         } else {
             for (int i = 0; i < Team.TEAM_SIZE; i++) {
@@ -121,10 +127,19 @@ public class GameManager {
         randomEvent.randomEvent();
     }
 
+    /**
+     * Adds funds to the player's bank balance
+     * @param funds The amount of money to add
+     */
     public static void addFunds(int funds) {
         bankBalance += funds;
     }
 
+    /**
+     * Generate new athletes with randomised stats and a new name from the list of names
+     * @param n the number of athletes to generate
+     * @return an array of {@code n} random athletes
+     */
     public static Athlete[] generateAthletes(int n) {
         Athlete[] athletes = new Athlete[n];
 
@@ -134,6 +149,11 @@ public class GameManager {
         return athletes;
     }
 
+    /**
+     * Generate new items with randomised stats and a new name from the list of names
+     * @param n the number of items to generate
+     * @return an array of {@code n} random items
+     */
     public static Item[] generateItems(int n) {
         Item[] items = new Item[n];
 
@@ -143,7 +163,11 @@ public class GameManager {
         return items;
     }
 
-
+    /**
+     * Uses the provided item on the provided athlete
+     * @param item The item to be used
+     * @param athlete The athlete to use the item on
+     */
     public static void useItem(Item item, Athlete athlete) {
         athlete.applyItem(item);
         items.remove(item);
@@ -199,6 +223,12 @@ public class GameManager {
         WindowManager.gameScreen.updateTeamInfo();
     }
 
+    /**
+     * Sets the game configuration
+     * @param teamName The name of the player's team
+     * @param seasonLength The length of the season
+     * @param hardMode `true` if the game is in hard mode, `false` otherwise
+     */
     public static void setConfiguration(String teamName, int seasonLength, boolean hardMode) {
         GameManager.seasonLength = seasonLength;
         GameManager.team = new PlayerTeam(teamName);

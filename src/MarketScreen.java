@@ -15,6 +15,9 @@ public class MarketScreen extends GameScreenPanel {
     private Athlete[] weeklyAthletePool;
     private Item[] weeklyItemPool;
 
+    /**
+     * Initialize the contents of the frame.
+     */
     @Override
     protected void initialize() {
         super.initialize();
@@ -32,12 +35,16 @@ public class MarketScreen extends GameScreenPanel {
         contentPanel.add(teamShelf);
     }
 
+    /**
+     * Creates a new MarketScreen panel with the given game screen as its parent
+     * @param gameScreen The {@link GameScreen} that is the parent of this panel
+     */
     public MarketScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.MARKET, gameScreen);
     }
 
     /**
-     * Event handler to make a market purchase
+     * Event handler to purchase a {@link Purchasable}
      * @param event the event that triggered the purchase
      */
     private void purchase(ActionEvent event)  {
@@ -69,6 +76,10 @@ public class MarketScreen extends GameScreenPanel {
         }
     }
 
+    /**
+     * Event handler to sell a {@link Purchasable}
+     * @param event the event that triggered the sell
+     */
     private void sell(ActionEvent event) {
         System.out.println("sell");
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
@@ -97,6 +108,10 @@ public class MarketScreen extends GameScreenPanel {
         panel.getShelf().removePanel(panel);
     }
 
+    /**
+     * Purchases an {@link Athlete} from the market
+     * @param athlete the {@link Athlete} to purchase
+     */
     private void purchaseAthlete(Athlete athlete) {
         if (GameManager.getBankBalance() < athlete.getContractPrice()) {
             JOptionPane.showMessageDialog(this,
@@ -150,11 +165,17 @@ public class MarketScreen extends GameScreenPanel {
         }
     }
 
+    /**
+     * Updates the weekly pool of {@link Athlete}s and {@link Item}s available for purchase
+     */
     public void updateWeeklyPool() {
         weeklyAthletePool = GameManager.generateAthletes(WEEKLY_POOL_SIZE);
         weeklyItemPool = GameManager.generateItems(WEEKLY_POOL_SIZE);
     }
 
+    /**
+     * Reloads the contents of the shelves to reflect the current state of the game
+     */
     @Override
     public void reload() {
         athletesShelf.reload(weeklyAthletePool);
