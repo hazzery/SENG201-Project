@@ -61,7 +61,7 @@ public class Athlete implements Purchasable {
     public Athlete() {
         initAthleteNameReader();
 
-        this.name = athleteNames.pop();
+        this.name = athleteNames.pop().trim();
         this.nickName = this.name;
         this.stamina = ThreadLocalRandom.current().nextInt(80, 101);
         this.offence = ThreadLocalRandom.current().nextInt(0, 101);

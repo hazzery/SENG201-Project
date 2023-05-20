@@ -283,4 +283,15 @@ public class GameMechanics<ActionListener> {
         return oppositionDiff / (oppositionAthletes.size() * 3);
     }
 
+    public static void afterMatchReward(){
+        GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
+    }
+
+    public static void playerInjury(){
+        //Take Player Stanima off
+        athleteList.get(athIndex).stamina -= 0.5 * getOppDiff();
+    }
+
+
+
 }

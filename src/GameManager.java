@@ -1,3 +1,4 @@
+import java.util.stream.Stream;
 import java.util.ArrayList;
 
 public class GameManager {
@@ -6,7 +7,7 @@ public class GameManager {
     public static Team team;
 
 
-    public static int bankBalance = 10000;
+    private static int bankBalance = 10000;
     private static int currentWeek = 1;
 
     public static OppositionTeam oppositionTeam;
@@ -61,7 +62,6 @@ public class GameManager {
         } else {
             return 1;
         }
-        
     }
 
     /**
@@ -91,16 +91,23 @@ public class GameManager {
         return seasonLength;
     }
 
+    public static Item[] getItems() {
+        return items.toArray(new Item[0]);
+    }
+    public static Stream<Item> itemStream() {
+        return items.stream();
+    }
+
     /**
      * Increments the current week by one
      */
     public static void nextWeek() {
-        
+
         currentWeek++;
     }
 
-    public static Item[] getItems() {
-        return items.toArray(new Item[0]);
+    public static void addFunds(int funds) {
+        bankBalance += funds;
     }
 
     public static Athlete[] generateAthletes(int n) {

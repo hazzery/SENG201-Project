@@ -22,7 +22,7 @@ public class Item implements Purchasable {
      */
     public Item() {
         initItemNameReader();
-        this.name = itemNames.pop();
+        this.name = itemNames.pop().trim();
         this.statType = Athlete.StatType.values()[ThreadLocalRandom.current().nextInt(0, 3)];
         this.improvementAmount = ThreadLocalRandom.current().nextInt(1, 101);
     }
@@ -110,5 +110,10 @@ public class Item implements Purchasable {
     @Override
     public int getSellBackPrice() {
         return improvementAmount * 2 + 150;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

@@ -8,6 +8,7 @@ public class TeamSelectScreen extends JPanel {
 
     private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
     private final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
+    private final Athlete[] athletePool = GameManager.generateAthletes(9);
 
     private int bankBalance = 8500;
 
@@ -56,7 +57,7 @@ public class TeamSelectScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-        selectableAthletesShelf = new PurchasablesShelf(GameManager.generateAthletes(8), "Available", this::selectButtonText, this::selectAthlete);
+        selectableAthletesShelf = new PurchasablesShelf(athletePool, "Available", this::selectButtonText, this::selectAthlete);
         buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
@@ -99,6 +100,9 @@ public class TeamSelectScreen extends JPanel {
         }
         if (!selectedAthletes.contains(athlete)) {
             String nickName = JOptionPane.showInputDialog("Choose a nickname for" + athlete.getName() + ":");
+            if (nickName == null)
+                return; // User cancelled
+
             if (nickName.length() > 0) {
                 try {
                     Utilities.validateName(nickName, true);
@@ -143,9 +147,9 @@ public class TeamSelectScreen extends JPanel {
      */
     private void resetAthletes() {
         selectedAthletes.clear();
-        selectedAthletesShelf.removeAll();
-        selectedAthletesShelf.revalidate();
-        selectedAthletesShelf.repaint();
+        selectedAthletesShelf.reload(new Athlete[0]);
+        selectableAthletesShelf.reload(athletePool);
+        bankBalance = 8500;
     }
 
     /**
