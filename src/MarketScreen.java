@@ -104,7 +104,7 @@ public class MarketScreen extends GameScreenPanel {
             return;
         }
 
-        if (GameManager.team.size() >= Team.MAXIMUM_SIZE) {
+        if (GameManager.team.size() >= PlayerTeam.MAXIMUM_SIZE) {
             JOptionPane.showMessageDialog(this,
                     "You have too many athletes, you must sell one to purchase another");
             return;

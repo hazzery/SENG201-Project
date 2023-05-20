@@ -4,8 +4,10 @@ import java.util.ArrayList;
 public class GameManager {
     private static int seasonLength;
     private static boolean hardMode;
-    private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
 
+    public static PlayerTeam team;
+
+    private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
 
     private static int bankBalance = 10000;
     private static int currentWeek = 1;
@@ -17,7 +19,7 @@ public class GameManager {
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
-    private static ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
+    private static final ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
 
 
     //THESE NUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
@@ -30,10 +32,6 @@ public class GameManager {
     public static void initializeAthletes() {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
             athletes.add(new Athlete());
-    }
-
-    public static void initializeOpposition() {
-        oppositionTeam.generateOpposition();
     }
 
     /**
@@ -205,7 +203,7 @@ public class GameManager {
 
     public static void setConfiguration(String teamName, int seasonLength, boolean hardMode) {
         GameManager.seasonLength = seasonLength;
-        GameManager.team = new Team(teamName);
+        GameManager.team = new PlayerTeam(teamName);
         GameManager.hardMode = hardMode;
     }
 }
