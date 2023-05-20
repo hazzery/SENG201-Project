@@ -178,9 +178,9 @@ public class GameMechanics<ActionListener> {
                 int statIndex = ThreadLocalRandom.current().nextInt(0, 2);
                 int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
                 if (statIndex == 0) {
-                    team.getActive(i).defence += statIncrease;
+                    athleteList.get(i).defence += statIncrease;
                 } else if (statIndex == 1) {
-                    team.getActive(i).offence += statIncrease;
+                    athleteList.get(i).offence += statIncrease;
                 } 
             }
         }
