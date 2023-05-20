@@ -49,12 +49,8 @@ public class GameMechanics<ActionListener> {
 
         // Check which button was clicked and perform corresponding action
         switch (result) {
-            case 0:
-                playCMD();
-                break;
-            case 1:
-                System.exit(0);
-                break;
+            case 0 -> playCMD();
+            case 1 -> System.exit(0);
         }
     }
 
@@ -79,7 +75,7 @@ public class GameMechanics<ActionListener> {
 
     //CMD/Basic GUI Game Play
     public static void playCMD() {
-        if (isGameOver == true){return;}
+        if (isGameOver){return;}
         // Display the popup box with three buttons
         int result = JOptionPane.showOptionDialog(null,
                 "Athlete " + athleteList.get(athIndex).getName() + " will be attacking Opposition: " + oppositionAthletes.get(oppIndex).getName() + "",
@@ -92,18 +88,10 @@ public class GameMechanics<ActionListener> {
 
         // Check which button was clicked and perform corresponding action
         switch (result) {
-            case 0:
-                playTurn(0);
-                break;
-            case 1:
-                playTurn(1);
-                break;
-            case 2:
-                playTurn(2);
-                break;
-            case 3:
-                System.exit(0);
-                break;
+            case 0 -> playTurn(0);
+            case 1 -> playTurn(1);
+            case 2 -> playTurn(2);
+            case 3 -> System.exit(0);
         }
     }
 
@@ -137,7 +125,7 @@ public class GameMechanics<ActionListener> {
 
     
     public static void oppositionPlayTurn(){ 
-        if (isGameOver == true){return;}
+        if (isGameOver){return;}
         // if (athIndex >= athleteList.size()){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
 
@@ -154,7 +142,7 @@ public class GameMechanics<ActionListener> {
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
 
-            } else if (oppositionAttack >= 35 && oppositionAttack < 40){
+            } else if (oppositionAttack < 40){
                 double damage = attackHeavy(oppIndex, athIndex);
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
@@ -184,13 +172,9 @@ public class GameMechanics<ActionListener> {
                 new String[]{"Next Turn", "Quit"},
                 null);
 
-        switch (result){
-            case 0:
-                playCMD();
-                break;
-            case 1:
-                System.exit(0);
-                break;
+        switch (result) {
+            case 0 -> playCMD();
+            case 1 -> System.exit(0);
         }
     }
 
@@ -217,7 +201,7 @@ public class GameMechanics<ActionListener> {
             System.out.println();
             System.out.println("Game Over");
             JOptionPane.showMessageDialog(null, "Game Over");
-            if (deadAthletes == true){
+            if (deadAthletes){
                 System.out.println("Opposition Wins");
                 didAthletesWin = false;
             } else {
@@ -231,7 +215,7 @@ public class GameMechanics<ActionListener> {
 
     public static void endOfGame(){
         System.out.println();
-        if (didAthletesWin == true){
+        if (didAthletesWin){
             System.out.println("You earned $" + afterMatchReward() + " for winning");
             JOptionPane.showMessageDialog(null, "You earned $" + afterMatchReward() + " for winning");
             // afterMatchReward(); // commented out to prevent a duel call
@@ -267,8 +251,8 @@ public class GameMechanics<ActionListener> {
         }
 
         System.out.println("\n Your Athletes have been reset and Updated");
-        for (int i = 0; i < athleteList.size(); i++){
-            System.out.println(athleteList.get(i).getStats());
+        for (Athlete athlete : athleteList) {
+            System.out.println(athlete.getStats());
         }
     }
 
