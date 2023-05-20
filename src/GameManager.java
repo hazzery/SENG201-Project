@@ -1,3 +1,4 @@
+import java.util.stream.Stream;
 import java.util.ArrayList;
 
 public class GameManager {
@@ -92,6 +93,9 @@ public class GameManager {
 
     public static Item[] getItems() {
         return items.toArray(new Item[0]);
+    }
+    public static Stream<Item> itemStream() {
+        return items.stream();
     }
 
     /**

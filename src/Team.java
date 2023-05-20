@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.stream.Stream;
+import java.util.ArrayList;
 
 /**
  * Class the models a team
@@ -102,6 +102,10 @@ public class Team {
 
     Athlete[] getAll() {
         return Stream.concat(actives.stream(), reserves.stream()).toArray(Athlete[]::new);
+    }
+
+    Purchasable[] athletesAndItems() {
+        return Stream.concat(Stream.concat(actives.stream(), reserves.stream()), GameManager.itemStream()).toArray(Purchasable[]::new);
     }
 
     public void addAthlete(Athlete athlete, boolean reserve) {

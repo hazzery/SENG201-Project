@@ -56,4 +56,9 @@ public class PurchasablePanel extends JPanel {
     public PurchasablesShelf getShelf() {
         return (PurchasablesShelf) getParent().getParent();
     }
+
+    @Override
+    public String toString() {
+        return "PurchasablePanel{" + purchasable + "}  ";
+    }
 }
