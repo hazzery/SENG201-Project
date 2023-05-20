@@ -31,9 +31,9 @@ public class RandomEvent {
     public void randomStatIncrease() {
         int athleteIndex = ThreadLocalRandom.current().nextInt(0, team.numActive());
         int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
-        int statIncrease = ThreadLocalRandom.current().nextInt(1, 5);
+        int statIncrease = ThreadLocalRandom.current().nextInt(10, 25);
         if (statIndex == 0) {
-            team.getActive(athleteIndex).stamina += statIncrease;
+            team.getActive(athleteIndex).stamina += statIncrease + 10;
         } else if (statIndex == 1) {
             team.getActive(athleteIndex).offence += statIncrease;
         } else if (statIndex == 2) {
