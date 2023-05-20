@@ -18,6 +18,7 @@ public class Athlete implements Purchasable {
     public int offence;
     public int defence;
     public int current_health;
+    public boolean isInjured = false;
 
     static private boolean nameScannerIsInitialised = false;
     static private Scanner nameScanner;
@@ -62,7 +63,7 @@ public class Athlete implements Purchasable {
 
         this.name = athleteNames.pop();
         this.nickName = this.name;
-        this.stamina = ThreadLocalRandom.current().nextInt(0, 101);
+        this.stamina = ThreadLocalRandom.current().nextInt(80, 101);
         this.offence = ThreadLocalRandom.current().nextInt(0, 101);
         this.defence = ThreadLocalRandom.current().nextInt(0, 101);
         this.current_health = 100;
