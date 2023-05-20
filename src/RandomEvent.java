@@ -43,7 +43,7 @@ public class RandomEvent {
     }
 
     public void randomNewAthlete() {
-        if (team.numActive() + team.numReserves() >= team.MAXIMUM_SIZE){
+        if (team.numActive() + team.numReserves() >= Team.MAXIMUM_SIZE){
             System.out.println("Random Event: An Athlete tried to join your team but its full");
             return;
         }

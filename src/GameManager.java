@@ -11,6 +11,7 @@ public class GameManager {
     private static int currentWeek = 1;
 
     public static OppositionTeam oppositionTeam;
+    public static RandomEvent randomEvent;
 
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
@@ -102,11 +103,20 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
+        addFunds((int) (300 - 100 * isGameHard()));
+        currentWeek++;
+    }
+
+    /**
+     * 
+     */
+    public static void byeWeek(){
+        //TODO Add code which allows a Athlete to be trained
+
         for (int i = 0; i < Team.TEAM_SIZE; i++) {
             team.getActive(i).byeWeek();
         }
-        
-        currentWeek++;
+        randomEvent.randomEvent();
     }
 
     public static void addFunds(int funds) {
