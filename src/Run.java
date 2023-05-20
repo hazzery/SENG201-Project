@@ -19,10 +19,8 @@ public class Run {
         
         System.out.println(athleteList);
         System.out.println(oppositionAthletes);
-
-        int currentRoundTest = 0;
         System.out.println("PLAY GAME");
-        GameMechanics gameMechanics = new GameMechanics(currentRoundTest, athleteList, oppositionAthletes);
+        
 
         for (int i = 0; i < athleteList.size(); i++){
             System.out.println(athleteList.get(i).getCurrentHealth());
@@ -31,5 +29,7 @@ public class Run {
         for (int i = 0; i < oppositionAthletes.size(); i++){
             System.out.println(oppositionAthletes.get(i).getCurrentHealth());
         }
+
+        GameMechanics.playGame(1, athleteList, oppositionAthletes);
     }
 }

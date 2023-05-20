@@ -101,7 +101,8 @@ public class Athlete implements Purchasable {
         return Map.of(
             "Stamina", String.valueOf(this.stamina),
             "Offence", String.valueOf(this.offence),
-            "Defence", String.valueOf(this.defence)
+            "Defence", String.valueOf(this.defence),
+            "Current Health", String.valueOf(this.current_health)
         );
     }
 
