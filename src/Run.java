@@ -1,11 +1,14 @@
 //DELETE THIS CLASS ASAP
 //ONLY FOR TESTING PURPOSES
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JFrame;
 
 
 public class Run {
+    private JFrame jFrame;
     public static void main(String[] args) {
         ArrayList<Athlete> athleteList = new ArrayList<>(4);
         for (int i = 0; i < 5; i++){
@@ -30,7 +33,16 @@ public class Run {
         for (Athlete oppositionAthlete : oppositionAthletes) {
             System.out.println(oppositionAthlete.getCurrentHealth());
         }
-
-        GameMechanics.playGame(1, athleteList, oppositionAthletes);
+        
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MatchWindow window = new MatchWindow();
+					window.jFrame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
     }
 }
