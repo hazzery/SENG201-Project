@@ -13,6 +13,11 @@ public class MatchWindow extends JPanel {
 		WindowManager.initializeMainWindow();
 		GameManager.setConfiguration("DanielsTeam", 12, false);
 		GameManager.startGame(GameManager.athletes, 10000);
+
+        OppositionTeam oppositionTeam = new OppositionTeam();
+        Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
+		GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
+
 		WindowManager.showMatchScreen();
 	}
 
@@ -23,28 +28,55 @@ public class MatchWindow extends JPanel {
 		initialize();
 	}
 
+	public void turnAction(int index){
+		GameMechanics.guiButtonPress(index);
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.setLayout(new BorderLayout(0, 0));
-
-        //BOTTOM BUTTONS
+        //BUTTONS
 		JButton btnNewButton = new JButton("Light Attack");
 		btnNewButton.setBounds(150, 850, 200, 40);
 		this.add(btnNewButton);
-		
+		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				System.out.println("Light Attack");
+				turnAction(0);
+			}
+		});
+
 		JButton btnNewButton_1 = new JButton("Heavy Attack");
 		btnNewButton_1.setBounds(450, 850, 200, 40);
 		this.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				System.out.println("Heavy Attack");
+				turnAction(1);
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Heal");
 		btnNewButton_2.setBounds(750, 850, 200, 40);
 		this.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				System.out.println("Heal");
+				turnAction(2);
+
+			}
+		});
 		
 		JButton btnNewButton_2_1 = new JButton("Next Turn");
 		btnNewButton_2_1.setBounds(1050, 850, 200, 40);
 		this.add(btnNewButton_2_1);
+		btnNewButton_2_1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				System.out.println("NEXT TURN");
+				turnAction(3);
+			}
+		});
 
 		// mainPanel = new JPanel();
         // mainPanel.setBorder(marginBorder);

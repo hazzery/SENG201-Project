@@ -26,6 +26,7 @@ public class GameMechanics<ActionListener> {
 
     public static boolean isGameOver;
     public static boolean didAthletesWin;
+    public static boolean isNextTurnAble = true;
 
     //public static boolean isNextTurnAble = true;
 
@@ -34,7 +35,18 @@ public class GameMechanics<ActionListener> {
         GameMechanics.athleteList = athleteList; //Team.getActives();
         GameMechanics.currentRound = currentRound; //GameManager.currentWeek();
         isGameOver = false;
-        cdmInit();
+        //cdmInit();
+    }
+
+    public static void guiButtonPress(int index){
+        
+        switch(index){
+            case 0 -> playTurn(0);
+            case 1 -> playTurn(1);
+            case 2 -> playTurn(2);
+            //case 3 -> nextTurn();
+        }
+
     }
 
     public static void cdmInit(){
@@ -159,24 +171,24 @@ public class GameMechanics<ActionListener> {
         }
         System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
         endGameCondition();
-        nextTurn();
+        // nextTurn();
     }
 
-    public static void nextTurn(){
-        int result = JOptionPane.showOptionDialog(null,
-                "Next Turn or Quit:",
-                "Turn???",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.WARNING_MESSAGE,
-                null,
-                new String[]{"Next Turn", "Quit"},
-                null);
+    // public static void nextTurn(){
+    //     int result = JOptionPane.showOptionDialog(null,
+    //             "Next Turn or Quit:",
+    //             "Turn???",
+    //             JOptionPane.DEFAULT_OPTION,
+    //             JOptionPane.WARNING_MESSAGE,
+    //             null,
+    //             new String[]{"Next Turn", "Quit"},
+    //             null);
 
-        switch (result) {
-            case 0 -> playCMD();
-            case 1 -> System.exit(0);
-        }
-    }
+    //     switch (result) {
+    //         case 0 -> playCMD();
+    //         case 1 -> System.exit(0);
+    //     }
+    // }
 
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
