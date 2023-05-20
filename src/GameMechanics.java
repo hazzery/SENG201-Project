@@ -33,7 +33,28 @@ public class GameMechanics<ActionListener> {
         GameMechanics.athleteList = athleteList; //Team.getActives();
         GameMechanics.currentRound = currentRound; //GameManager.currentWeek();
         isGameOver = false;
-        playCMD();
+        cdmInit();
+    }
+
+    public static void cdmInit(){
+        int result = JOptionPane.showOptionDialog(null,
+                "Your Team: " + athleteList + "\n" + "Opposition Team: " + oppositionAthletes + "\n" + "Round: " + currentRound,
+                "Start Game",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Start Game", "Quit"},
+                null);
+
+        // Check which button was clicked and perform corresponding action
+        switch (result) {
+            case 0:
+                playCMD();
+                break;
+            case 1:
+                System.exit(0);
+                break;
+        }
     }
 
     //This code is scuffed for testing purposes (AUTO PLAYS)
