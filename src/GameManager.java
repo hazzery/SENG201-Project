@@ -14,8 +14,6 @@ public class GameManager {
 
     public static OppositionTeam oppositionTeam;
     public static RandomEvent randomEvent;
-    public static Team team;
-
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);

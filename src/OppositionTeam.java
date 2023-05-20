@@ -79,4 +79,3 @@ public class OppositionTeam extends Team {
         return teams;
     }
 }
-
