@@ -60,13 +60,13 @@ public class MarketScreen extends GameScreenPanel {
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Purchasable purchasable = panel.getPurchasable();
 
+        boolean shouldReserve = false;
         if (purchasable instanceof Athlete athlete) {
-            purchaseAthlete(athlete);
-            return;
+            shouldReserve = purchaseAthlete(athlete);
         }
 
         try {
-            GameManager.purchase(purchasable, true);
+            GameManager.purchase(purchasable, shouldReserve);
         } catch (IllegalStateException error) {
             JOptionPane.showMessageDialog(this, error.getMessage());
             return;
@@ -74,13 +74,24 @@ public class MarketScreen extends GameScreenPanel {
 
         panel.getShelf().removePanel(panel);
 
-        // Delete the purchasable from the weekly pool
-        for (int i = 0; i < weeklyItemPool.length; i++) {
-            if (weeklyItemPool[i] == purchasable) {
-                weeklyItemPool[i] = null;
-                break;
+        if (purchasable instanceof Item item) {
+//            teamShelf.addPanel(new PurchasablePanel(item, MarketScreen::sellButtonText, this::sell));
+            // Delete the purchasable from the weekly pool
+            for (int i = 0; i < weeklyItemPool.length; i++) {
+                if (weeklyItemPool[i] == item) {
+                    weeklyItemPool[i] = null;
+                    break;
+                }
+            }
+        } else if (purchasable instanceof Athlete athlete) {
+            for (int i = 0; i < weeklyAthletePool.length; i++) {
+                if (weeklyAthletePool[i] == athlete) {
+                    weeklyAthletePool[i] = null;
+                    break;
+                }
             }
         }
+
     }
 
     /**
@@ -119,57 +130,38 @@ public class MarketScreen extends GameScreenPanel {
      * Purchases an {@link Athlete} from the market
      * @param athlete the athlete to purchase
      */
-    private void purchaseAthlete(Athlete athlete) {
+    private boolean purchaseAthlete(Athlete athlete) throws IllegalStateException {
         if (GameManager.getBankBalance() < athlete.getContractPrice()) {
             JOptionPane.showMessageDialog(this,
                     "Insufficient funds to purchase " + athlete.getName());
-            return;
+            throw new IllegalStateException("Insufficient funds to purchase " + athlete.getName());
         }
 
         if (GameManager.team.size() >= PlayerTeam.MAXIMUM_SIZE) {
             JOptionPane.showMessageDialog(this,
                     "You have too many athletes, you must sell one to purchase another");
-            return;
+            throw new IllegalStateException("You have too many athletes, you must sell one to purchase another");
         }
 
-        boolean willBeActive = false;
         int activateNewAthlete = JOptionPane.showConfirmDialog(this,
                 "Would you like to place" + athlete.getName() + " as an active athlete?",
                 "Swap Athlete", JOptionPane.YES_NO_OPTION);
 
         if (activateNewAthlete == JOptionPane.YES_OPTION) {
-            willBeActive = true;
             Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
                     "Which active athlete would you like to reserve to activate" + athlete.getName() + '?',
                     "Reserve athlete", JOptionPane.PLAIN_MESSAGE,
                     null, GameManager.team.getActives(), null);
 
-            if (swap == null) {
-                JOptionPane.showMessageDialog(this,
-                        "Must reserve an athlete to place new athlete in active team");
-                return;
-            }
+            if (swap == null)
+                throw new IllegalStateException("Must reserve an athlete to place new athlete in active team");
 
-            try {
-                GameManager.team.setReserve(swap);
-            } catch (IllegalStateException error) {
-                JOptionPane.showMessageDialog(this, error.getMessage());
-                return;
-            }
+            GameManager.team.setReserve(swap);
+
+            return true;
         }
 
-        try {
-            GameManager.purchase(athlete, willBeActive);
-        } catch (IllegalStateException error) {
-            JOptionPane.showMessageDialog(this, error.getMessage());
-        }
-
-        for (int i = 0; i < weeklyAthletePool.length; i++) {
-            if (weeklyAthletePool[i] == athlete) {
-                weeklyAthletePool[i] = null;
-                break;
-            }
-        }
+        return false;
     }
 
     /**
