@@ -12,7 +12,8 @@ import javax.swing.*;
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
-	public String Text = "Game Start";
+	public String OppText = "Opposition Output: ";
+	public String TeamText = "Team Output: ";
 
 	private JPanel headerPanel;
 		private JLabel matchLabel;
@@ -21,6 +22,7 @@ public class MatchWindow extends JPanel {
 		private JPanel gameOutputPanel;
 			private JLabel idkLabel;
 			static JLabel gameOutputLabel;
+			static JLabel oppositionLabel;
 		private PurchasablesShelf oppositionTeamPanel;
 	private JPanel footerPanel;
 		private JButton lightAttackButton;
@@ -57,6 +59,7 @@ public class MatchWindow extends JPanel {
 
 	public void turnAction(int index){
 		GameMechanics.guiButtonPress(index);
+		update();
 	}
 
 	/**
@@ -66,7 +69,6 @@ public class MatchWindow extends JPanel {
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBorder(marginBorder);
 
-		//HEADER
 		headerPanel = new JPanel();
 		headerPanel.setBorder(marginBorder);
 		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
@@ -75,7 +77,6 @@ public class MatchWindow extends JPanel {
 		matchLabel = new JLabel("Match");
 		headerPanel.add(matchLabel);
 
-		//MAIN
 		mainPanel = new JPanel();
 		mainPanel.setBorder(marginBorder);
 		mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -86,20 +87,23 @@ public class MatchWindow extends JPanel {
 
 		gameOutputPanel = new JPanel();
 		gameOutputPanel.setBorder(marginBorder);
-		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.X_AXIS));
+		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(gameOutputPanel);
 
-		idkLabel = new JLabel("Game Output:    ");
+		idkLabel = new JLabel("Game Output:");
 		gameOutputPanel.add(idkLabel);
-
-		gameOutputLabel = new JLabel("Game Start");
+		
+		gameOutputLabel = new JLabel("Team Output:");
 		gameOutputPanel.add(gameOutputLabel);
-		gameOutputLabel.setText(Text);
+		gameOutputLabel.setText(TeamText);
+
+		oppositionLabel = new JLabel("Opposition Output:");
+		gameOutputPanel.add(oppositionLabel);
+		oppositionLabel.setText(OppText);
 
 		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
 
-		//FOOTER
 		footerPanel = new JPanel();
 		footerPanel.setBorder(marginBorder);
 		footerPanel.setLayout(new GridLayout(1, 4, 0, 0));
@@ -131,24 +135,24 @@ public class MatchWindow extends JPanel {
 	private void exitMatch(ActionEvent actionEvent) {
 		System.out.println("Exit Game");
 		turnAction(3);
-		update();
+		
 	}
 
 	private void heal(ActionEvent actionEvent) {
 		System.out.println("Heal");
 		turnAction(2);
-		update();
+		
 	}
 
 	private void heavyAttack(ActionEvent actionEvent) {
 		System.out.println("Heavy Attack");
 		turnAction(1);
-		update();
+
 	}
 
 	private void lightAttack(ActionEvent actionEvent) {
 		System.out.println("Light Attack");
 		turnAction(0);
-		update();
+		
 	}
 }
