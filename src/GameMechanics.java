@@ -84,7 +84,6 @@ public class GameMechanics<ActionListener> {
     public static void exitedMatch(){
 
         WindowManager.showGameScreen();
-        stadiumScreen.updateWeeklyPool();
     }
 
     /**
