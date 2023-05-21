@@ -12,17 +12,19 @@ import javax.swing.*;
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
-	public String OppText = "Opposition Output: ";
-	public String TeamText = "Team Output: ";
+	public String OppText;
+	public String TeamText;
+	public String gameText;
 
 	private JPanel headerPanel;
 		private JLabel matchLabel;
 	private JPanel mainPanel;
 		private PurchasablesShelf playerTeamPanel;
 		private JPanel gameOutputPanel;
-			private JLabel idkLabel;
-			static JLabel gameOutputLabel;
-			static JLabel oppositionLabel;
+			private JLabel ouputLabel;
+			static JTextArea gameOutput;
+			static JTextArea teamOutput;
+			static JTextArea oppositionOutput;
 		private PurchasablesShelf oppositionTeamPanel;
 	private JPanel footerPanel;
 		private JButton lightAttackButton;
@@ -90,16 +92,23 @@ public class MatchWindow extends JPanel {
 		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(gameOutputPanel);
 
-		idkLabel = new JLabel("Game Output:");
-		gameOutputPanel.add(idkLabel);
-		
-		gameOutputLabel = new JLabel("Team Output:");
-		gameOutputPanel.add(gameOutputLabel);
-		gameOutputLabel.setText(TeamText);
+		ouputLabel = new JLabel("Game Output:");
+		gameOutputPanel.add(ouputLabel);
 
-		oppositionLabel = new JLabel("Opposition Output:");
-		gameOutputPanel.add(oppositionLabel);
-		oppositionLabel.setText(OppText);
+		gameOutput = new JTextArea(2, 20);
+		gameOutput.setLineWrap(true);
+		gameOutputPanel.add(gameOutput);
+		gameOutput.setText(gameText);
+		
+		teamOutput = new JTextArea(2, 20);
+		teamOutput.setLineWrap(true);
+		gameOutputPanel.add(teamOutput);
+		teamOutput.setText(TeamText);
+
+		oppositionOutput = new JTextArea(2, 20);
+		oppositionOutput.setLineWrap(true);
+		gameOutputPanel.add(oppositionOutput);
+		oppositionOutput.setText(OppText);
 
 		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
