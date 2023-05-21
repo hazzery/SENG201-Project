@@ -44,7 +44,7 @@ public class MatchWindow extends JPanel {
 	private void initialize() {
 		setLayout(null);
         //BUTTONS
-		JButton btnNewButton = new JButton("Light Attack");
+		JButton btnNewButton = new JButton("Light Attack (90%)");
 		btnNewButton.setBounds(100, 950, 200, 40);
 		this.add(btnNewButton);
 		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -54,7 +54,7 @@ public class MatchWindow extends JPanel {
 			}
 		});
 
-		JButton btnNewButton_1 = new JButton("Heavy Attack");
+		JButton btnNewButton_1 = new JButton("Heavy Attack (40%)");
 		btnNewButton_1.setBounds(400, 950, 200, 40);
 		this.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,16 +74,6 @@ public class MatchWindow extends JPanel {
 
 			}
 		});
-		
-		JButton btnNewButton_2_1 = new JButton("Next Turn");
-		btnNewButton_2_1.setBounds(1000, 950, 200, 40);
-		this.add(btnNewButton_2_1);
-		btnNewButton_2_1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("NEXT TURN");
-				turnAction(3);
-			}
-		});
 
 		JButton btnNewButton_2_2 = new JButton("Exit Match");
 		btnNewButton_2_2.setBounds(1300, 950, 200, 40);
@@ -91,7 +81,7 @@ public class MatchWindow extends JPanel {
 		btnNewButton_2_2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				System.out.println("Exit Game");
-				turnAction(4);
+				turnAction(3);
 			}
 		});
 
