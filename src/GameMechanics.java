@@ -5,8 +5,9 @@ import javax.swing.JOptionPane;
 
 
 /**
- * DANIEL I HAVE NO CLUE WHAT THIS CLASS DOES PLEASE WRITE THE JAVADOC FOR THIS CLASS
- *
+ * GameMechanics is a static utility class in charge of the game play.
+ * It provides game logic and functionality to the GUI for the gameplay part of the game.
+ * 
  * @author Daniel Smith
  * @param <ActionListener> DANIEL WHY TF IS THIS A PARAMETERISED GENERIC CLASS
  */
@@ -15,6 +16,7 @@ public class GameMechanics<ActionListener> {
     public static Team team;
     public static GameManager gameManager;
     public static OppositionTeam oppositionTeam;
+    public static StadiumScreen stadiumScreen;
     public static TurnActionStatments turnActionStatments = new TurnActionStatments();
 
     private static ArrayList<Athlete> oppositionAthletes;
@@ -35,6 +37,7 @@ public class GameMechanics<ActionListener> {
 
     //public static boolean isNextTurnAble = true;
 
+
     public static void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
         GameMechanics.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
         GameMechanics.athleteList = athleteList; //Team.getActives();
@@ -43,6 +46,10 @@ public class GameMechanics<ActionListener> {
         //cdmInit();
     }
 
+    /**
+     * This method is called by the {@link MatchWindow} class when the user clicks on a game action button.
+     * @param index
+     */
     public static void guiButtonPress(int index){
         
         switch(index){
@@ -50,10 +57,38 @@ public class GameMechanics<ActionListener> {
             case 1 -> playTurn(1);
             case 2 -> playTurn(2);
             //case 3 -> nextTurn();
+            case 4 -> exitMatch(); 
         }
 
     }
 
+    //TODO ADD RETURN STANIMIA AND HEALTH TO ATHLETE LISTS & DISPOSE OF OPPOSITION TEAM
+    private static void exitMatch() {
+        int result = JOptionPane.showOptionDialog(null,
+                "You are about to quit",
+                "Are you sure you want to exit?",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Yes Quit :'(", "No Stay :D"},
+                null);
+
+        // Check which button was clicked and perform corresponding action
+        switch (result) {
+            case 0 -> exitedMatch(); 
+            case 1 -> JOptionPane.getRootFrame().dispose();
+        }
+        
+    }
+
+    public static void exitedMatch(){
+
+        WindowManager.showGameScreen();
+    }
+
+    /**
+     * This method is a debug / command line version of the game with very minimal GUI calls to display the game state.
+     */
     public static void cdmInit(){
         int result = JOptionPane.showOptionDialog(null,
                 "Your Team: " + athleteList + "\n" + "Opposition Team: " + oppositionAthletes + "\n" + "Round: " + currentRound,
@@ -71,26 +106,9 @@ public class GameMechanics<ActionListener> {
         }
     }
 
-    //This code is scuffed for testing purposes (AUTO PLAYS)
-    // public static void playMatch(){
-    //     if (isGameOver == false){
-    //         isNextTurnAble = false;
-    //         //below is testing code to test for functionality
-    //         for (int i = 0; i < 30; i++){
-    //             endGameCondition();
-    //             if (isGameOver == true){
-    //                 break;
-    //             }
-    //             playTurn(attackType);
-    //             endGameCondition();
-    //         }
-    //     } else {
-    //         System.out.println("Game Over");
-    //     }    
-    // }
-
-
-    //CMD/Basic GUI Game Play
+    /**
+     * This method is called by the {@link cmdInit} method when the user clicks on the start game action button.
+     */
     public static void playCMD() {
         if (isGameOver){return;}
         // Display the popup box with three buttons
@@ -112,6 +130,12 @@ public class GameMechanics<ActionListener> {
         }
     }
 
+    /**
+     * This method is called by the {@link cmdInit} and {@link playGame} method when the user clicks on the start game action button.
+     * by taing the parameter attackType it the calls the appropriate attack method.
+     *
+     * @param attackType
+     */
     public static void playTurn(int attackType){
         // if (isGameOver == true){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
@@ -140,7 +164,10 @@ public class GameMechanics<ActionListener> {
         oppositionPlayTurn();
     }
 
-    
+    /**
+     * This method is called by the {@link playTurn} method once the athletes turn has been completed.
+     * This method is automattically called when the athlete has attacked.
+     */
     public static void oppositionPlayTurn(){ 
         if (isGameOver){return;}
         // if (athIndex >= athleteList.size()){return;}
@@ -197,6 +224,10 @@ public class GameMechanics<ActionListener> {
     //     }
     // }
 
+    /**
+     * This method is called by the {@link playTurn} method once the athletes or opposition turn has been completed.
+     * This method is automattically called after any attack has occured.
+     */
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
             System.out.println("Athlete " + athIndex + " is dead");
@@ -211,7 +242,12 @@ public class GameMechanics<ActionListener> {
             oppIndex++;
         }
     }
-    
+
+
+    /**
+     * This method is called by the {@link playturn} and {@link oppositionPlayTurn} methods once the athletes or opposition turn has been completed.
+     * This method checks that the game is not over by checking if either teams of athletes are completely defeated if true the {@link endOfGame} method is called.
+     */
     public static void endGameCondition(){
         boolean deadAthletes = athleteList.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
         boolean deadOpposition = oppositionAthletes.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
@@ -232,6 +268,12 @@ public class GameMechanics<ActionListener> {
         
     }
 
+    /**
+     * This method is called by the {@link endGameCondition} method once the game is over.
+     * This method is automattically called when the game is over. 
+     * This method with update the players athletes so that they are returned with full health but a reduced amount of stanima,
+     * and will reward the player with a reward based on the difficulty of the game which is determined by the {@link afterMatchReward} method.
+     */
     public static void endOfGame(){
         System.out.println();
         if (didAthletesWin){
@@ -275,17 +317,32 @@ public class GameMechanics<ActionListener> {
         }
     }
 
+
+    /**
+     * This method is called by the {@link endOfGame} method once the game is over, to provide the player with a reward based on the difficulty of the game.
+     * @return the amount of money the player has earned based on the difficulty of the game and the round the player is on.
+     */
     public static double afterMatchReward(){
         double increase =  10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound);
         GameManager.addFunds((int) (10 * getOppDiff() * GameManager.isGameHard() * (0.15 * currentRound)));
         return increase;
     }
 
+    /**
+     * This method is called by the {@link XXX} method once the athletes stanima has been reduced a value less or equal to zero.
+     * This method is automattically called after a stanima value has been reduced to zero or below.
+     * This method will update the players athlete to be in the injured state.
+     */
+    //TODO IMPLEMENT THIS METHOD
     public static void playerInjury(){
         //Take Player Stanima off
         athleteList.get(athIndex).stamina -= 0.5 * getOppDiff();
     }
 
+    /**
+     * This method is called by the {@link playTurn} method once an attack has been completed to update the values of the Opposition.
+     * @param damage the amount of damage that has been delt to the opposition.
+     */
     public static void updateOpposition(double damage){
         if (damage == 0){
             JOptionPane.showMessageDialog(null, 
@@ -309,6 +366,10 @@ public class GameMechanics<ActionListener> {
         
     }
     
+    /**
+     * This method is called by the {@link oppositionPlayTurn} method once an attack has been completed to update the values of the Athlete.
+     * @param damage is the value that the opposition has delt to the player.
+     */
     public static void updateAthlete(double damage){
         if (damage == 0){
             JOptionPane.showMessageDialog(null, 
@@ -331,6 +392,10 @@ public class GameMechanics<ActionListener> {
         
     }
     
+    /**
+     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of damage delt to the recipent.
+     * @param damage is the damage delt to the recipent.
+     */
     public static double attackLight(int i, int j){
         System.out.println("Light Attack");
         int chance = ThreadLocalRandom.current().nextInt(0, 10);
@@ -344,6 +409,10 @@ public class GameMechanics<ActionListener> {
         
     }
    
+    /**
+     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of damage delt to the recipent.
+     * @param damage is the damage delt to the recipent.
+     */
     public static double attackHeavy(int i, int j){
         System.out.println("Heavy Attack");
         int chance = ThreadLocalRandom.current().nextInt(0, 4);
@@ -354,12 +423,20 @@ public class GameMechanics<ActionListener> {
         }
     }   
 
+    /**
+     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of health delt to the recipent.
+     * @param damage is the health delt to the recipent.
+     */
     public static double heal(int i){
         System.out.println("Heal Attack");
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
     }
 
+    /**
+     * This method is called to determine the overall difficulty of the opposition.
+     * @return the overall difficulty of the opposition.
+     */
     public static double getOppDiff(){
         int oppositionDiff = 0;
         for (int i = 0; i < oppositionAthletes.size(); i++){
