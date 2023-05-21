@@ -56,6 +56,7 @@ public class GameMechanics<ActionListener> {
             case 1 -> playTurn(1);
             case 2 -> playTurn(2);
             //case 3 -> nextTurn();
+            case 4 -> WindowManager.showGameScreen();
         }
 
     }
