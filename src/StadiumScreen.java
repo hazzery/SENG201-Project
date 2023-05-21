@@ -60,7 +60,7 @@ public class StadiumScreen extends GameScreenPanel {
     private void selectOpponent(ActionEvent event) {
         TeamPanel panel = (TeamPanel) ((JButton)event.getSource()).getParent();
         OppositionTeam team = (OppositionTeam) panel.getTeam();
-        JOptionPane.showMessageDialog(this, "You have selected " + team.getName());
+        GameManager.playMatch(team);
     }
 
     /**
