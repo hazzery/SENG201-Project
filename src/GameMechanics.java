@@ -9,18 +9,18 @@ import javax.swing.JOptionPane;
  * It provides game logic and functionality to the GUI for the gameplay part of the game.
  * 
  * @author Daniel Smith
- * @param <ActionListener> DANIEL WHY TF IS THIS A PARAMETERISED GENERIC CLASS
  */
-public class GameMechanics<ActionListener> {
+public class GameMechanics {
 
     public static Team team;
     public static GameManager gameManager;
     public static OppositionTeam oppositionTeam;
     public static StadiumScreen stadiumScreen;
+    public static MatchWindow matchWindow;
     public static TurnActionStatments turnActionStatments = new TurnActionStatments();
 
-    private static ArrayList<Athlete> oppositionAthletes;
-    private static ArrayList<Athlete> athleteList;
+    public static ArrayList<Athlete> oppositionAthletes;
+    public static ArrayList<Athlete> athleteList;
 
     public static int indexer ;
 
@@ -155,6 +155,9 @@ public class GameMechanics<ActionListener> {
         }
         System.out.println("END OF ATTACK ATH " + athIndex + " " + oppIndex + "");
         endGameCondition();
+
+        if (isGameOver){return;}
+        if (athIndex == 5 || oppIndex ==5){return;}
         oppositionPlayTurn();
     }
 
@@ -163,60 +166,31 @@ public class GameMechanics<ActionListener> {
      * This method is automattically called when the athlete has attacked.
      */
     public static void oppositionPlayTurn(){ 
-        if (isGameOver){return;}
-        // if (athIndex >= athleteList.size()){return;}
-        if (athIndex == 5 || oppIndex ==5){return;}
-
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
-
-            //Testing code
-            System.out.println();  
-            System.out.println("Opposition " + oppIndex + turnActionStatments.getAttackName() + athIndex + "");
-            //Testing code
-            JOptionPane.showMessageDialog(null, 
-            "The Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() + " is going to attack: " + athleteList.get(athIndex).getName() + ""
-            );
+            System.out.println("Opposition " + oppIndex + turnActionStatments.getAttackName() + athIndex + "");    
+            // "The Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() + " is going to attack: " + athleteList.get(athIndex).getName() + ""
+            
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
                 double damage = attackLight(oppIndex, athIndex);
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
-
             } else if (oppositionAttack < 40){
                 double damage = attackHeavy(oppIndex, athIndex);
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
-
             } else {
                 double damage =  heal(oppIndex);
                 updateAthlete(damage * GameManager.isGameHard());
-
             }
         } else {
             // System.out.println("Athlete " + athIndex + " is dead");
-            // athIndex++;
+            athIndex++;
             oppositionPlayTurn();
         }
         System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
         endGameCondition();
-        // nextTurn();
     }
-
-    // public static void nextTurn(){
-    //     int result = JOptionPane.showOptionDialog(null,
-    //             "Next Turn or Quit:",
-    //             "Turn???",
-    //             JOptionPane.DEFAULT_OPTION,
-    //             JOptionPane.WARNING_MESSAGE,
-    //             null,
-    //             new String[]{"Next Turn", "Quit"},
-    //             null);
-
-    //     switch (result) {
-    //         case 0 -> playCMD();
-    //         case 1 -> System.exit(0);
-    //     }
-    // }
 
     /**
      * This method is called by the {@link playTurn} method once the athletes or opposition turn has been completed.
@@ -225,13 +199,13 @@ public class GameMechanics<ActionListener> {
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
             System.out.println("Athlete " + athIndex + " is dead");
-            JOptionPane.showMessageDialog(null, "Athlete " + athleteList.get(athIndex).getName() + " \n Was defeated as " + turnActionStatments.getDefeatName());
+            // "Athlete " + athleteList.get(athIndex).getName() + " \n Was defeated as " + turnActionStatments.getDefeatName()
             
             athIndex++;
         }
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() <= 0){
             System.out.println("Opposition " + oppIndex + " is dead");
-            JOptionPane.showMessageDialog(null, "Opposition " + oppositionAthletes.get(oppIndex).getName() + " \n Was defeated as" + turnActionStatments.getDefeatName());
+            // "Opposition " + oppositionAthletes.get(oppIndex).getName() + " \n Was defeated as" + turnActionStatments.getDefeatName()
             
             oppIndex++;
         }
@@ -341,23 +315,19 @@ public class GameMechanics<ActionListener> {
      */
     public static void updateOpposition(double damage){
         if (damage == 0){
-            JOptionPane.showMessageDialog(null, 
-            "Your attack on opposition " + oppositionAthletes.get(oppIndex).getName()  + " missed");
+            //"Your attack on opposition " + oppositionAthletes.get(oppIndex).getName()  + " missed"
         }
         
         if (damage >= 0){  
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
-            JOptionPane.showMessageDialog(null, 
-            "The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " \n So " + damage + " damage was delt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
-            );
+            //"The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " \n So " + damage + " damage was delt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
         } else {
             
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            JOptionPane.showMessageDialog(null, 
-            "Youre Athlete " + athleteList.get(athIndex).getName() + " " + turnActionStatments.getHealName() + " \n So " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
-            );
+            // "Youre Athlete " + athleteList.get(athIndex).getName() + " " + turnActionStatments.getHealName() + " \n So " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
+            
         }
         
     }
@@ -368,22 +338,19 @@ public class GameMechanics<ActionListener> {
      */
     public static void updateAthlete(double damage){
         if (damage == 0){
-            JOptionPane.showMessageDialog(null, 
-            "The attack on your athlete " + athleteList.get(athIndex).getName()  + " missed");
+            //"The attack on your athlete " + athleteList.get(athIndex).getName()  + " missed"
         }
         if (damage >= 0){
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            JOptionPane.showMessageDialog(null, 
-            "Your Athlete" + athleteList.get(athIndex).getName() + " " + turnActionStatments.getAttackName() + " \n So " + damage + " damage was delt" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
-            );
+            //"Your Athlete" + athleteList.get(athIndex).getName() + " " + turnActionStatments.getAttackName() + " \n So " + damage + " damage was delt" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + ""
+            
         } else {
             
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " heals " + damage + " health" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
-            JOptionPane.showMessageDialog(null, 
-            "The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getHealName() + " \n So " + damage + " damage was reversed" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
-            );
+            //"The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getHealName() + " \n So " + damage + " damage was reversed" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + ""
+            
         }
         
     }
@@ -411,12 +378,13 @@ public class GameMechanics<ActionListener> {
      */
     public static double attackHeavy(int i, int j){
         System.out.println("Heavy Attack");
-        int chance = ThreadLocalRandom.current().nextInt(0, 10);
-        if (chance > 6){
-            return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + athleteList.get(i).getStamina()) / 10) ;
-        } else {
-            return 0;
-        }
+        return 100;
+        // int chance = ThreadLocalRandom.current().nextInt(0, 10);
+        // if (chance > 6){
+        //     return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + athleteList.get(i).getStamina()) / 10) ;
+        // } else {
+        //     return 0;
+        // }
     }   
 
     /**
@@ -436,8 +404,8 @@ public class GameMechanics<ActionListener> {
     public static double getOppDiff(){
         int oppositionDiff = 0;
         for (int i = 0; i < oppositionAthletes.size(); i++){
-            oppositionDiff += oppositionAthletes.get(i).getOffence() + oppositionAthletes.get(i).getDefence() + oppositionAthletes.get(i).getStamina();
+            oppositionDiff += oppositionAthletes.get(i).getOffence() + oppositionAthletes.get(i).getDefence();
         }
-        return oppositionDiff / (oppositionAthletes.size() * 3);
+        return oppositionDiff / (oppositionAthletes.size() * 2);
     }
  }

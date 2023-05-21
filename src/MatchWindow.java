@@ -19,12 +19,12 @@ public class MatchWindow extends JPanel {
 		private PurchasablesShelf playerTeamPanel;
 		private JPanel gameOutputPanel;
 			private JLabel idkLabel;
-		private PurchasablesShelf oppositionTeamLabel;
+			private JLabel gameOutputLabel;
+		private PurchasablesShelf oppositionTeamPanel;
 	private JPanel footerPanel;
 		private JButton lightAttackButton;
 		private JButton heavyAttackButton;
 		private JButton healButton;
-		private JButton nextTurnButton;
 		private JButton exitMatchButton;
 
 
@@ -32,18 +32,18 @@ public class MatchWindow extends JPanel {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		GameManager.initializeAthletes();
-		GameManager.initializeItems();
-		WindowManager.initializeMainWindow();
-		GameManager.setConfiguration("DanielsTeam", 12, false);
-		GameManager.startGame(GameManager.athletes, 10000);
+	// 	GameManager.initializeAthletes();
+	// 	GameManager.initializeItems();
+	// 	WindowManager.initializeMainWindow();
+	// 	GameManager.setConfiguration("DanielsTeam", 12, false);
+	// 	GameManager.startGame(GameManager.athletes, 10000);
 
-        OppositionTeam oppositionTeam = new OppositionTeam();
-		GameManager.oppositionTeam = oppositionTeam;
-        Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
-		GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
+    //     OppositionTeam oppositionTeam = new OppositionTeam();
+	// 	GameManager.oppositionTeam = oppositionTeam;
+    //     Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
+	// 	GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
 
-		WindowManager.showMatchScreen();
+	// 	WindowManager.showMatchScreen();
 	}
 
 	/**
@@ -88,11 +88,14 @@ public class MatchWindow extends JPanel {
 		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.X_AXIS));
 		mainPanel.add(gameOutputPanel);
 
-		idkLabel = new JLabel("Game Output");
+		idkLabel = new JLabel("Game Output:    ");
 		gameOutputPanel.add(idkLabel);
 
-		oppositionTeamLabel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
-		mainPanel.add(oppositionTeamLabel);
+		gameOutputLabel = new JLabel("SOME OUPUT LOL");
+		gameOutputPanel.add(gameOutputLabel);
+
+		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
+		mainPanel.add(oppositionTeamPanel);
 
 		//FOOTER
 		footerPanel = new JPanel();
@@ -106,44 +109,44 @@ public class MatchWindow extends JPanel {
 		footerPanel.add(lightAttackButton);
 
 		heavyAttackButton = new JButton("Heavy Attack");
-		lightAttackButton.addActionListener(this::heavyAttack);
-		footerPanel.add(lightAttackButton);
+		heavyAttackButton.addActionListener(this::heavyAttack);
+		footerPanel.add(heavyAttackButton);
 
 		healButton = new JButton("Heal");
 		healButton.addActionListener(this::heal);
 		footerPanel.add(healButton);
-
-		nextTurnButton = new JButton("Next Turn");
-		nextTurnButton.addActionListener(this::nextTurn);
-		footerPanel.add(nextTurnButton);
 
 		exitMatchButton = new JButton("Exit Match");
 		exitMatchButton.addActionListener(this::exitMatch);
 		footerPanel.add(exitMatchButton);
 	}
 
-	private void exitMatch(ActionEvent actionEvent) {
-		System.out.println("Exit Game");
-		turnAction(4);
+	private void update(){
+		playerTeamPanel.reload(GameMechanics.athleteList);
+		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
 	}
 
-	private void nextTurn(ActionEvent actionEvent) {
-		System.out.println("NEXT TURN");
+	private void exitMatch(ActionEvent actionEvent) {
+		System.out.println("Exit Game");
 		turnAction(3);
+		update();
 	}
 
 	private void heal(ActionEvent actionEvent) {
 		System.out.println("Heal");
 		turnAction(2);
+		update();
 	}
 
 	private void heavyAttack(ActionEvent actionEvent) {
 		System.out.println("Heavy Attack");
 		turnAction(1);
+		update();
 	}
 
 	private void lightAttack(ActionEvent actionEvent) {
 		System.out.println("Light Attack");
 		turnAction(0);
+		update();
 	}
 }

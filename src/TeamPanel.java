@@ -70,7 +70,7 @@ public class TeamPanel extends JPanel {
      */
     public void addButton(String buttonText, ActionListener actionListener) {
         rewardLabel = new JLabel();
-        rewardLabel.setText("Reward: $" + (int) team.getDifficulty() * 10);
+        rewardLabel.setText("Reward: $" + (int) team.getDifficulty() * 10 * GameManager.isGameHard() * (0.15 * GameManager.currentWeek()));
         statsPanel.add(rewardLabel);
 
         JButton button = new JButton(buttonText);
