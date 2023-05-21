@@ -56,9 +56,28 @@ public class GameMechanics<ActionListener> {
             case 1 -> playTurn(1);
             case 2 -> playTurn(2);
             //case 3 -> nextTurn();
-            case 4 -> WindowManager.showGameScreen();
+            case 4 -> exitMatch(); 
         }
 
+    }
+
+    //TODO ADD RETURN STANIMIA AND HEALTH TO ATHLETE LISTS & DISPOSE OF OPPOSITION TEAM
+    private static void exitMatch() {
+        int result = JOptionPane.showOptionDialog(null,
+                "You are about to quit",
+                "Are you sure you want to exit?",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Yes Quit :'(", "No Stay :D"},
+                null);
+
+        // Check which button was clicked and perform corresponding action
+        switch (result) {
+            case 0 -> WindowManager.showGameScreen(); 
+            case 1 -> JOptionPane.getRootFrame().dispose();
+        }
+        
     }
 
     /**
