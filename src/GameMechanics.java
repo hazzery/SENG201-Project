@@ -56,8 +56,7 @@ public class GameMechanics<ActionListener> {
             case 0 -> playTurn(0);
             case 1 -> playTurn(1);
             case 2 -> playTurn(2);
-            //case 3 -> nextTurn();
-            case 4 -> exitMatch(); 
+            case 3 -> exitMatch(); 
         }
 
     }
@@ -66,7 +65,7 @@ public class GameMechanics<ActionListener> {
     private static void exitMatch() {
         int result = JOptionPane.showOptionDialog(null,
                 "You are about to quit",
-                "Are you sure you want to exit?",
+                "Are you sure you want to exit? The Damage done to your athletes will remain",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,
@@ -75,15 +74,10 @@ public class GameMechanics<ActionListener> {
 
         // Check which button was clicked and perform corresponding action
         switch (result) {
-            case 0 -> exitedMatch(); 
+            case 0 ->  WindowManager.showGameScreen(); 
             case 1 -> JOptionPane.getRootFrame().dispose();
         }
         
-    }
-
-    public static void exitedMatch(){
-
-        WindowManager.showGameScreen();
     }
 
     /**
@@ -283,6 +277,7 @@ public class GameMechanics<ActionListener> {
             System.out.println("Your balence is now: " + GameManager.getBankBalance());
             JOptionPane.showMessageDialog(null, "Your balence is now: " + GameManager.getBankBalance());
 
+
         } else {
             System.out.println("Try Again next time xoxo");
             JOptionPane.showMessageDialog(null, "Try Again next time xoxo");
@@ -315,6 +310,7 @@ public class GameMechanics<ActionListener> {
         for (Athlete athlete : athleteList) {
             System.out.println(athlete.getStats());
         }
+        WindowManager.showGameScreen();
     }
 
 
@@ -415,8 +411,8 @@ public class GameMechanics<ActionListener> {
      */
     public static double attackHeavy(int i, int j){
         System.out.println("Heavy Attack");
-        int chance = ThreadLocalRandom.current().nextInt(0, 4);
-        if (chance == 2){
+        int chance = ThreadLocalRandom.current().nextInt(0, 10);
+        if (chance > 6){
             return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + athleteList.get(i).getStamina()) / 10) ;
         } else {
             return 0;
