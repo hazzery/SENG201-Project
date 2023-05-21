@@ -11,6 +11,9 @@ public class ClubScreen extends GameScreenPanel {
         private PurchasablesShelf reservesShelf;
         private PurchasablesShelf itemsShelf;
 
+    /**
+     * Initialize the contents of the frame.
+     */
     @Override
     protected void initialize() {
         super.initialize();
@@ -31,7 +34,7 @@ public class ClubScreen extends GameScreenPanel {
     }
 
     /**
-     *
+     * Reloads the contents of the shelves to reflect the current state of the game
      */
     @Override
     public void reload() {
@@ -40,10 +43,18 @@ public class ClubScreen extends GameScreenPanel {
         itemsShelf.reload(GameManager.getItems());
     }
 
+    /**
+     * Creates a new ClubScreen panel with the given game screen as its parent
+     * @param gameScreen The {@link GameScreen} that is the parent of this panel
+     */
     ClubScreen(GameScreen gameScreen) {
         super(GameScreen.Screen.CLUB, gameScreen);
     }
 
+    /**
+     * Event handler called to reserve an athlete
+     * @param event {@link ActionEvent} containing information about which button was clicked
+     */
     private void reserveAthlete(ActionEvent event) {
         Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
                 "Select an athlete to swap with", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
@@ -73,6 +84,10 @@ public class ClubScreen extends GameScreenPanel {
         reservesShelf.removePanel(swap);
     }
 
+    /**
+     * Event handler called to activate an athlete
+     * @param event {@link ActionEvent} containing information about which button was clicked
+     */
     private void activateAthlete(ActionEvent event) {
 
         Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
@@ -102,6 +117,10 @@ public class ClubScreen extends GameScreenPanel {
         activesShelf.removePanel(swap);
     }
 
+    /**
+     * Event handler called to use an item on an athlete
+     * @param event {@link ActionEvent} containing information about which button was clicked
+     */
     private void selectAthleteForItem(ActionEvent event) {
         Athlete athlete = (Athlete) JOptionPane.showInputDialog(this,
                 "Select an athlete to use this item on", "Use Item", JOptionPane.PLAIN_MESSAGE,
