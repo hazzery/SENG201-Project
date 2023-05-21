@@ -12,6 +12,8 @@ import javax.swing.*;
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
+	public GameMechanics gameMechanics;
+
 	public String OppText;
 	public String TeamText;
 	public String gameText;
@@ -60,7 +62,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	public void turnAction(int index){
-		GameMechanics.guiButtonPress(index);
+		gameMechanics.guiButtonPress(index);
 		update();
 	}
 
@@ -96,16 +98,19 @@ public class MatchWindow extends JPanel {
 		gameOutputPanel.add(ouputLabel);
 
 		gameOutput = new JTextArea(2, 20);
+		gameOutput.setEditable(false);	
 		gameOutput.setLineWrap(true);
 		gameOutputPanel.add(gameOutput);
 		gameOutput.setText(gameText);
 		
 		teamOutput = new JTextArea(2, 20);
+		teamOutput.setEditable(false);
 		teamOutput.setLineWrap(true);
 		gameOutputPanel.add(teamOutput);
 		teamOutput.setText(TeamText);
 
 		oppositionOutput = new JTextArea(2, 20);
+		oppositionOutput.setEditable(false);
 		oppositionOutput.setLineWrap(true);
 		gameOutputPanel.add(oppositionOutput);
 		oppositionOutput.setText(OppText);
@@ -137,8 +142,8 @@ public class MatchWindow extends JPanel {
 	}
 
 	private void update(){
-		playerTeamPanel.reload(GameMechanics.athleteList);
-		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
+		playerTeamPanel.reload(gameMechanics.athleteList);
+		oppositionTeamPanel.reload(gameMechanics.oppositionAthletes);
 	}
 
 	private void exitMatch(ActionEvent actionEvent) {
