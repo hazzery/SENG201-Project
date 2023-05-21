@@ -22,9 +22,9 @@ public class MatchWindow extends JPanel {
 		private PurchasablesShelf playerTeamPanel;
 		private JPanel gameOutputPanel;
 			private JLabel ouputLabel;
-			static JTextArea gameOutput;
-			static JTextArea teamOutput;
-			static JTextArea oppositionOutput;
+			static JLabel gameOutput;
+			static JLabel teamOutput;
+			static JLabel oppositionOutput;
 		private PurchasablesShelf oppositionTeamPanel;
 	private JPanel footerPanel;
 		private JButton lightAttackButton;
@@ -95,20 +95,14 @@ public class MatchWindow extends JPanel {
 		ouputLabel = new JLabel("Game Output:");
 		gameOutputPanel.add(ouputLabel);
 
-		gameOutput = new JTextArea(2, 20);
-		gameOutput.setLineWrap(true);
+		gameOutput = new JLabel(gameText);
 		gameOutputPanel.add(gameOutput);
-		gameOutput.setText(gameText);
-		
-		teamOutput = new JTextArea(2, 20);
-		teamOutput.setLineWrap(true);
-		gameOutputPanel.add(teamOutput);
-		teamOutput.setText(TeamText);
 
-		oppositionOutput = new JTextArea(2, 20);
-		oppositionOutput.setLineWrap(true);
+		teamOutput = new JLabel(TeamText);
+		gameOutputPanel.add(teamOutput);
+
+		oppositionOutput = new JLabel(OppText);
 		gameOutputPanel.add(oppositionOutput);
-		oppositionOutput.setText(OppText);
 
 		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
