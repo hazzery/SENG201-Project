@@ -65,7 +65,7 @@ public class GameMechanics<ActionListener> {
     private static void exitMatch() {
         int result = JOptionPane.showOptionDialog(null,
                 "You are about to quit",
-                "Are you sure you want to exit?",
+                "Are you sure you want to exit? The Damage done to your athletes will remain",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,

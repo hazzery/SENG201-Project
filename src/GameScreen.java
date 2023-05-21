@@ -73,7 +73,7 @@ public class GameScreen extends JPanel {
      * to reflect new changes in the game's state
      */
     void updateSeasonInfo() {
-        GameManager.nextWeek();
+        GameManager.nextWeek(); 
         currentWeekLabel.setText("Week " + GameManager.currentWeek() + " of " + GameManager.getSeasonLength());
         remainingWeeksLabel.setText((GameManager.getSeasonLength() - GameManager.currentWeek()) + " weeks remaining");
         seasonPanel.revalidate();

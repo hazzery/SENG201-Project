@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 import java.util.ArrayList;
 
-
 /**
  * GameManager is a static utility class in charge of the game state.
  * It provides game logic functionality to the GUI
