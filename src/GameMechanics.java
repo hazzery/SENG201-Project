@@ -16,6 +16,7 @@ public class GameMechanics<ActionListener> {
     public static Team team;
     public static GameManager gameManager;
     public static OppositionTeam oppositionTeam;
+    public static StadiumScreen stadiumScreen;
     public static TurnActionStatments turnActionStatments = new TurnActionStatments();
 
     private static ArrayList<Athlete> oppositionAthletes;
@@ -74,10 +75,16 @@ public class GameMechanics<ActionListener> {
 
         // Check which button was clicked and perform corresponding action
         switch (result) {
-            case 0 -> WindowManager.showGameScreen(); 
+            case 0 -> exitedMatch(); 
             case 1 -> JOptionPane.getRootFrame().dispose();
         }
         
+    }
+
+    public static void exitedMatch(){
+
+        WindowManager.showGameScreen();
+        stadiumScreen.updateWeeklyPool();
     }
 
     /**
