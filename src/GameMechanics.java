@@ -61,7 +61,6 @@ public class GameMechanics {
 
     }
 
-    //TODO ADD RETURN STANIMIA AND HEALTH TO ATHLETE LISTS & DISPOSE OF OPPOSITION TEAM
     private static void exitMatch() {
         int result = JOptionPane.showOptionDialog(null,
                 "You are about to quit",
@@ -133,7 +132,7 @@ public class GameMechanics {
     public static void playTurn(int attackType){
         // if (isGameOver == true){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
-
+       
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
             System.out.println("Athlete " + athIndex + " attacks " + oppIndex + "");
             if (attackType == 0){
@@ -155,9 +154,6 @@ public class GameMechanics {
         }
         System.out.println("END OF ATTACK ATH " + athIndex + " " + oppIndex + "");
         endGameCondition();
-
-        if (isGameOver){return;}
-        if (athIndex == 5 || oppIndex ==5){return;}
         oppositionPlayTurn();
     }
 
@@ -166,6 +162,8 @@ public class GameMechanics {
      * This method is automattically called when the athlete has attacked.
      */
     public static void oppositionPlayTurn(){ 
+        if (isGameOver){return;}
+        if (athIndex == 5 || oppIndex ==5){return;}
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
             System.out.println("Opposition " + oppIndex + turnActionStatments.getAttackName() + athIndex + "");    
             // "The Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() + " is going to attack: " + athleteList.get(athIndex).getName() + ""
@@ -360,6 +358,7 @@ public class GameMechanics {
      * @param damage is the damage delt to the recipent.
      */
     public static double attackLight(int i, int j){
+        updateGameOutput("Light Attack");
         System.out.println("Light Attack");
         int chance = ThreadLocalRandom.current().nextInt(0, 10);
         if (chance >= 1){
@@ -377,6 +376,7 @@ public class GameMechanics {
      * @param damage is the damage delt to the recipent.
      */
     public static double attackHeavy(int i, int j){
+        updateGameOutput("Heavy Attack");
         System.out.println("Heavy Attack");
         return 100;
         // int chance = ThreadLocalRandom.current().nextInt(0, 10);
@@ -393,6 +393,7 @@ public class GameMechanics {
      */
     public static double heal(int i){
         System.out.println("Heal Attack");
+        updateGameOutput("Heal Attack");
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
     }
@@ -408,4 +409,11 @@ public class GameMechanics {
         }
         return oppositionDiff / (oppositionAthletes.size() * 2);
     }
+
+    public static void updateGameOutput(String string){
+        
+        MatchWindow.gameOutputLabel.setText(string);
+        MatchWindow.gameOutputLabel.revalidate();
+    }
+
  }

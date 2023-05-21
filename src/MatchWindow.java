@@ -12,6 +12,7 @@ import javax.swing.*;
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
+	public String Text = "Game Start";
 
 	private JPanel headerPanel;
 		private JLabel matchLabel;
@@ -19,7 +20,7 @@ public class MatchWindow extends JPanel {
 		private PurchasablesShelf playerTeamPanel;
 		private JPanel gameOutputPanel;
 			private JLabel idkLabel;
-			private JLabel gameOutputLabel;
+			static JLabel gameOutputLabel;
 		private PurchasablesShelf oppositionTeamPanel;
 	private JPanel footerPanel;
 		private JButton lightAttackButton;
@@ -38,9 +39,9 @@ public class MatchWindow extends JPanel {
 	// 	GameManager.setConfiguration("DanielsTeam", 12, false);
 	// 	GameManager.startGame(GameManager.athletes, 10000);
 
-    //     OppositionTeam oppositionTeam = new OppositionTeam();
+    //  OppositionTeam oppositionTeam = new OppositionTeam();
 	// 	GameManager.oppositionTeam = oppositionTeam;
-    //     Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
+    //  Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
 	// 	GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
 
 	// 	WindowManager.showMatchScreen();
@@ -91,8 +92,9 @@ public class MatchWindow extends JPanel {
 		idkLabel = new JLabel("Game Output:    ");
 		gameOutputPanel.add(idkLabel);
 
-		gameOutputLabel = new JLabel("SOME OUPUT LOL");
+		gameOutputLabel = new JLabel("Game Start");
 		gameOutputPanel.add(gameOutputLabel);
+		gameOutputLabel.setText(Text);
 
 		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
