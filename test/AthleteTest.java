@@ -54,7 +54,7 @@ class AthleteTest {
 
         assertEquals(100, athlete.getStamina());
         assertEquals(100, athlete.current_health);
-        assertEquals(false, athlete.isInjured);
+        assertFalse(athlete.isInjured);
 }
 
     @Test
