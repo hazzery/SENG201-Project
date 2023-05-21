@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.stream.Stream;
 import java.util.ArrayList;
 
@@ -241,5 +242,14 @@ public class GameManager {
         GameManager.seasonLength = seasonLength;
         GameManager.team = new PlayerTeam(teamName);
         GameManager.hardMode = hardMode;
+    }
+
+    /**
+     * Sets the game into a new match with the provided opposition
+     * @param opposition The opposing team the user selected
+     */
+    public static void playMatch(OppositionTeam opposition) {
+        WindowManager.showMatchScreen();
+        GameMechanics.playGame(1, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
     }
 }
