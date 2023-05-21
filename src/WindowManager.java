@@ -45,6 +45,8 @@ public class WindowManager {
      * @param panel the panel to display
      */
     private static void setScreen(JPanel panel) {
+        if (mainWindow == null)
+            initializeMainWindow();
         mainWindow.remove(mainWindow.getContentPane());
         mainWindow.setContentPane(panel);
         mainWindow.revalidate();

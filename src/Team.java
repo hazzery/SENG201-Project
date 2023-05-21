@@ -55,7 +55,8 @@ public abstract class Team {
         for (Athlete athlete : this.actives) {
             total += athlete.getOffence();
         }
-        return total / this.actives.size();
+        int size = this.actives.size() == 0 ? 1 : this.actives.size();
+        return total / size;
     }
 
     /**
@@ -68,7 +69,9 @@ public abstract class Team {
         for (Athlete athlete : this.actives) {
             total += athlete.getDefence();
         }
-        return total / this.actives.size();
+
+        int size = this.actives.size() == 0 ? 1 : this.actives.size();
+        return total / size;
     }
 
     /**

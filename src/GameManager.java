@@ -17,7 +17,7 @@ public class GameManager {
 
     private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
 
-    private static int bankBalance = 10000;
+    private static int bankBalance = 0;
     private static int currentWeek = 1;
 
     public static OppositionTeam oppositionTeam;
@@ -197,7 +197,9 @@ public class GameManager {
             throw new IllegalStateException("Insufficient money to make purchase");
 
         bankBalance -= purchasable.getContractPrice();
-        WindowManager.gameScreen.updateTeamInfo();
+        if (WindowManager.gameScreen != null) {
+            WindowManager.gameScreen.updateTeamInfo();
+        }
 
         if (purchasable instanceof Athlete athlete)
             team.addAthlete(athlete, !activateNewAthlete);
@@ -228,7 +230,9 @@ public class GameManager {
             items.remove(item);
 
         bankBalance += purchasable.getSellBackPrice();
-        WindowManager.gameScreen.updateTeamInfo();
+
+        if (WindowManager.gameScreen != null)
+            WindowManager.gameScreen.updateTeamInfo();
     }
 
     /**
