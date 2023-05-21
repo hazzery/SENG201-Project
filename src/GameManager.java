@@ -55,6 +55,7 @@ public class GameManager {
      * @param bankBalance the player's starting bank balance
      */
     public static void startGame(ArrayList<Athlete> selectedAthletes, int bankBalance) {
+        
         GameManager.bankBalance = bankBalance;
         for (int i = 0; i < Team.TEAM_SIZE; i++) {
             team.addAthlete(selectedAthletes.get(i), false);
@@ -252,8 +253,9 @@ public class GameManager {
      * @param opposition The opposing team the user selected
      */
     public static void playMatch(OppositionTeam opposition) {
+        GameMechanics gameMechanics = new GameMechanics();
         GameManager.oppositionTeam = opposition;
-        GameMechanics.playGame(1, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
+        gameMechanics.playGame(currentWeek, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
         WindowManager.showMatchScreen();
     }
 }
