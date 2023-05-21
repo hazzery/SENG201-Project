@@ -1,3 +1,8 @@
+/**
+ * Utilities is a static utility class validates names to make sure the meet the required form
+ *
+ * @author Harrison Parkes
+ */
 public class Utilities {
 
     /**
@@ -19,13 +24,5 @@ public class Utilities {
         else if (!name.matches("[A-Za-z0-9]+")) {
             throw new IllegalArgumentException("Name must contain only letters and numbers");
         }
-    }
-
-    public static String purchaseButtonText(Purchasable purchasable) {
-        return HTMLString.multiLine("Purchase", "$" + purchasable.getContractPrice());
-    }
-
-    public static String sellButtonText(Purchasable purchasable) {
-        return HTMLString.multiLine("Sell", "$" + purchasable.getSellBackPrice());
     }
 }

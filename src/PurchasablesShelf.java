@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * A PurchasablesShelf is a display panel used to show a collection of {@link PurchasablePanel}s
+ *
+ * @author Harrison Parkes
+ */
 public class PurchasablesShelf extends JPanel {
     private final String shelfName;
     private Function<Purchasable, String> getButtonText = null;
@@ -68,7 +74,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Removes the given {@link PurchasablePanel} from the shelf
-     * @param panel The {@link PurchasablePanel} to remove
+     * @param panel The PurchasablePanel to remove
      */
     public void removePanel(PurchasablePanel panel) {
         shelfPanel.remove(panel);
@@ -78,7 +84,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Adds a {@link PurchasablePanel} to the shelf to display the given {@link Purchasable}
-     * @param purchasable The {@link Purchasable} to display
+     * @param purchasable The purchasable to display
      */
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);

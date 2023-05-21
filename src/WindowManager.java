@@ -1,5 +1,12 @@
 import javax.swing.*;
 
+
+/**
+ * WindowManager is a static utility class that manages everything to do with the game's window
+ * Used for switching out the various screens involved with the gameplay
+ *
+ * @author Harrison Parkes
+ */
 public class WindowManager {
 
     private static JFrame mainWindow;
@@ -52,6 +59,9 @@ public class WindowManager {
         setScreen(initScreen);
     }
 
+    /**
+     * Change the current screen from the initialisation screen to the team selection screen
+     */
     public static void showTeamSelection() {
         teamSelectScreen = new TeamSelectScreen();
         setScreen(teamSelectScreen);
@@ -65,6 +75,9 @@ public class WindowManager {
         setScreen(gameScreen);
     }
 
+    /**
+     * Changes the current screen from the stadium to the match screen
+     */
     public static void showMatchScreen() {
         matchScreen = new MatchWindow();
     	setScreen(matchScreen);

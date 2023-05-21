@@ -1,8 +1,14 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Stack;
+import java.io.File;
 
+
+/**
+ * DANIEL I HAVE ZERO CLUE WHAT THIS IS
+ *
+ * @author Daniel Smith
+ */
 public class TurnActionStatments{
     static private boolean attackScannerIsInitialised = false;
     static private Scanner attackScanner;

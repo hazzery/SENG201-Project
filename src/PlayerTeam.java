@@ -128,26 +128,45 @@ public class PlayerTeam extends Team {
     }
 
     /**
-     *
-     * @param athlete
+     * Removes the given athlete from the team
+     * @param athlete the athlete to remove from the team
      */
     public void removeAthlete(Athlete athlete) {
         this.actives.remove(athlete);
         this.reserves.remove(athlete);
     }
 
+    /**
+     * Gets the active athlete at the provided index
+     * @param index the index within the active athletes
+     * @return The athlete at the specified index within the actives array
+     */
     public Athlete getActive(int index) {
         return this.actives.get(index);
     }
 
+    /**
+     * Checks to see if the provided athlete is active on this team
+     * @param athlete The athlete to check membership on
+     * @return {@code true} if the given athlete is an active athlete on the team, {@code false} otherwise
+     */
     public boolean isActive(Athlete athlete) {
         return this.actives.contains(athlete);
     }
 
+    /**
+     * Get all the athletes on this team as an array
+     * @return An array of all active and reserved athletes
+     */
+    @Override
     public Athlete[] getAthletes() {
         return Stream.concat(actives.stream(), reserves.stream()).toArray(Athlete[]::new);
     }
 
+    /**
+     * Get all the athletes on this team and all the players items, as an array
+     * @return An array of all active and reserved athletes and all the players items
+     */
     Purchasable[] athletesAndItems() {
         return Stream.concat(Stream.concat(actives.stream(), reserves.stream()), GameManager.itemStream()).toArray(Purchasable[]::new);
     }
