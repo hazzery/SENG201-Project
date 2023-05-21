@@ -4,6 +4,12 @@ import java.util.Map;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * PurchasablePanel is a display panel used to provide a visual representation of a {@link Purchasable} object
+ *
+ * @author Harrison Parkes
+ */
 public class PurchasablePanel extends JPanel {
     private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
     private final HashMap<String, JLabel> statLabels;

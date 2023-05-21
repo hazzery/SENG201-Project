@@ -3,7 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-
+/**
+ * TeamSelectScreen is the user interface that allows the user to choose which athletes they would like
+ * in their initial team, from a selection of randomly generated athletes
+ *
+ * @author Harrison Parkes
+ */
 public class TeamSelectScreen extends JPanel {
 
     private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
@@ -24,13 +29,16 @@ public class TeamSelectScreen extends JPanel {
         private JButton acceptAthletesButton;
 
     /**
-     * Create the panel.
+     * Instantiates a new TeamSelectScreen
      */
     public TeamSelectScreen() {
         initialise();
         setVisible(true);
     }
 
+    /**
+     * Initialize the contents of the frame.
+     */
     private void initialise() {
         this.setLayout(new BorderLayout(0, 0));
 
@@ -82,14 +90,30 @@ public class TeamSelectScreen extends JPanel {
 
     }
 
+    /**
+     * Function that creates the button text for a select athlete button
+     * Uses the provided athlete to get its price
+     * @param purchasable Any purchasable object
+     * @return The string to put on the button
+     */
     private String selectButtonText (Purchasable purchasable) {
         return HTMLString.multiLine("Select", "$" + purchasable.getContractPrice());
     }
 
+    /**
+     * Function that creates the button text for an unselect athlete button
+     * Uses the provided athlete to get its price
+     * @param purchasable Any purchasable object
+     * @return The string to put on the button
+     */
     private String unselectButtonText (Purchasable purchasable) {
         return HTMLString.multiLine("Unselect", "+ $" + purchasable.getContractPrice());
     }
 
+    /**
+     * Event handler for select athlete button
+     * @param event An {@link ActionEvent} containing information about which button called the handler
+     */
     private void selectAthlete(ActionEvent event) {
         PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
         Athlete athlete = (Athlete) panel.getPurchasable();

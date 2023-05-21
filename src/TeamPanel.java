@@ -1,7 +1,13 @@
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
+
+/**
+ * TeamPanel is a display panel used to create a visual representation of a {@link Team}
+ *
+ * @author Harrison Parkes
+ */
 public class TeamPanel extends JPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
@@ -13,12 +19,20 @@ public class TeamPanel extends JPanel {
         private JLabel rewardLabel;
 
     private final Team team;
+
+    /**
+     * Instantiates a new TeamPanel for the provided team
+     * @param team The team to visualise
+     */
     public TeamPanel(Team team) {
         this.team = team;
         initialize();
         setVisible(true);
     }
 
+    /**
+     * Initialize the contents of the frame.
+     */
     private void initialize() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(marginBorder);
@@ -48,6 +62,12 @@ public class TeamPanel extends JPanel {
         statsPanel.add(rankingLabel);
     }
 
+    /**
+     * Add a button to the TeamPanel with the provided text and {@link ActionListener}
+     * @param buttonText The text to show on the button
+     * @param actionListener The action listener to handle to {@link java.awt.event.ActionEvent}
+     *                       created when the button is clicked
+     */
     public void addButton(String buttonText, ActionListener actionListener) {
         rewardLabel = new JLabel();
         rewardLabel.setText("Reward: $" + (int) team.getDifficulty() * 10);
@@ -59,8 +79,11 @@ public class TeamPanel extends JPanel {
         this.add(button);
     }
 
+    /**
+     * Gets the team associated with this panel
+     * @return The team this panel represents
+     */
     public Team getTeam() {
         return team;
     }
-
 }

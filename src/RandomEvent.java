@@ -1,7 +1,10 @@
 import java.util.concurrent.ThreadLocalRandom;
 
+
 /**
- * A class that represents a Random Event
+ * DANIEL ........
+ *
+ * @author Daniel Smith
  */
 public class RandomEvent {
     public int chance;

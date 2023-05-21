@@ -32,13 +32,13 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", Utilities::purchaseButtonText, this::purchase);
+        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", MarketScreen::purchaseButtonText, this::purchase);
         contentPanel.add(athletesShelf);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", Utilities::purchaseButtonText, this::purchase);
+        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", MarketScreen::purchaseButtonText, this::purchase);
         contentPanel.add(itemsShelf);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.athletesAndItems(), "Inventory", Utilities::sellButtonText, this::sell);
+        teamShelf = new PurchasablesShelf(GameManager.team.athletesAndItems(), "Inventory", MarketScreen::sellButtonText, this::sell);
         contentPanel.add(teamShelf);
     }
 
@@ -188,5 +188,25 @@ public class MarketScreen extends GameScreenPanel {
         athletesShelf.reload(weeklyAthletePool);
         itemsShelf.reload(weeklyItemPool);
         teamShelf.reload(GameManager.team.athletesAndItems());
+    }
+
+    /**
+     * Function that creates the button text for a purchase athlete button
+     * Uses the provided athlete to get its price
+     * @param purchasable Any purchasable object
+     * @return The string to put on the button
+     */
+    public static String purchaseButtonText(Purchasable purchasable) {
+        return HTMLString.multiLine("Purchase", "$" + purchasable.getContractPrice());
+    }
+
+    /**
+     * Function that creates the button text for a sell athlete button
+     * Uses the provided athlete to get its resale price
+     * @param purchasable Any purchasable object
+     * @return The string to put on the button
+     */
+    public static String sellButtonText(Purchasable purchasable) {
+        return HTMLString.multiLine("Sell", "$" + purchasable.getSellBackPrice());
     }
 }

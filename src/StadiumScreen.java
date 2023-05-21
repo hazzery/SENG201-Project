@@ -1,7 +1,13 @@
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
+/**
+ * StadiumScreen is the display panel that allows the user to browse and choose from a small selection
+ * of weekly matches to compete in. It is a display panel that sits within the {@link GameScreen}
+ *
+ * @author Harrison Parkes
+ */
 public class StadiumScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 

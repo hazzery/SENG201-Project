@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 
+/**
+ * SplashScreen is the first screen shown to the user when the application launches
+ *
+ * @author Harrison Parkes
+ */
 public class SplashScreen extends JPanel {
 
 	private static final int BORDER_WIDTH = 0;
