@@ -30,20 +30,9 @@ public class GameMechanics {
 
     public static int attackType;
 
-
     public static boolean isGameOver;
     public static boolean didAthletesWin;
     public static boolean isNextTurnAble = true;
-
-    public static String teamOutput = "";
-    public static String oppOutput = "";
-
-    //public static boolean isNextTurnAble = true;
-
-    public GameMechanics(){
-        gameManager = new GameManager();
-    }
-
 
     public void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
         this.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
@@ -57,7 +46,6 @@ public class GameMechanics {
      * @param index
      */
     public static void guiButtonPress(int index){
-        
         switch(index){
             case 0 -> playTurn(0);
             case 1 -> playTurn(1);
@@ -81,53 +69,6 @@ public class GameMechanics {
         switch (result) {
             case 0 ->  WindowManager.showGameScreen(); 
             case 1 -> JOptionPane.getRootFrame().dispose();
-        }
-        
-    }
-
-    /**
-     * This method is a debug / command line version of the game with very minimal GUI calls to display the game state.
-     * This method is not used buy the GUI version of the game.
-     */
-    public static void cdmInit(){
-        int result = JOptionPane.showOptionDialog(null,
-                "Your Team: " + athleteList + "\n" + "Opposition Team: " + oppositionAthletes + "\n" + "Round: " + currentRound,
-                "Start Game",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.WARNING_MESSAGE,
-                null,
-                new String[]{"Start Game", "Quit"},
-                null);
-
-        // Check which button was clicked and perform corresponding action
-        switch (result) {
-            case 0 -> playCMD();
-            case 1 -> System.exit(0);
-        }
-    }
-
-    /**
-     * This method is called by the {@link cmdInit} method when the user clicks on the start game action button.
-     * This method is not used buy the GUI version of the game.
-     */
-    public static void playCMD() {
-        if (isGameOver){return;}
-        // Display the popup box with three buttons
-        int result = JOptionPane.showOptionDialog(null,
-                "Athlete " + athleteList.get(athIndex).getName() + " will be attacking Opposition: " + oppositionAthletes.get(oppIndex).getName() + "",
-                "ATTACK!!!!",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.WARNING_MESSAGE,
-                null,
-                new String[]{"Light Attack (90%)", "Heavy Attack (25%)", "Heal", "End Game"},
-                null);
-
-        // Check which button was clicked and perform corresponding action
-        switch (result) {
-            case 0 -> playTurn(0);
-            case 1 -> playTurn(1);
-            case 2 -> playTurn(2);
-            case 3 -> System.exit(0);
         }
     }
 
@@ -297,16 +238,7 @@ public class GameMechanics {
         return increase;
     }
 
-    /**
-     * This method is called by the {@link XXX} method once the athletes stanima has been reduced a value less or equal to zero.
-     * This method is automattically called after a stanima value has been reduced to zero or below.
-     * This method will update the players athlete to be in the injured state.
-     */
-    //TODO IMPLEMENT THIS METHOD
-    public static void playerInjury(){
-        //Take Player Stanima off
-        athleteList.get(athIndex).stamina -= 0.5 * getOppDiff();
-    }
+    
 
     /**
      * This method is called by the {@link playTurn} method once an attack has been completed to update the values of the Opposition.
