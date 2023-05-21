@@ -15,7 +15,7 @@ public class TeamSelectScreen extends JPanel {
     private final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
     private final Athlete[] athletePool = GameManager.generateAthletes(9);
 
-    private int bankBalance = 8500;
+    private int bankBalance = 10000;
 
     private JPanel headerPanel;
         private JLabel bankBalanceLabel;

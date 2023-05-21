@@ -248,7 +248,8 @@ public class GameManager {
      * @param opposition The opposing team the user selected
      */
     public static void playMatch(OppositionTeam opposition) {
-        WindowManager.showMatchScreen();
+        GameManager.oppositionTeam = opposition;
         GameMechanics.playGame(1, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
+        WindowManager.showMatchScreen();
     }
 }

@@ -21,6 +21,9 @@ public class PurchasablesShelf extends JPanel {
 
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
+    public PurchasablesShelf(Purchasable[] purchasables, String shelfName) {
+        this(purchasables, shelfName, null, null);
+    }
 
     /**
      * Initialise a new "shelf" to display a group of {@link Purchasable}s
@@ -88,8 +91,12 @@ public class PurchasablesShelf extends JPanel {
      */
     public void addPanel(Purchasable purchasable) {
         PurchasablePanel panel = new PurchasablePanel(purchasable);
-        String buttonText = getButtonText.apply(purchasable);
-        panel.withCustomButton(buttonText, actionListener);
+
+        if (actionListener != null) {
+            String buttonText = getButtonText.apply(purchasable);
+            panel.withCustomButton(buttonText, actionListener);
+        }
+
         shelfPanel.add(panel);
         shelfPanel.revalidate();
         shelfPanel.repaint();

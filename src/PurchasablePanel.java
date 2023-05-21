@@ -43,6 +43,8 @@ public class PurchasablePanel extends JPanel {
             statLabels.get(entry.getKey()).setHorizontalAlignment(SwingConstants.CENTER);
             this.add(statLabels.get(entry.getKey()));
         }
+
+        setVisible(true);
     }
 
     /**
