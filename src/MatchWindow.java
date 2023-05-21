@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javax.swing.*;
 
 
@@ -40,9 +42,10 @@ public class MatchWindow extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		setLayout(null);
         //BUTTONS
 		JButton btnNewButton = new JButton("Light Attack");
-		btnNewButton.setBounds(150, 850, 200, 40);
+		btnNewButton.setBounds(100, 950, 200, 40);
 		this.add(btnNewButton);
 		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,7 +55,7 @@ public class MatchWindow extends JPanel {
 		});
 
 		JButton btnNewButton_1 = new JButton("Heavy Attack");
-		btnNewButton_1.setBounds(450, 850, 200, 40);
+		btnNewButton_1.setBounds(400, 950, 200, 40);
 		this.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +65,7 @@ public class MatchWindow extends JPanel {
 		});
 		
 		JButton btnNewButton_2 = new JButton("Heal");
-		btnNewButton_2.setBounds(750, 850, 200, 40);
+		btnNewButton_2.setBounds(700, 950, 200, 40);
 		this.add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +76,7 @@ public class MatchWindow extends JPanel {
 		});
 		
 		JButton btnNewButton_2_1 = new JButton("Next Turn");
-		btnNewButton_2_1.setBounds(1050, 850, 200, 40);
+		btnNewButton_2_1.setBounds(1000, 950, 200, 40);
 		this.add(btnNewButton_2_1);
 		btnNewButton_2_1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +84,41 @@ public class MatchWindow extends JPanel {
 				turnAction(3);
 			}
 		});
+
+		JButton btnNewButton_2_2 = new JButton("Exit Match");
+		btnNewButton_2_2.setBounds(1300, 950, 200, 40);
+		this.add(btnNewButton_2_2);
+		btnNewButton_2_2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				System.out.println("Exit Game");
+				turnAction(4);
+			}
+		});
+
+		JPanel header = new JPanel();
+		JLabel headerJLabel = new JLabel("Match Screen");
+		headerJLabel.setText("Match Screen");
+		header.setBackground(new Color(192, 192, 192));
+		header.setBounds(10, 5, 1620, 100);
+		add(header);
+		add(headerJLabel, header, UNDEFINED_CONDITION);
+
+		
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(5, 150, 1550, 200);
+		add(panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBounds(5, 400, 1550, 200);
+		add(panel_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.LIGHT_GRAY);
+		panel_2.setBounds(5, 650, 1550, 200);
+		add(panel_2);
 
 		// mainPanel = new JPanel();
         // mainPanel.setBorder(marginBorder);
