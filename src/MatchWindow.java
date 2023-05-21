@@ -1,4 +1,5 @@
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -9,6 +10,23 @@ import javax.swing.*;
  * @author Daniel Smith
  */
 public class MatchWindow extends JPanel {
+	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
+
+
+	private JPanel headerPanel;
+		private JLabel matchLabel;
+	private JPanel mainPanel;
+		private TeamPanel playerTeamPanel;
+		private JPanel gameOutputPanel;
+			private JLabel idkLabel;
+		private TeamPanel oppositionTeamLabel;
+	private JPanel footerPanel;
+		private JButton lightAttackButton;
+		private JButton heavyAttackButton;
+		private JButton healButton;
+		private JButton nextTurnButton;
+		private JButton exitMatchButton;
+
 
 	/**
 	 * Launch the application.
@@ -21,6 +39,7 @@ public class MatchWindow extends JPanel {
 		GameManager.startGame(GameManager.athletes, 10000);
 
         OppositionTeam oppositionTeam = new OppositionTeam();
+		GameManager.oppositionTeam = oppositionTeam;
         Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
 		GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
 
@@ -32,6 +51,7 @@ public class MatchWindow extends JPanel {
 	 */
 	public MatchWindow() {
 		initialize();
+		setVisible(true);
 	}
 
 	public void turnAction(int index){
@@ -42,110 +62,88 @@ public class MatchWindow extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setLayout(null);
+		this.setLayout(new BorderLayout(0, 0));
+		this.setBorder(marginBorder);
+
+		//HEADER
+		headerPanel = new JPanel();
+		headerPanel.setBorder(marginBorder);
+		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
+		this.add(headerPanel, BorderLayout.NORTH);
+
+		matchLabel = new JLabel("Match");
+		headerPanel.add(matchLabel);
+
+		//MAIN
+		mainPanel = new JPanel();
+		mainPanel.setBorder(marginBorder);
+		mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		this.add(mainPanel, BorderLayout.CENTER);
+
+		playerTeamPanel = new TeamPanel(GameManager.team);
+		mainPanel.add(playerTeamPanel);
+
+		gameOutputPanel = new JPanel();
+		gameOutputPanel.setBorder(marginBorder);
+		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.X_AXIS));
+		mainPanel.add(gameOutputPanel);
+
+		idkLabel = new JLabel("Game Output");
+		gameOutputPanel.add(idkLabel);
+
+		oppositionTeamLabel = new TeamPanel(GameManager.oppositionTeam);
+		mainPanel.add(oppositionTeamLabel);
+
+		//FOOTER
+		footerPanel = new JPanel();
+		footerPanel.setBorder(marginBorder);
+		footerPanel.setLayout(new GridLayout(1, 4, 0, 0));
+		this.add(footerPanel, BorderLayout.SOUTH);
+
         //BUTTONS
-		JButton btnNewButton = new JButton("Light Attack");
-		btnNewButton.setBounds(100, 950, 200, 40);
-		this.add(btnNewButton);
-		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Light Attack");
-				turnAction(0);
-			}
-		});
+		lightAttackButton = new JButton("Light Attack");
+		lightAttackButton.addActionListener(this::lightAttack);
+		footerPanel.add(lightAttackButton);
 
-		JButton btnNewButton_1 = new JButton("Heavy Attack");
-		btnNewButton_1.setBounds(400, 950, 200, 40);
-		this.add(btnNewButton_1);
-		btnNewButton_1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Heavy Attack");
-				turnAction(1);
-			}
-		});
-		
-		JButton btnNewButton_2 = new JButton("Heal");
-		btnNewButton_2.setBounds(700, 950, 200, 40);
-		this.add(btnNewButton_2);
-		btnNewButton_2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Heal");
-				turnAction(2);
+		heavyAttackButton = new JButton("Heavy Attack");
+		lightAttackButton.addActionListener(this::heavyAttack);
+		footerPanel.add(lightAttackButton);
 
-			}
-		});
-		
-		JButton btnNewButton_2_1 = new JButton("Next Turn");
-		btnNewButton_2_1.setBounds(1000, 950, 200, 40);
-		this.add(btnNewButton_2_1);
-		btnNewButton_2_1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("NEXT TURN");
-				turnAction(3);
-			}
-		});
+		healButton = new JButton("Heal");
+		healButton.addActionListener(this::heal);
+		footerPanel.add(healButton);
 
-		JButton btnNewButton_2_2 = new JButton("Exit Match");
-		btnNewButton_2_2.setBounds(1300, 950, 200, 40);
-		this.add(btnNewButton_2_2);
-		btnNewButton_2_2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Exit Game");
-				turnAction(4);
-			}
-		});
+		nextTurnButton = new JButton("Next Turn");
+		nextTurnButton.addActionListener(this::nextTurn);
+		footerPanel.add(nextTurnButton);
 
-		JPanel header = new JPanel();
-		JLabel headerJLabel = new JLabel("Match Screen");
-		headerJLabel.setText("Match Screen");
-		header.setBackground(new Color(192, 192, 192));
-		header.setBounds(10, 5, 1620, 100);
-		add(header);
-		add(headerJLabel, header, UNDEFINED_CONDITION);
+		exitMatchButton = new JButton("Exit Match");
+		exitMatchButton.addActionListener(this::exitMatch);
+		footerPanel.add(exitMatchButton);
+	}
 
-		
+	private void exitMatch(ActionEvent actionEvent) {
+		System.out.println("Exit Game");
+		turnAction(4);
+	}
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(192, 192, 192));
-		panel.setBounds(5, 150, 1550, 200);
-		add(panel);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBounds(5, 400, 1550, 200);
-		add(panel_1);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.LIGHT_GRAY);
-		panel_2.setBounds(5, 650, 1550, 200);
-		add(panel_2);
+	private void nextTurn(ActionEvent actionEvent) {
+		System.out.println("NEXT TURN");
+		turnAction(3);
+	}
 
-		// mainPanel = new JPanel();
-        // mainPanel.setBorder(marginBorder);
-        // mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
+	private void heal(ActionEvent actionEvent) {
+		System.out.println("Heal");
+		turnAction(2);
+	}
 
-        // oppositionWrapperPanel = new JPanel();
-        // oppositionWrapperPanel.setBorder(marginBorder);
-        // oppositionWrapperPanel.setLayout(new BoxLayout(oppositionWrapperPanel, BoxLayout.X_AXIS));
-        // mainPanel.add(oppositionWrapperPanel);
+	private void heavyAttack(ActionEvent actionEvent) {
+		System.out.println("Heavy Attack");
+		turnAction(1);
+	}
 
-        // //TODO Active Athletes in Game are displayed here
-
-        // athletesWrapperPanel = new JPanel();
-        // athletesWrapperPanel.setBorder(marginBorder);
-        // athletesWrapperPanel.setLayout(new BoxLayout(athletesWrapperPanel, BoxLayout.X_AXIS));
-        // mainPanel.add(athletesWrapperPanel);
-
-        // //TODO Opposition athletes in Game are displayed here
-
-        // FooterPanel = new JPanel();
-        // FooterPanel.setBorder(marginBorder);
-        // FooterPanel.setLayout(new BoxLayout(FooterPanel, BoxLayout.X_AXIS));
-        // mainPanel.add(FooterPanel);
-
-
-
-
-
+	private void lightAttack(ActionEvent actionEvent) {
+		System.out.println("Light Attack");
+		turnAction(0);
 	}
 }
