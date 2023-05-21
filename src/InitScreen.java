@@ -1,10 +1,14 @@
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * InitScreen is the user interface that allows the user to select the initial game configuration
+ * This consists of their team's name, the length of the season, and weather or not they play in hard mode
+ *
+ * @author Harrison Parkes
+ */
 public class InitScreen extends JPanel {
     private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
@@ -25,16 +29,17 @@ public class InitScreen extends JPanel {
         private JButton cancelButton;
 
 
-
-
     /**
-     * Create the application.
+     * Create a new initialisation screen
      */
     public InitScreen() {
         initialize();
         setVisible(true);
     }
 
+    /**
+     * Confirms the user's selected configuration and moves onto the team selection screen
+     */
     public void confirm() {
         String teamName = teamNameText.getText();
 
@@ -52,8 +57,6 @@ public class InitScreen extends JPanel {
         GameManager.setConfiguration(teamName, seasonLength, hardMode);
         WindowManager.showTeamSelection();
     }
-
-
 
     /**
      * Initialize the contents of the frame.

@@ -1,6 +1,12 @@
-import java.util.ArrayList;
 import java.util.stream.Stream;
+import java.util.ArrayList;
 
+
+/**
+ * PlayerTeam is the container class that holds all information relevant to the player's team of {@link Athlete}s
+ *
+ * @author Harrison Parkes
+ */
 public class PlayerTeam extends Team {
     public static final int MAX_RESERVES = 5;
     public static final int MAXIMUM_SIZE = TEAM_SIZE + MAX_RESERVES;
@@ -17,6 +23,11 @@ public class PlayerTeam extends Team {
         this.reserves = new ArrayList<>(MAX_RESERVES);
     }
 
+    /**
+     * Gets the total number of athletes in the team
+     *
+     * @return The total number of athletes in this team
+     */
     public int size() {
         return this.actives.size() + this.reserves.size();
     }
@@ -39,14 +50,27 @@ public class PlayerTeam extends Team {
         return this.reserves.size();
     }
 
+    /**
+     * Gets all active athletes as an array
+     * @return An array containing all active athletes
+     */
     public Athlete[] getActives() {
         return this.actives.toArray(new Athlete[0]);
     }
 
+    /**
+     * Gets all reserved athletes as an array
+     * @return An array containing all reserved athletes
+     */
     public Athlete[] getReserves() {
         return this.reserves.toArray(new Athlete[0]);
     }
 
+    /**
+     * Swaps out an active athlete for a reserved one
+     * @param currentlyActive An athlete that is currently active and should be reserved
+     * @param currentlyReserved An athlete that is currently reserved and should be activated
+     */
     public void swapAthletes(Athlete currentlyActive, Athlete currentlyReserved) {
         System.out.println("Swapping " + currentlyActive.getName() + " with " + currentlyReserved.getName());
         if (!this.actives.contains(currentlyActive) || !this.reserves.contains(currentlyReserved))
@@ -58,6 +82,11 @@ public class PlayerTeam extends Team {
         this.reserves.add(currentlyActive);
     }
 
+    /**
+     * Sets a reserved athlete as active
+     * @param athlete The athlete to activate
+     * @throws IllegalStateException If the athlete is not a reserve
+     */
     public void setActive(Athlete athlete) throws IllegalStateException {
         System.out.println("Setting " + athlete.getName() + " as active");
 
@@ -68,6 +97,11 @@ public class PlayerTeam extends Team {
         actives.add(athlete);
     }
 
+    /**
+     * Sets an activated athlete as a reserve
+     * @param athlete the athlete to reserve
+     * @throws IllegalStateException If the athlete is not active
+     */
     public void setReserve(Athlete athlete) throws IllegalStateException {
         System.out.println("Setting " + athlete.getName() + " as reserve");
 
@@ -81,6 +115,11 @@ public class PlayerTeam extends Team {
         reserves.add(athlete);
     }
 
+    /**
+     * Adds an athlete to the team in the desired pool
+     * @param athlete The athlete to add to the team
+     * @param reserve {@code true} if the athlete should be a reserve, {@code false} otherwise
+     */
     public void addAthlete(Athlete athlete, boolean reserve) {
         if (reserve)
             this.reserves.add(athlete);
@@ -88,6 +127,10 @@ public class PlayerTeam extends Team {
             this.actives.add(athlete);
     }
 
+    /**
+     *
+     * @param athlete
+     */
     public void removeAthlete(Athlete athlete) {
         this.actives.remove(athlete);
         this.reserves.remove(athlete);

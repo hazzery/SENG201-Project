@@ -2,6 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * ClubScreen is the display panel that allows the user to change which of their athletes are
+ * reserved and which are active. It is a display panel that sits within the {@link GameScreen}
+ *
+ * @author Harrison Parkes
+ */
 public class ClubScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 

@@ -1,7 +1,11 @@
-import java.awt.*;
 import javax.swing.*;
-import java.awt.Dialog.ModalExclusionType;
 
+
+/**
+ * DANIEL THIS ONE IS ON YOU TOO XOXOX
+ *
+ * @author Daniel Smith
+ */
 public class MatchWindow extends JPanel {
 
 	/**

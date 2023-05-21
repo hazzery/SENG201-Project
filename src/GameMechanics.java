@@ -1,12 +1,15 @@
-/*
- * This is just a fun little class to try out some game mechanics 
- */
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JOptionPane;
 
+
+/**
+ * DANIEL I HAVE NO CLUE WHAT THIS CLASS DOES PLEASE WRITE THE JAVADOC FOR THIS CLASS
+ *
+ * @author Daniel Smith
+ * @param <ActionListener> DANIEL WHY TF IS THIS A PARAMETERISED GENERIC CLASS
+ */
 public class GameMechanics<ActionListener> {
 
     public static Team team;

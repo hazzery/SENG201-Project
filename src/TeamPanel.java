@@ -24,7 +24,7 @@ public class TeamPanel extends JPanel {
         this.setBorder(marginBorder);
 
         nameLabel = new JLabel();
-        nameLabel.setText(HTMLString.header(team.getName()));
+        nameLabel.setText(HTMLString.subHeading(team.getName()));
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nameLabel.setBackground(Color.LIGHT_GRAY);

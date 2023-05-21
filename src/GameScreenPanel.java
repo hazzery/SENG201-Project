@@ -2,6 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 
+/**
+ * GameScreenPanel is the abstract base class that powers all the screens that can sit inside the {@link GameScreen}
+ * ({@link ClubScreen}, {@link MarketScreen}, and {@link StadiumScreen}) It provides these screens with a common header
+ * and footer to provide consistency across the user interface.
+ *
+ * @author Harrison Parkes
+ */
 public abstract class GameScreenPanel extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 

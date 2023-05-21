@@ -4,19 +4,31 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+
 /**
- * Class that models an opposition team
+ * Opposition is the container class that holds all information relevant to the many
+ * randomly generated oppositions that are generated each week
+ *
+ * @author Daniel Smith
+ * @author Harrison Parkes
  */
 public class OppositionTeam extends Team {
 
     private static boolean nameScannerIsInitialised = false;
     private static Stack<String> oppositionNames;
 
+    /**
+     * Instantiates a new opposition with random {@link Athlete}s and a name from the list of opposition names
+     */
     public OppositionTeam() {
         this("Unnamed team");
         this.name = oppositionNames.pop();
     }
 
+    /**
+     * Instantiates a new opposition with random {@link Athlete}s and a specified name
+     * @param name
+     */
     public OppositionTeam(String name) {
         super(name);
         this.initOppositionNameReader();
@@ -33,7 +45,8 @@ public class OppositionTeam extends Team {
     }
 
     /**
-     * @return
+     * Gets the number of {@link Athlete}s in the opposition team
+     * @return The number of athletes in the team
      */
     @Override
     public int size() {
@@ -41,7 +54,8 @@ public class OppositionTeam extends Team {
     }
 
     /**
-     * @return 
+     * Gets the {@link Athlete}s in the opposition team as an array
+     * @return An array containing all the athletes in this opposition team
      */
     @Override
     public Athlete[] getAthletes() {
@@ -49,8 +63,8 @@ public class OppositionTeam extends Team {
     }
 
     /**
-     * Collects a name from the OppositionNames.txt file and returns it
-     *
+     * Runs a scanner to read the opposition names from the opposition team names file
+     * and stores them in a stack
      */
     private void initOppositionNameReader() {
         if (nameScannerIsInitialised) return;
@@ -71,6 +85,11 @@ public class OppositionTeam extends Team {
         }
     }
 
+    /**
+     * Generates an array of opposition teams
+     * @param number The number of teams to generate
+     * @return An array of {@code n} opposition teams
+     */
     public static OppositionTeam[] generateOppositions(int number) {
         OppositionTeam[] teams = new OppositionTeam[number];
         for (int i = 0; i < number; i++) {

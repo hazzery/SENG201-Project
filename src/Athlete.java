@@ -1,7 +1,3 @@
-/**
- * Class that models an athlete
- */
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
@@ -11,6 +7,12 @@ import java.util.Scanner;
 import java.io.File;
 
 
+/**
+ * Athlete is the container class that holds all of an athlete's stats and other relevant information.
+ *
+ * @author Harrison Parkes
+ * @author Daniel Smith
+ */
 public class Athlete implements Purchasable {
     private final String name;
     private String nickName;
@@ -27,7 +29,7 @@ public class Athlete implements Purchasable {
     ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
 
     /**
-	 * Represents the stats of an {@link Athlete}
+	 * Represents the stats of an athlete
 	 */
     public enum StatType {
         STAMINA,
@@ -37,8 +39,8 @@ public class Athlete implements Purchasable {
     }
 
     /**
-     * Run a scanner to read the athlete names from the AthleteNames.txt file
-     * and store them in a stack
+     * Runs a scanner to read the athlete names from the athlete names file
+     * and stores them in a stack
      */
     private void initAthleteNameReader() {
         if (nameScannerIsInitialised) return;
@@ -239,7 +241,7 @@ public class Athlete implements Purchasable {
     }
 
     /**
-     * Resets the athletes health/stamina to full and removes any injuries
+     * Resets the athletes' health/stamina to full and removes any injuries
      */
     public void byeWeek() {
         this.current_health = 100;

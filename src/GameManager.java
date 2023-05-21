@@ -1,6 +1,14 @@
 import java.util.stream.Stream;
 import java.util.ArrayList;
 
+
+/**
+ * GameManager is a static utility class in charge of the game state.
+ * It provides game logic functionality to the GUI
+ *
+ * @author Harrison Parkes
+ * @author Daniel Smith
+ */
 public class GameManager {
     private static int seasonLength;
     private static boolean hardMode;
@@ -212,7 +220,7 @@ public class GameManager {
                 throw new IllegalStateException("Cannot sell athlete, must have at least " + Team.TEAM_SIZE + " athletes");
 
             if (GameManager.team.isActive(athlete) && GameManager.team.numActive() <= Team.TEAM_SIZE)
-                throw new MustSwapReserveException("Must swap in a reserve athlete before selling an active athlete");
+                throw new MustSwapReserveException();
 
             team.removeAthlete(athlete);
         }

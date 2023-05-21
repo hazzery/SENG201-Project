@@ -1,6 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * GameScreen is the screen that is shown once the user has selected their initial team members
+ * The game screen only provides the header and footer panels and acts as a container
+ * for the {@link ClubScreen}, {@link MarketScreen}, and {@link StadiumScreen} which sit inside the center
+ *
+ * @author Harrison Parkes
+ */
 public class GameScreen extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
@@ -21,6 +29,12 @@ public class GameScreen extends JPanel {
         private JButton nextWeekButton;
 
 
+    /**
+     * The Screen enum provides a clean way of changing between the three panels that sit within the game screen
+     * namely the {@link ClubScreen}, {@link MarketScreen}, and {@link StadiumScreen}.
+     *
+     * @author Harrison Parkes
+     */
     enum Screen {
         CLUB, MARKET, STADIUM;
 
@@ -36,13 +50,17 @@ public class GameScreen extends JPanel {
 
 
     /**
-     * Set up the JPanel
+     * Creates a new GameScreen for displaying on the main window
      */
     public GameScreen() {
         initialize();
         setVisible(true);
     }
 
+    /**
+     * Updates the team related information shown in the left of the game screen header
+     * to reflect new changes in the game's state
+     */
     void updateTeamInfo() {
         teamNameLabel.setText(GameManager.team.getName());
         bankBalanceLabel.setText("$" + GameManager.getBankBalance());
@@ -50,6 +68,10 @@ public class GameScreen extends JPanel {
         teamInfoPanel.repaint();
     }
 
+    /**
+     * Updates the season related information shown in the right of the game screen header
+     * to reflect new changes in the game's state
+     */
     void updateSeasonInfo() {
         GameManager.nextWeek();
         currentWeekLabel.setText("Week " + GameManager.currentWeek() + " of " + GameManager.getSeasonLength());

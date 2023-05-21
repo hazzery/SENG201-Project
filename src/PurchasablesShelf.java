@@ -18,11 +18,11 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Initialise a new "shelf" to display a group of {@link Purchasable}s
-     * @param purchasables The {@link Purchasable}s to display
+     * @param purchasables The purchasables to display
      * @param shelfName A name for the "shelf" to display next to the {@link PurchasablePanel}s
-     * @param getButtonText A function to get the text for the button on each {@link PurchasablePanel}
+     * @param getButtonText A function to get the text for the button on each panel
      * @param actionListener A function that takes an {@link ActionEvent} as its only parameter.
-     *                       Called when a button on a {@link PurchasablePanel} is pressed
+     *                       Called when a button on a PurchasablePanel is pressed
      */
     public PurchasablesShelf(Purchasable[] purchasables, String shelfName, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
         this.shelfName = shelfName;
@@ -52,7 +52,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Removes the {@link PurchasablePanel} that displays the given {@link Purchasable}
-     * @param purchasable The {@link Purchasable} whose {@link PurchasablePanel} should be removed
+     * @param purchasable The purchasable whose panel should be removed
      */
     public void removePanel(Purchasable purchasable) {
         for (Component component : shelfPanel.getComponents()) {
@@ -91,7 +91,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Places the provided {@link PurchasablePanel} on the shelf
-     * @param panel The {@link PurchasablePanel} to add
+     * @param panel The PurchasablePanel to add
      */
     public void addPanel(PurchasablePanel panel) {
         shelfPanel.add(panel);
@@ -101,7 +101,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Reloads the shelf to display the given {@link Purchasable}s
-     * @param purchasables The {@link Purchasable}s to display
+     * @param purchasables The purchasables to display
      */
     public void reload(ArrayList<? extends Purchasable> purchasables) {
         reload(purchasables.toArray(new Purchasable[0]));
@@ -109,7 +109,7 @@ public class PurchasablesShelf extends JPanel {
 
     /**
      * Reloads the shelf to display the given {@link Purchasable}s
-     * @param purchasables The {@link Purchasable}s to display
+     * @param purchasables The purchasables to display
      */
     public void reload(Purchasable[] purchasables) {
         shelfPanel.removeAll();

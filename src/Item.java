@@ -4,14 +4,13 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Class that models an item
+ * Item is the container class that holds all information relevant to the in-game items
  */
 public class Item implements Purchasable {
 
     private final String name;
     private final Athlete.StatType statType;
     private final int improvementAmount;
-
 
     private static boolean nameScannerIsInitialised = false;
     private static Stack<String> itemNames;
@@ -27,6 +26,9 @@ public class Item implements Purchasable {
         this.improvementAmount = ThreadLocalRandom.current().nextInt(1, 101);
     }
 
+    /**
+     * Scan in all names in the item names file and store them in a stack
+     */
     private void initItemNameReader() {
         if (nameScannerIsInitialised) return;
 
@@ -96,6 +98,10 @@ public class Item implements Purchasable {
         return improvementAmount * 5 + 175;
     }
 
+    /**
+     * Gets a dictionary mapping the athlete stat type which it boosts, to the amount it increases the stat
+     * @return A map which is used to display information on a {@link PurchasablePanel}
+     */
     @Override
     public Map<String, String> getStats() {
         return Map.of(statType.name(), String.valueOf(improvementAmount));
@@ -112,6 +118,10 @@ public class Item implements Purchasable {
         return improvementAmount * 2 + 150;
     }
 
+    /**
+     * Gives the item's name when displaying it as a string
+     * @return The item's name
+     */
     @Override
     public String toString() {
         return this.getName();
