@@ -22,23 +22,25 @@ public class GameMechanics {
     public static ArrayList<Athlete> oppositionAthletes;
     public static ArrayList<Athlete> athleteList;
 
-    public static int indexer ;
+    public static int indexer = 0;
 
-    public static int athIndex = 0;
-    public static int oppIndex = 0;
-    public static int currentRound;
+    private static int athIndex = 0;
+    private static int oppIndex = 0;
+    private static int currentRound;
 
-    public static int attackType;
+    private static int attackType;
 
-    public static boolean isGameOver;
-    public static boolean didAthletesWin;
-    public static boolean isNextTurnAble = true;
+    private static boolean isGameOver;
+    private static boolean didAthletesWin;
 
     public void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
+        System.out.println("PLAY GAME");
         this.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
         this.athleteList = athleteList; 
         this.currentRound = currentRound; 
         isGameOver = false;
+        athIndex = 0;
+        oppIndex = 0;
     }
 
     /**
@@ -46,6 +48,8 @@ public class GameMechanics {
      * @param index
      */
     public static void guiButtonPress(int index){
+        System.out.println("GUI BUTTON PRESS");
+        System.out.println(athIndex + oppIndex);
         switch(index){
             case 0 -> playTurn(0);
             case 1 -> playTurn(1);

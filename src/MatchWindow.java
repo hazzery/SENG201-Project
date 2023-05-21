@@ -11,8 +11,7 @@ import javax.swing.*;
  */
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
-
-	public GameMechanics gameMechanics;
+	GameMechanics gameMechanics = new GameMechanics();
 
 	public String OppText;
 	public String TeamText;
