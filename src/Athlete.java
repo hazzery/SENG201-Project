@@ -85,9 +85,9 @@ public class Athlete implements Purchasable {
     public Athlete(String name, int stamina, int offence, int defence) {
         this.name = name;
         this.nickName = name;
-        this.stamina = stamina;
-        this.offence = offence;
-        this.defence = defence;
+        this.stamina = Math.max(stamina, 80);
+        this.offence = Math.max(offence, 1);
+        this.defence = Math.max(defence, 1);
         this.current_health = 100;
     }
 
