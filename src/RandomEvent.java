@@ -2,7 +2,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
- * DANIEL ........
+ * Random Event is a class that holds all the random events that can happen in the game
  *
  * @author Daniel Smith
  */
@@ -11,13 +11,19 @@ public class RandomEvent {
     public GameManager gameManager;
     public Athlete athlete;
 
+    /**
+     * Creates a new instance of the {@code RandomEvent}
+     */
     public RandomEvent() {
         randomEvent();
     }
 
     public int chance = ThreadLocalRandom.current().nextInt(0, 15);
-    public void randomEvent() {
 
+    /**
+     * Random Event is a method that randomly selects an event to happen
+     */
+    public void randomEvent() {
         if (chance < 10) {
             randomStatIncrease();
         } else if (chance >= 10 && chance <= 13) {
@@ -32,6 +38,10 @@ public class RandomEvent {
     public int athleteIndex = ThreadLocalRandom.current().nextInt(0, GameManager.team.numActive());
     public int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
     public int statIncrease = ThreadLocalRandom.current().nextInt(10, 25);
+
+    /**
+     * Random Stat Increase is a method that randomly selects an athlete and a stat to increase
+     */
     public void randomStatIncrease() {
 
         if (statIndex == 0) {
@@ -44,6 +54,9 @@ public class RandomEvent {
         System.out.println("Random Event: " + GameManager.team.getActive(athleteIndex).getName() + "'s " + " increased by " + statIncrease + " points");
     }
 
+    /**
+     * Random New Athlete is a method that randomly creates a new athlete and add the athlete to the team
+     */
     public void randomNewAthlete() {
         if (GameManager.team.numActive() + GameManager.team.numReserves() >= PlayerTeam.MAXIMUM_SIZE){
             System.out.println("Random Event: An Athlete tried to join your team but its full");
@@ -57,6 +70,9 @@ public class RandomEvent {
         }
     }
 
+    /**
+     * Random Quit Athlete is a method that randomly selects an athlete and removes the athlete from the team
+     */
     public void randomQuitAthlete() {
         if (GameManager.team.numActive() == 0){
             System.out.println("Random Event: An Athlete tried to quit your team but you have no active athletes");
