@@ -67,6 +67,10 @@ public class ClubScreen extends GameScreenPanel {
      * @param event {@link ActionEvent} containing information about which button was clicked
      */
     private void reserveAthlete(ActionEvent event) {
+        if (GameManager.team.getReserves().length == 0) {
+            JOptionPane.showMessageDialog(null, "There are no reserves to swap with");
+            return;
+        }
         Athlete swap = (Athlete) JOptionPane.showInputDialog(this,
                 "Select an athlete to swap with", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
                 null, GameManager.team.getReserves(), "Choose athlete");

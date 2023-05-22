@@ -1,12 +1,9 @@
 package data;
 import java.util.concurrent.ThreadLocalRandom;
-import java.io.FileNotFoundException;
+import utility.NameFileReader;
 import gui.PurchasablePanel;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
 import java.util.Map;
-import java.io.File;
 
 
 /**
@@ -24,8 +21,7 @@ public class Athlete implements Purchasable {
     public int current_health;
     public boolean isInjured = false;
 
-    static private boolean nameScannerIsInitialised = false;
-    static private Stack<String> athleteNames;
+    static private NameFileReader nameReader = new NameFileReader("Resources/AthleteNames.txt");
 
     ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
 
@@ -40,34 +36,10 @@ public class Athlete implements Purchasable {
     }
 
     /**
-     * Runs a scanner to read the athlete names from the athlete names file
-     * and stores them in a stack
-     */
-    private void initAthleteNameReader() {
-        if (nameScannerIsInitialised) return;
-
-        athleteNames = new Stack<>();
-        try {
-            File myObj = new File("Resources/AthleteNames.txt");
-            Scanner nameScanner = new Scanner(myObj);
-            while (nameScanner.hasNextLine()) {
-                athleteNames.push(nameScanner.nextLine());
-            }
-            nameScanner.close();
-            nameScannerIsInitialised = true;
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Creates an athlete with randomised stats
      */
     public Athlete() {
-        initAthleteNameReader();
-
-        this.name = athleteNames.pop().trim();
+        this.name = nameReader.next();
         this.nickName = this.name;
         this.stamina = ThreadLocalRandom.current().nextInt(80, 101);
         this.offence = ThreadLocalRandom.current().nextInt(0, 101);

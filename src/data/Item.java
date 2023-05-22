@@ -1,8 +1,7 @@
 package data;
 import java.util.concurrent.ThreadLocalRandom;
-import java.io.FileNotFoundException;
+import utility.NameFileReader;
 import gui.PurchasablePanel;
-import java.io.File;
 import java.util.*;
 
 
@@ -14,40 +13,15 @@ public class Item implements Purchasable {
     private final String name;
     private final Athlete.StatType statType;
     private final int improvementAmount;
-
-    private static boolean nameScannerIsInitialised = false;
-    private static Stack<String> itemNames;
-
+    private static NameFileReader nameReader = new NameFileReader("Resources/ItemNames.txt");
 
     /**
      * Creates am item with randomised stats
      */
     public Item() {
-        initItemNameReader();
-        this.name = itemNames.pop().trim();
+        this.name = nameReader.next();
         this.statType = Athlete.StatType.values()[ThreadLocalRandom.current().nextInt(0, 3)];
         this.improvementAmount = ThreadLocalRandom.current().nextInt(1, 101);
-    }
-
-    /**
-     * Scan in all names in the item names file and store them in a stack
-     */
-    private void initItemNameReader() {
-        if (nameScannerIsInitialised) return;
-
-        try {
-            itemNames = new Stack<>();
-            File itemNameFile = new File("Resources/ItemNames.txt");
-            Scanner nameScanner = new Scanner(itemNameFile);
-            while (nameScanner.hasNextLine()) {
-                itemNames.push(nameScanner.nextLine());
-            }
-            nameScanner.close();
-            nameScannerIsInitialised = true;
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     /**

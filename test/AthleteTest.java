@@ -1,3 +1,5 @@
+import data.Athlete;
+import data.Item;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;

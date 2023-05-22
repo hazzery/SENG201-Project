@@ -9,7 +9,7 @@ import data.OppositionTeam;
 import data.Team;
 import gui.MatchWindow;
 import gui.StadiumScreen;
-import utility.TurnActionStatments;
+import utility.NameFileReader;
 
 
 /**
@@ -25,7 +25,9 @@ public class GameMechanics {
     public static OppositionTeam oppositionTeam;
     public static StadiumScreen stadiumScreen;
     public static MatchWindow matchWindow;
-    public static TurnActionStatments turnActionStatments = new TurnActionStatments();
+    public static NameFileReader attackText = new NameFileReader("Resources/SkierAttackOptions.txt");
+    public static NameFileReader defeatText = new NameFileReader("Resources/SkierDefeatOptions.txt");
+    public static NameFileReader healText = new NameFileReader("Resources/SkierHealOptions.txt");
     public static ArrayList<Athlete> oppositionAthletes;
     public static ArrayList<Athlete> athleteList;
     public static int athIndex = 0;
@@ -127,7 +129,7 @@ public class GameMechanics {
         if (isGameOver){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
-            System.out.println("Opposition " + oppIndex + turnActionStatments.getAttackName() + athIndex + "");    
+            System.out.println("Opposition " + oppIndex + attackText.next() + athIndex + "");
             
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
@@ -158,12 +160,12 @@ public class GameMechanics {
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
             System.out.println("Athlete " + athIndex + " is dead");
-            gameOutput("Athlete " + athleteList.get(athIndex).getName() + " was defeated as " + turnActionStatments.getDefeatName());
+            gameOutput("Athlete " + athleteList.get(athIndex).getName() + " was defeated as " + defeatText.next());
             athIndex++;
         }
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() <= 0){
             System.out.println("Opposition " + oppIndex + " is dead");
-            gameOutput("Opposition " + oppositionAthletes.get(oppIndex).getName() + " was defeated as " + turnActionStatments.getDefeatName());
+            gameOutput("Opposition " + oppositionAthletes.get(oppIndex).getName() + " was defeated as " + defeatText.next());
             oppIndex++;
         }
     }
@@ -262,11 +264,11 @@ public class GameMechanics {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             if (oppositionAthletes.get(oppIndex).current_health < 0){ oppositionAthletes.get(oppIndex).current_health = 0; }
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
-            oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " so " + damage + " damage was dealt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
+            oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + attackText.next() + " so " + damage + " damage was dealt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
         } else {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            teamGameOutput("Your Athlete " + athleteList.get(athIndex).getName() + " " + turnActionStatments.getHealName() + " so " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
+            teamGameOutput("Your Athlete " + athleteList.get(athIndex).getName() + " " + healText.next() + " so " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         }
         
@@ -284,12 +286,12 @@ public class GameMechanics {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             if (athleteList.get(athIndex).current_health < 0){ athleteList.get(athIndex).current_health = 0; }
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            teamGameOutput(" " + turnActionStatments.getAttackName() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was dealt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
+            teamGameOutput(" " + attackText.next() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was dealt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         } else {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             System.out.println("Opposition " + oppIndex + " heals " + damage + " health" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
-            oppGameOutput(" " + turnActionStatments.getHealName() + " so the Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() +  " had "+ damage +" damage was reversed" + ", Health is now: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
+            oppGameOutput(" " + healText.next() + " so the Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() +  " had "+ damage +" damage was reversed" + ", Health is now: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
 
         }
         
