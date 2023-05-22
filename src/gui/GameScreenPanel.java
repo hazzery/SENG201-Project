@@ -1,4 +1,6 @@
+package gui;
 import javax.swing.*;
+import utility.HTMLString;
 import java.awt.*;
 
 
@@ -11,16 +13,7 @@ import java.awt.*;
  */
 public abstract class GameScreenPanel extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
-
-
-    private JPanel headerPanel;
-        private JLabel clubHeaderLabel;
     protected JPanel contentPanel;
-    private JPanel goElsewherePanel;
-        private JButton goLeftButton;
-        private JButton goRightButton;
-
-
     protected final GameScreen parent;
     private final GameScreen.Screen screenType;
 
@@ -31,12 +24,12 @@ public abstract class GameScreenPanel extends JPanel {
         this.setLayout(new BorderLayout(0, 0));
         this.setBorder(marginBorder);
 
-        headerPanel = new JPanel();
+        JPanel headerPanel = new JPanel();
         headerPanel.setBorder(marginBorder);
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
         this.add(headerPanel, BorderLayout.NORTH);
 
-        clubHeaderLabel = new JLabel(HTMLString.header(screenType.toString()));
+        JLabel clubHeaderLabel = new JLabel(HTMLString.header(screenType.toString()));
         clubHeaderLabel.setHorizontalAlignment(SwingConstants.CENTER);
         headerPanel.add(clubHeaderLabel);
 
@@ -44,17 +37,17 @@ public abstract class GameScreenPanel extends JPanel {
         contentPanel.setBorder(marginBorder);
         this.add(contentPanel, BorderLayout.CENTER);
 
-        goElsewherePanel = new JPanel();
+        JPanel goElsewherePanel = new JPanel();
         goElsewherePanel.setBorder(marginBorder);
         goElsewherePanel.setLayout(new GridLayout(1, 0, 0, 0));
         this.add(goElsewherePanel, BorderLayout.SOUTH);
 
-        goLeftButton = new JButton();
+        JButton goLeftButton = new JButton();
         goLeftButton.setText("Go left");
         goLeftButton.addActionListener(e -> parent.setScreen(screenType.previous()));
         goElsewherePanel.add(goLeftButton);
 
-        goRightButton = new JButton();
+        JButton goRightButton = new JButton();
         goRightButton.setText("Go Right");
         goRightButton.addActionListener(e -> parent.setScreen(screenType.next()));
         goElsewherePanel.add(goRightButton);

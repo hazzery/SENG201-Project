@@ -1,5 +1,12 @@
+package gui;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+
+import data.*;
+import management.GameManager;
+import utility.MustSwapReserveException;
+import utility.HTMLString;
+
 import java.awt.*;
 
 
@@ -10,15 +17,10 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class MarketScreen extends GameScreenPanel {
-    MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
+    private PurchasablesShelf athletesShelf;
+    private PurchasablesShelf itemsShelf;
+    private PurchasablesShelf teamShelf;
 
-    // Indentation of components below shows hierarchy of elements on the screen
-  //protected JPanel contentPanel
-        private PurchasablesShelf athletesShelf;
-        private PurchasablesShelf itemsShelf;
-        private PurchasablesShelf teamShelf;
-
-    private final int WEEKLY_POOL_SIZE = 5;
     private Athlete[] weeklyAthletePool;
     private Item[] weeklyItemPool;
 
@@ -168,6 +170,7 @@ public class MarketScreen extends GameScreenPanel {
      * Updates the weekly pool of {@link Athlete}s and {@link Item}s available for purchase
      */
     public void updateWeeklyPool() {
+        int WEEKLY_POOL_SIZE = 5;
         weeklyAthletePool = GameManager.generateAthletes(WEEKLY_POOL_SIZE);
         weeklyItemPool = GameManager.generateItems(WEEKLY_POOL_SIZE);
     }

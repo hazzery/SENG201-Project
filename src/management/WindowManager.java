@@ -1,4 +1,12 @@
+package management;
 import javax.swing.*;
+
+import gui.GameOverScreen;
+import gui.GameScreen;
+import gui.InitScreen;
+import gui.MatchWindow;
+import gui.SplashScreen;
+import gui.TeamSelectScreen;
 
 
 /**
@@ -11,12 +19,7 @@ public class WindowManager {
 
     private static JFrame mainWindow;
 
-    private static SplashScreen splashScreen;
-    private static InitScreen initScreen;
-    private static TeamSelectScreen teamSelectScreen;
     static GameScreen gameScreen;
-    private static MatchWindow matchScreen;
-    private static GameOverScreen gameOverScreen;
 
     /**
      * Initialises the main window
@@ -37,7 +40,7 @@ public class WindowManager {
     public static void launchApplicationWindow() {
         initializeMainWindow();
 
-        splashScreen = new SplashScreen();
+        SplashScreen splashScreen = new SplashScreen();
         mainWindow.setContentPane(splashScreen);
     }
 
@@ -58,7 +61,7 @@ public class WindowManager {
      * Changes the current screen from the splash screen to the game initialisation screen
      */
     public static void showInitScreen() {
-        initScreen = new InitScreen();
+        InitScreen initScreen = new InitScreen();
         setScreen(initScreen);
     }
 
@@ -66,7 +69,7 @@ public class WindowManager {
      * Change the current screen from the initialisation screen to the team selection screen
      */
     public static void showTeamSelection() {
-        teamSelectScreen = new TeamSelectScreen();
+        TeamSelectScreen teamSelectScreen = new TeamSelectScreen();
         setScreen(teamSelectScreen);
     }
 
@@ -82,7 +85,7 @@ public class WindowManager {
      * Changes the current screen from the stadium to the match screen
      */
     public static void showMatchScreen() {
-        matchScreen = new MatchWindow();
+        MatchWindow matchScreen = new MatchWindow();
     	setScreen(matchScreen);
     }
 
@@ -90,7 +93,7 @@ public class WindowManager {
      * Changes the current screen from the game screen to the game over screen
      */
     public static void showGameOverScreen() {
-        gameOverScreen = new GameOverScreen();
+        GameOverScreen gameOverScreen = new GameOverScreen();
         setScreen(gameOverScreen);
     }
 

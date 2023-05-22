@@ -1,7 +1,15 @@
+package management;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JOptionPane;
+
+import data.Athlete;
+import data.OppositionTeam;
+import data.Team;
+import gui.MatchWindow;
+import gui.StadiumScreen;
+import utility.TurnActionStatments;
 
 
 /**
@@ -196,8 +204,8 @@ public class GameMechanics {
         System.out.println();
         if (didAthletesWin){
             System.out.println("You earned $" + afterMatchReward() + " for winning");
-            JOptionPane.showMessageDialog(null, "You earned $" + afterMatchReward() + " for winning, Your balence is now: " + GameManager.getBankBalance());
-            System.out.println("Your balence is now: " + GameManager.getBankBalance());
+            JOptionPane.showMessageDialog(null, "You earned $" + afterMatchReward() + " for winning, Your balance is now: " + GameManager.getBankBalance());
+            System.out.println("Your balance is now: " + GameManager.getBankBalance());
 
         } else {
             System.out.println("Try Again next time xoxo");
@@ -254,11 +262,11 @@ public class GameMechanics {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             if (oppositionAthletes.get(oppIndex).current_health < 0){ oppositionAthletes.get(oppIndex).current_health = 0; }
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
-            oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " so " + damage + " damage was delt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
+            oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " so " + damage + " damage was dealt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
         } else {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             System.out.println("Athlete " + athIndex + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            teamGameOutput("Youre Athlete " + athleteList.get(athIndex).getName() + " " + turnActionStatments.getHealName() + " so " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
+            teamGameOutput("Your Athlete " + athleteList.get(athIndex).getName() + " " + turnActionStatments.getHealName() + " so " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         }
         
@@ -266,7 +274,7 @@ public class GameMechanics {
     
     /**
      * This method is called by the {@link GameMechanics#oppositionPlayTurn()} method once an attack has been completed to update the values of the Athlete.
-     * This mehtod will update the {@link Athlete} objects in {@link GameMechanics#athleteList}.
+     * This method will update the {@link Athlete} objects in {@link GameMechanics#athleteList}.
      * @param damage is the value that the opposition has dealt to the player.
      */
     public static void updateAthlete(double damage){
@@ -276,7 +284,7 @@ public class GameMechanics {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             if (athleteList.get(athIndex).current_health < 0){ athleteList.get(athIndex).current_health = 0; }
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
-            teamGameOutput(" " + turnActionStatments.getAttackName() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was delt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
+            teamGameOutput(" " + turnActionStatments.getAttackName() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was dealt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         } else {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
@@ -290,7 +298,7 @@ public class GameMechanics {
     /**
      * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of damage dealt to the recipient through a light attack.
      * @param i the index of the attacker Athlete object in an arraylist
-     * @param j the index of the attacked Athlete object in a narraylist
+     * @param j the index of the attacked Athlete object in an arraylist
      * @return the damage that the attack will give
      */
     public static double attackLight(int chance, int i, int j){
@@ -322,8 +330,8 @@ public class GameMechanics {
 
     /**
      * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of health to be received.
-     * @param i the index of the healee Athlete object in an arraylist
-     * @return the amount of health that the healee will give
+     * @param i the index of the Athlete to be healed object in an arraylist
+     * @return the amount of health that the athlete will receive
      */
     public static double heal(int i){
         System.out.println("Heal Attack");

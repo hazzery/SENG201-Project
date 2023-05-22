@@ -1,7 +1,11 @@
+package data;
+import java.io.FileNotFoundException;
+import management.GameManager;
 import java.util.Scanner;
 import java.util.Stack;
 import java.io.File;
-import java.io.FileNotFoundException;
+
+
 
 
 /**
@@ -26,7 +30,7 @@ public class OppositionTeam extends Team {
 
     /**
      * Instantiates a new opposition with random {@link Athlete}s and a specified name
-     * @param name
+     * @param name A name for the team
      */
     public OppositionTeam(String name) {
         super(name);

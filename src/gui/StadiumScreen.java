@@ -1,5 +1,10 @@
+package gui;
+import data.OppositionTeam;
+import management.GameManager;
+
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+
 import java.awt.*;
 
 /**
@@ -11,12 +16,7 @@ import java.awt.*;
 public class StadiumScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
-//    protected JPanel contentPanel;
-        private JPanel playerTeamPanel;
-            private TeamPanel playerTeam;
-        private JPanel oppositionTeamPanel;
-            private TeamPanel[] oppositionTeams;
-
+    private TeamPanel playerTeam;
     private OppositionTeam[] opponents;
 
     /**
@@ -29,7 +29,8 @@ public class StadiumScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        playerTeamPanel = new JPanel();
+        //    protected JPanel contentPanel;
+        JPanel playerTeamPanel = new JPanel();
         playerTeamPanel.setLayout(new GridLayout(0, 1, 0, 0));
         playerTeamPanel.setBorder(marginBorder);
         contentPanel.add(playerTeamPanel);
@@ -37,12 +38,12 @@ public class StadiumScreen extends GameScreenPanel {
         playerTeam = new TeamPanel(GameManager.team);
         playerTeamPanel.add(playerTeam);
 
-        oppositionTeamPanel = new JPanel();
+        JPanel oppositionTeamPanel = new JPanel();
         oppositionTeamPanel.setLayout(new GridLayout(1, 0, 0, 0));
         oppositionTeamPanel.setBorder(marginBorder);
         contentPanel.add(oppositionTeamPanel);
 
-        oppositionTeams = new TeamPanel[opponents.length];
+        TeamPanel[] oppositionTeams = new TeamPanel[opponents.length];
         for (int i = 0; i < oppositionTeams.length; i++) {
             oppositionTeams[i] = new TeamPanel(opponents[i]);
             oppositionTeamPanel.add(oppositionTeams[i]);
@@ -81,9 +82,6 @@ public class StadiumScreen extends GameScreenPanel {
      */
     @Override
     public void reload() {
-//        playerTeam.reload();
-//        for (TeamPanel teamPanel : oppositionTeams) {
-//            teamPanel.reload();
-//        }
+        playerTeam.reload();
     }
 }

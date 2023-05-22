@@ -1,5 +1,8 @@
+package data;
 import java.util.stream.Stream;
+import management.GameManager;
 import java.util.ArrayList;
+
 
 
 /**
@@ -63,6 +66,7 @@ public class PlayerTeam extends Team {
      * @return An array containing all reserved athletes
      */
     public Athlete[] getReserves() {
+
         return this.reserves.toArray(new Athlete[0]);
     }
 
@@ -167,7 +171,7 @@ public class PlayerTeam extends Team {
      * Get all the athletes on this team and all the players items, as an array
      * @return An array of all active and reserved athletes and all the players items
      */
-    Purchasable[] athletesAndItems() {
+    public Purchasable[] athletesAndItems() {
         return Stream.concat(Stream.concat(actives.stream(), reserves.stream()), GameManager.itemStream()).toArray(Purchasable[]::new);
     }
 }

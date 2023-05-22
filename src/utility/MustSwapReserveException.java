@@ -1,3 +1,8 @@
+package utility;
+import gui.MarketScreen;
+import data.Athlete;
+
+
 /**
  * MustSwapReserveException is a very specific exception that occurs when the
  * user goes to purchase a new {@link Athlete} and wants to place that athlete as active.

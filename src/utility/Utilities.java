@@ -1,3 +1,4 @@
+package utility;
 /**
  * Utilities is a static utility class validates names to make sure the meet the required form
  *

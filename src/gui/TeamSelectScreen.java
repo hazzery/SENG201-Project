@@ -1,3 +1,11 @@
+package gui;
+import data.Athlete;
+import data.Purchasable;
+import data.Team;
+import management.GameManager;
+import utility.HTMLString;
+import utility.Utilities;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,23 +18,15 @@ import java.util.ArrayList;
  * @author Harrison Parkes
  */
 public class TeamSelectScreen extends JPanel {
-
     private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
     private final ArrayList<Athlete> selectedAthletes = new ArrayList<>(Team.TEAM_SIZE);
     private final Athlete[] athletePool = GameManager.generateAthletes(9);
 
     private int bankBalance = 10000;
 
-    private JPanel headerPanel;
-        private JLabel bankBalanceLabel;
-    private JPanel athleteSelectionPanel;
-        private JLabel selectAthletesLabel;
-        private JPanel buttonsWrapperPanel;
-            private PurchasablesShelf selectableAthletesShelf;
+    private JLabel bankBalanceLabel;
+    private PurchasablesShelf selectableAthletesShelf;
             private PurchasablesShelf selectedAthletesShelf;
-    private JPanel FooterPanel;
-        private JButton resetAthletesButton;
-        private JButton acceptAthletesButton;
 
     /**
      * Instantiates a new TeamSelectScreen
@@ -42,7 +42,7 @@ public class TeamSelectScreen extends JPanel {
     private void initialise() {
         this.setLayout(new BorderLayout(0, 0));
 
-        headerPanel = new JPanel();
+        JPanel headerPanel = new JPanel();
         headerPanel.setBorder(marginBorder);
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
         this.add(headerPanel, BorderLayout.NORTH);
@@ -51,16 +51,16 @@ public class TeamSelectScreen extends JPanel {
         bankBalanceLabel.setText("You Have: $" + bankBalance);
         headerPanel.add(bankBalanceLabel);
 
-        athleteSelectionPanel = new JPanel();
+        JPanel athleteSelectionPanel = new JPanel();
         athleteSelectionPanel.setBorder(marginBorder);
         athleteSelectionPanel.setLayout(new BorderLayout(0, 0));
         this.add(athleteSelectionPanel, BorderLayout.CENTER);
 
-        selectAthletesLabel = new JLabel();
+        JLabel selectAthletesLabel = new JLabel();
         selectAthletesLabel.setText("Select athletes from the below options:");
         athleteSelectionPanel.add(selectAthletesLabel, BorderLayout.NORTH);
 
-        buttonsWrapperPanel = new JPanel();
+        JPanel buttonsWrapperPanel = new JPanel();
         buttonsWrapperPanel.setBorder(marginBorder);
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
@@ -73,20 +73,20 @@ public class TeamSelectScreen extends JPanel {
         selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
-        FooterPanel = new JPanel();
-        FooterPanel.setBorder(marginBorder);
-        FooterPanel.setLayout(new GridLayout(1, 2, 0, 0));
-        this.add(FooterPanel, BorderLayout.SOUTH);
+        JPanel footerPanel = new JPanel();
+        footerPanel.setBorder(marginBorder);
+        footerPanel.setLayout(new GridLayout(1, 2, 0, 0));
+        this.add(footerPanel, BorderLayout.SOUTH);
 
-        resetAthletesButton = new JButton();
+        JButton resetAthletesButton = new JButton();
         resetAthletesButton.setText("Reset team");
         resetAthletesButton.addActionListener(e -> resetAthletes());
-        FooterPanel.add(resetAthletesButton);
+        footerPanel.add(resetAthletesButton);
 
-        acceptAthletesButton = new JButton();
+        JButton acceptAthletesButton = new JButton();
         acceptAthletesButton.setText("Accept team and continue");
         acceptAthletesButton.addActionListener(e -> acceptTeam());
-        FooterPanel.add(acceptAthletesButton);
+        footerPanel.add(acceptAthletesButton);
 
     }
 

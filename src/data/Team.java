@@ -1,4 +1,7 @@
+package data;
 import java.util.ArrayList;
+import gui.TeamPanel;
+
 
 /**
  * Team is the abstract base class behind {@link PlayerTeam} and {@link OppositionTeam}

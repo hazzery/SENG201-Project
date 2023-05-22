@@ -1,4 +1,8 @@
+package management;
 import java.util.concurrent.ThreadLocalRandom;
+
+import data.Athlete;
+import data.PlayerTeam;
 
 
 /**
@@ -26,7 +30,7 @@ public class RandomEvent {
     public void randomEvent() {
         if (chance < 10) {
             randomStatIncrease();
-        } else if (chance >= 10 && chance <= 13) {
+        } else if (chance <= 13) {
             randomQuitAthlete();
         } else if (chance == 14) {
             randomNewAthlete();
@@ -80,7 +84,7 @@ public class RandomEvent {
         }
         if (GameManager.team.numActive() + GameManager.team.numReserves() < 5 && GameManager.getBankBalance() < 1000){
             System.out.println("Random Event: An Athlete quit your team but you have less than 5 athletes and no money!!!");
-            //gameManager.gameOver(); //Gameover call (Not implemented yet)
+            //gameManager.gameOver(); //Game-over call (Not implemented yet)
             return;
         }
 

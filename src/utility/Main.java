@@ -1,3 +1,7 @@
+package utility;
+import management.GameManager;
+import management.WindowManager;
+
 /**
  * The starting point of the program!
  *

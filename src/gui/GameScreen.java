@@ -1,4 +1,9 @@
+package gui;
+import management.GameManager;
+import management.WindowManager;
+
 import javax.swing.*;
+
 import java.awt.*;
 
 
@@ -13,9 +18,7 @@ public class GameScreen extends JPanel {
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
-    // Indentation of components below shows hierarchy of elements on the screen
-    private JPanel headerPanel;
-        private JPanel teamInfoPanel;
+    private JPanel teamInfoPanel;
             private JLabel teamNameLabel;
             private JLabel bankBalanceLabel;
         private JPanel seasonPanel;
@@ -25,8 +28,6 @@ public class GameScreen extends JPanel {
         private ClubScreen clubScreen;
         private MarketScreen marketScreen;
         private StadiumScreen stadiumScreen;
-    private JPanel FooterPanel;
-        private JButton nextWeekButton;
 
 
     /**
@@ -61,7 +62,7 @@ public class GameScreen extends JPanel {
      * Updates the team related information shown in the left of the game screen header
      * to reflect new changes in the game's state
      */
-    void updateTeamInfo() {
+    public void updateTeamInfo() {
         teamNameLabel.setText(GameManager.team.getName());
         bankBalanceLabel.setText("$" + GameManager.getBankBalance());
         teamInfoPanel.revalidate();
@@ -117,7 +118,8 @@ public class GameScreen extends JPanel {
         this.setLayout(new BorderLayout(100, 0));
         this.setBorder(marginBorder);
 
-        headerPanel = new JPanel();
+        // Indentation of components below shows hierarchy of elements on the screen
+        JPanel headerPanel = new JPanel();
         headerPanel.setBorder(marginBorder);
         headerPanel.setLayout(new GridLayout(1, 0, 0, 0));
         this.add(headerPanel, BorderLayout.NORTH);
@@ -162,15 +164,15 @@ public class GameScreen extends JPanel {
         stadiumScreen = new StadiumScreen(this);
         marketScreen = new MarketScreen(this);
 
-        FooterPanel = new JPanel();
-        FooterPanel.setBorder(marginBorder);
-        FooterPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        this.add(FooterPanel, BorderLayout.SOUTH);
+        JPanel footerPanel = new JPanel();
+        footerPanel.setBorder(marginBorder);
+        footerPanel.setLayout(new GridLayout(1, 0, 0, 0));
+        this.add(footerPanel, BorderLayout.SOUTH);
 
-        nextWeekButton = new JButton();
+        JButton nextWeekButton = new JButton();
         nextWeekButton.setText("Next Week");
         nextWeekButton.addActionListener(e -> updateSeasonInfo());
-        FooterPanel.add(nextWeekButton);
+        footerPanel.add(nextWeekButton);
     }
 
     /**
@@ -186,7 +188,7 @@ public class GameScreen extends JPanel {
         GameManager.initializeAthletes();
         GameManager.initializeItems();
         WindowManager.initializeMainWindow();
-        GameManager.setConfiguration("HarrysTeam", 12, false);
+        GameManager.setConfiguration("TeamName", 12, false);
         GameManager.startGame(GameManager.athletes, 10000);
     }
 }

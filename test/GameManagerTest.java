@@ -1,5 +1,13 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import data.Athlete;
+import data.Item;
+import data.OppositionTeam;
+import data.Team;
+import management.GameManager;
 import org.junit.jupiter.api.Test;
+import utility.MustSwapReserveException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;

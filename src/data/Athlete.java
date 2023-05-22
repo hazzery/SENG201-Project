@@ -1,9 +1,11 @@
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
+package data;
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.FileNotFoundException;
+import gui.PurchasablePanel;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
+import java.util.Map;
 import java.io.File;
 
 
@@ -23,7 +25,6 @@ public class Athlete implements Purchasable {
     public boolean isInjured = false;
 
     static private boolean nameScannerIsInitialised = false;
-    static private Scanner nameScanner;
     static private Stack<String> athleteNames;
 
     ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
@@ -45,10 +46,10 @@ public class Athlete implements Purchasable {
     private void initAthleteNameReader() {
         if (nameScannerIsInitialised) return;
 
-        athleteNames = new Stack<String>();
+        athleteNames = new Stack<>();
         try {
             File myObj = new File("Resources/AthleteNames.txt");
-            nameScanner = new Scanner(myObj);
+            Scanner nameScanner = new Scanner(myObj);
             while (nameScanner.hasNextLine()) {
                 athleteNames.push(nameScanner.nextLine());
             }

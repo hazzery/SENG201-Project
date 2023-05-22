@@ -1,3 +1,4 @@
+package utility;
 /**
  * HTMLString is a static utility class that abstracts away Swing's internal use of HTML
  * to format text on screen components.
@@ -11,7 +12,7 @@ public class HTMLString {
      * @param strings An arbitrary number of strings which should all be displayed on separate lines
      * @return A new multiline string to display on a swing display component
      */
-    static String multiLine(String... strings) {
+    public static String multiLine(String... strings) {
         StringBuilder builder = new StringBuilder("<html>");
 
         for (String string : strings) {
@@ -28,7 +29,7 @@ public class HTMLString {
      * @param string Any string
      * @return A new heading formatted string to display on a swing component
      */
-    static String header(String string) {
+    public static String header(String string) {
         return "<html><h1>" + string + "</h1></html>";
     }
 
@@ -38,7 +39,7 @@ public class HTMLString {
      * @param string Any string
      * @return A new sub-heading formatted string to display on a swing component
      */
-    static String subHeading(String string) {
+    public static String subHeading(String string) {
         return "<html><h2>" + string + "</h2></html>";
     }
 }

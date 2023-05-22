@@ -1,7 +1,10 @@
+package gui;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import data.Purchasable;
 import java.util.Map;
 import javax.swing.*;
+import data.Athlete;
 import java.awt.*;
 
 
@@ -11,7 +14,6 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class PurchasablePanel extends JPanel {
-    private final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
     private final HashMap<String, JLabel> statLabels;
     private final Purchasable purchasable;
 
@@ -28,6 +30,7 @@ public class PurchasablePanel extends JPanel {
             athlete.registerPanel(this);
 
         this.setLayout(new GridLayout(0, 1, 0, 0));
+        MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
         this.setBorder(marginBorder);
 
         JLabel nameLabel = new JLabel(purchasable.getName());
@@ -56,6 +59,8 @@ public class PurchasablePanel extends JPanel {
     public void withCustomButton(String buttonText, ActionListener actionListener) throws IllegalStateException {
         if (hasButton)
             throw new IllegalStateException("This panel already has a purchase button.");
+
+        hasButton = true;
 
         JButton button = new JButton(buttonText);
         button.addActionListener(actionListener);

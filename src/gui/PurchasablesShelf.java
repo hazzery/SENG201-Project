@@ -1,3 +1,6 @@
+package gui;
+import data.Purchasable;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.function.Function;
@@ -12,10 +15,8 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class PurchasablesShelf extends JPanel {
-    private final String shelfName;
-    private Function<Purchasable, String> getButtonText = null;
-    private ActionListener actionListener = null;
-    private boolean isOwned;
+    private final Function<Purchasable, String> getButtonText;
+    private final ActionListener actionListener;
     private final JPanel shelfPanel;
 
 
@@ -34,7 +35,6 @@ public class PurchasablesShelf extends JPanel {
      *                       Called when a button on a PurchasablePanel is pressed
      */
     public PurchasablesShelf(Purchasable[] purchasables, String shelfName, Function<Purchasable, String> getButtonText, ActionListener actionListener) {
-        this.shelfName = shelfName;
         this.getButtonText = getButtonText;
         this.actionListener = actionListener;
 

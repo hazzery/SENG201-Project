@@ -1,6 +1,11 @@
-import javax.swing.*;
-import java.awt.*;
+package gui;
 import java.awt.event.ActionEvent;
+import management.GameManager;
+import data.PlayerTeam;
+import javax.swing.*;
+import data.Athlete;
+import java.awt.*;
+import data.Item;
 
 
 /**
@@ -12,11 +17,9 @@ import java.awt.event.ActionEvent;
 public class ClubScreen extends GameScreenPanel {
     MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
-    // Indentation of components below shows hierarchy of elements on the screen
-    private JPanel mainPanel;
-        private PurchasablesShelf activesShelf;
-        private PurchasablesShelf reservesShelf;
-        private PurchasablesShelf itemsShelf;
+    private PurchasablesShelf activesShelf;
+    private PurchasablesShelf reservesShelf;
+    private PurchasablesShelf itemsShelf;
 
     /**
      * Initialise the contents of the frame.
@@ -25,7 +28,8 @@ public class ClubScreen extends GameScreenPanel {
     protected void initialize() {
         super.initialize();
 
-        mainPanel = new JPanel();
+        // Indentation of components below shows hierarchy of elements on the screen
+        JPanel mainPanel = new JPanel();
         mainPanel.setBorder(marginBorder);
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);

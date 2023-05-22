@@ -1,5 +1,11 @@
+package gui;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import management.GameManager;
+import utility.HTMLString;
+import data.Team;
+
 import java.awt.*;
 
 
@@ -13,10 +19,9 @@ public class TeamPanel extends JPanel {
 
     JLabel nameLabel;
     private JPanel statsPanel;
-        private JLabel offenceLabel;
-        private JLabel defenceLabel;
-        private JLabel rankingLabel;
-        private JLabel rewardLabel;
+    private JLabel offenceLabel;
+    private JLabel defenceLabel;
+    private JLabel rankingLabel;
 
     private final Team team;
 
@@ -69,7 +74,7 @@ public class TeamPanel extends JPanel {
      *                       created when the button is clicked
      */
     public void addButton(String buttonText, ActionListener actionListener) {
-        rewardLabel = new JLabel();
+        JLabel rewardLabel = new JLabel();
         rewardLabel.setText("Reward: $" + (int) team.getDifficulty() * 10 * GameManager.isGameHard() * (0.15 * GameManager.currentWeek()));
         statsPanel.add(rewardLabel);
 
@@ -85,5 +90,11 @@ public class TeamPanel extends JPanel {
      */
     public Team getTeam() {
         return team;
+    }
+
+    public void reload() {
+        offenceLabel.setText("Offence: " + String.format("%.1f", team.getAverageOffence()));
+        defenceLabel.setText("Defence: " + String.format("%.1f", team.getAverageDefence()));
+        rankingLabel.setText("Difficulty: " + String.format("%.1f", team.getDifficulty()));
     }
 }

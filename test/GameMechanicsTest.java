@@ -1,8 +1,11 @@
-import org.junit.jupiter.api.BeforeAll;
+import data.Athlete;
+import data.OppositionTeam;
+import management.GameManager;
+import management.GameMechanics;
+import management.WindowManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +30,7 @@ public class GameMechanicsTest {
     void playGameTest(){
         assertEquals(0, GameMechanics.athIndex);
         assertEquals(0, GameMechanics.oppIndex);
-        assertEquals(false, GameMechanics.isGameOver);
+        assertFalse(GameMechanics.isGameOver);
         assertEquals(1, GameMechanics.currentRound);
     }
 

@@ -1,3 +1,5 @@
+package data;
+import gui.PurchasablePanel;
 import java.util.Map;
 
 

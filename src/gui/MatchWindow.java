@@ -1,3 +1,7 @@
+package gui;
+import management.GameManager;
+import management.GameMechanics;
+
 import java.awt.event.ActionEvent;
 import java.awt.*;
 
@@ -18,21 +22,11 @@ public class MatchWindow extends JPanel {
 	public String TeamText;
 	public String gameText;
 
-	private JPanel headerPanel;
-		private JLabel matchLabel;
-	private JPanel mainPanel;
-		private PurchasablesShelf playerTeamPanel;
-		private JPanel gameOutputPanel;
-			private JLabel ouputLabel;
-			static JLabel gameOutput;
-			static JLabel teamOutput;
-			static JLabel oppositionOutput;
+	private PurchasablesShelf playerTeamPanel;
+	public static JLabel gameOutput;
+			public static JLabel teamOutput;
+			public static JLabel oppositionOutput;
 		private PurchasablesShelf oppositionTeamPanel;
-	private JPanel footerPanel;
-		private JButton lightAttackButton;
-		private JButton heavyAttackButton;
-		private JButton healButton;
-		private JButton exitMatchButton;
 
 	/**
 	 * Create the application.
@@ -61,15 +55,15 @@ public class MatchWindow extends JPanel {
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBorder(marginBorder);
 
-		headerPanel = new JPanel();
+		JPanel headerPanel = new JPanel();
 		headerPanel.setBorder(marginBorder);
 		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
 		this.add(headerPanel, BorderLayout.NORTH);
 
-		matchLabel = new JLabel("Match");
+		JLabel matchLabel = new JLabel("Match");
 		headerPanel.add(matchLabel);
 
-		mainPanel = new JPanel();
+		JPanel mainPanel = new JPanel();
 		mainPanel.setBorder(marginBorder);
 		mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -77,13 +71,13 @@ public class MatchWindow extends JPanel {
 		playerTeamPanel = new PurchasablesShelf(GameManager.team.getActives(), "Your Team");
 		mainPanel.add(playerTeamPanel);
 
-		gameOutputPanel = new JPanel();
+		JPanel gameOutputPanel = new JPanel();
 		gameOutputPanel.setBorder(marginBorder);
 		gameOutputPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		mainPanel.add(gameOutputPanel);
 
-		ouputLabel = new JLabel("Game Output:");
-		gameOutputPanel.add(ouputLabel);
+		JLabel outputLabel = new JLabel("Game Output:");
+		gameOutputPanel.add(outputLabel);
 
 		gameOutput = new JLabel(gameText);
 		gameOutputPanel.add(gameOutput);
@@ -97,24 +91,24 @@ public class MatchWindow extends JPanel {
 		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
 
-		footerPanel = new JPanel();
+		JPanel footerPanel = new JPanel();
 		footerPanel.setBorder(marginBorder);
 		footerPanel.setLayout(new GridLayout(1, 4, 0, 0));
 		this.add(footerPanel, BorderLayout.SOUTH);
 
-		lightAttackButton = new JButton("Light Attack");
+		JButton lightAttackButton = new JButton("Light Attack");
 		lightAttackButton.addActionListener(this::lightAttack);
 		footerPanel.add(lightAttackButton);
 
-		heavyAttackButton = new JButton("Heavy Attack");
+		JButton heavyAttackButton = new JButton("Heavy Attack");
 		heavyAttackButton.addActionListener(this::heavyAttack);
 		footerPanel.add(heavyAttackButton);
 
-		healButton = new JButton("Heal");
+		JButton healButton = new JButton("Heal");
 		healButton.addActionListener(this::heal);
 		footerPanel.add(healButton);
 
-		exitMatchButton = new JButton("Exit Match");
+		JButton exitMatchButton = new JButton("Exit Match");
 		exitMatchButton.addActionListener(this::exitMatch);
 		footerPanel.add(exitMatchButton);
 	}
@@ -139,7 +133,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 2 representing the heal condition
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 2, meaning heal
 	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
 	 */
 	private void heal(ActionEvent actionEvent) {
