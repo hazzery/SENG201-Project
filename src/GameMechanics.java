@@ -22,8 +22,6 @@ public class GameMechanics {
     public static ArrayList<Athlete> oppositionAthletes;
     public static ArrayList<Athlete> athleteList;
 
-    public static int indexer = 0;
-
     private static int athIndex = 0;
     private static int oppIndex = 0;
     private static int currentRound;
@@ -31,6 +29,12 @@ public class GameMechanics {
     private static boolean isGameOver;
     private static boolean didAthletesWin;
 
+    /**
+     * The class constructor configures critical elements for the class to run correctly
+     * @param currentRound takes the current round and is saved as a local int
+     * @param athleteList the Players active team
+     * @param oppositionAthletes the chosen opposition team
+     */
     public void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
         System.out.println("PLAY GAME");
         GameMechanics.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
@@ -42,12 +46,12 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link MatchWindow} class when the user clicks on a game action button.
-     * @param index
+     * This method is called by the {@link MatchWindow} class when the user clicks on a game action button. 
+     * Then calls the {@link GameMechanics#playTurn(int)} with given attackType
+     * 
+     * @param index the result of the GUI call in {@link MatchWindow}
      */
     public static void guiButtonPress(int index){
-        System.out.println("GUI BUTTON PRESS");
-        System.out.println(athIndex + oppIndex);
         switch(index){
             case 0 -> playTurn(0);
             case 1 -> playTurn(1);
@@ -57,6 +61,9 @@ public class GameMechanics {
 
     }
 
+    /**
+     * Method that informs the player that they are exiting the match and provides a confirmatory message.
+     */
     private static void exitMatch() {
         int result = JOptionPane.showOptionDialog(null,
                 "You are about to quit",
@@ -76,9 +83,9 @@ public class GameMechanics {
 
     /**
      * This method is called by the  {@link GameMechanics#playGame(int, ArrayList, Athlete[])} method when the user clicks on the start game action button.
-     * by taing the parameter attackType it the calls the appropriate attack method.
+     * by taking the parameter attackType it the calls the appropriate attack method.
      *
-     * @param attackType
+     * @param attackType the attackType that play turn will call
      */
     public static void playTurn(int attackType){
         if (athIndex == 5 || oppIndex ==5){return;}
@@ -98,7 +105,6 @@ public class GameMechanics {
                 updateOpposition(damage);
             }
         } else {
-            // System.out.println("Opposition " + oppIndex + " is dead");
 //            oppIndex++;
             playTurn(attackType);
         }
@@ -108,8 +114,8 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link playTurn} method once the athletes turn has been completed.
-     * This method is automattically called when the athlete has attacked.
+     * This method is called by the {@link GameMechanics#playTurn(int)} method once the athletes turn has been completed.
+     * This method is automatic called when the athlete has attacked.
      */
     public static void oppositionPlayTurn(){ 
         if (isGameOver){return;}
@@ -131,8 +137,7 @@ public class GameMechanics {
                 updateAthlete(damage * GameManager.isGameHard());
             }
         } else {
-            // System.out.println("Athlete " + athIndex + " is dead");
-//            athIndex++;
+//          athIndex++;
             oppositionPlayTurn();
         }
         System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
@@ -140,8 +145,9 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link playTurn} method once the athletes or opposition turn has been completed.
-     * This method is automattically called after any attack has occured.
+     * This method is called by the {@link GameMechanics#playTurn(int)} method once the athletes or opposition turn has been completed.
+     * This method is automatically called after the {@link GameMechanics#playTurn(int)}
+     * The method will check the health of the Athlete and Opposition, to ensure they are not dead, if they are the next Athlete will be indexed
      */
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
@@ -158,8 +164,8 @@ public class GameMechanics {
 
 
     /**
-     * This method is called by the {@link playturn} and {@link oppositionPlayTurn} methods once the athletes or opposition turn has been completed.
-     * This method checks that the game is not over by checking if either teams of athletes are completely defeated if true the {@link endOfGame} method is called.
+     * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods once the athletes or opposition turn has been completed.
+     * This method checks that the game is not over by checking if either teams of athletes are completely defeated if true the {@link GameMechanics#endOfGame()} method is called.
      */
     public static void endGameCondition(){
         boolean deadAthletes = athleteList.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
@@ -182,10 +188,10 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link endGameCondition} method once the game is over.
-     * This method is automattically called when the game is over. 
-     * This method with update the players athletes so that they are returned with full health but a reduced amount of stanima,
-     * and will reward the player with a reward based on the difficulty of the game which is determined by the {@link afterMatchReward} method.
+     * This method is called by the {@link GameMechanics#endGameCondition()} method once the game is over.
+     * This method with update the players athletes so that they are returned with full health but a reduced amount of stamina,
+     * and will reward the player with a reward based on the difficulty of the game which is determined by the {@link GameMechanics#afterMatchReward()} method.
+     * This method will update {@link GameMechanics#athleteList}
      */
     public static void endOfGame(){
         System.out.println();
