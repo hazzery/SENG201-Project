@@ -132,7 +132,6 @@ public class GameManager {
     /**
      * Tells all athletes to train for the week, instead of playing a game
      */
-    //TODO TEST THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static void byeWeek(){
          int result = JOptionPane.showOptionDialog(null,
                  "Bye Week",

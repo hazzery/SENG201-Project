@@ -57,6 +57,12 @@ class AthleteTest {
         Item item = new Item("Test", Athlete.StatType.OFFENCE, 5);
         athlete.applyItem(item);
         assertEquals(6, athlete.getOffence());
+        Item itemS = new Item("Test", Athlete.StatType.STAMINA, 5);
+        athlete.applyItem(itemS);
+        assertEquals(6, athlete.getStamina());
+        Item itemD = new Item("Test", Athlete.StatType.DEFENCE, 5);
+        athlete.applyItem(itemD);
+        assertEquals(6, athlete.getDefence());
     }
 
     @Test
