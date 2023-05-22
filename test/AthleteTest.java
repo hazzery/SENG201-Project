@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -9,16 +10,18 @@ class AthleteTest {
     @Test
     void constructor() {
         Athlete athlete = new Athlete();
-        assertNotNull(athlete);
-        assertNotNull(athlete.getName());
-        assertNotNull(athlete.getNickname());
+        assertTrue(athlete.getName().length() >= 3);
+        assertTrue(athlete.getNickname().length() >= 3);
+        assertTrue(athlete.getStamina() >= 80 && athlete.getStamina() <= 100);
+        assertTrue(athlete.getOffence() >= 1 && athlete.getStamina() <= 100);
+        assertTrue(athlete.getDefence() >= 1 && athlete.getStamina() <= 100);
     }
 
     @Test
     void getStats() {
-        Athlete athlete = new Athlete("Test", 1, 1, 1);
+        Athlete athlete = new Athlete("Test", 80, 1, 1);
         assertEquals(Map.of(
-            "Stamina", "1",
+            "Stamina", "80",
             "Offence", "1",
             "Defence", "1",
             "Current Health", "100"
@@ -27,14 +30,25 @@ class AthleteTest {
 
     @Test
     void getContractPrice() {
-        Athlete athlete = new Athlete("Test", 1, 1, 1);
-        assertEquals(30, athlete.getContractPrice());
+        // Parameterised constructor sets stamina, offence, and defence to 80, 1, and 1 respectively
+        // if negative values are passed
+        Athlete athlete = new Athlete("Test", -999, -999, -999);
+        assertEquals(820, athlete.getContractPrice());
+
+        athlete = new Athlete("Test", 80, 1, 1);
+        assertEquals(820, athlete.getContractPrice());
+
+        athlete = new Athlete("Test", 100, 100, 100);
+        assertEquals(3000, athlete.getContractPrice());
     }
 
     @Test
     void getSellBackPrice() {
-        Athlete athlete = new Athlete("Test", 1, 1, 1);
-        assertEquals(109, athlete.getSellBackPrice());
+        Athlete athlete = new Athlete("Test", 80, 1, 1);
+        assertEquals(346, athlete.getSellBackPrice());
+
+        Athlete athlete2 = new Athlete("Test", 100, 100, 100);
+        assertEquals(1000, athlete2.getSellBackPrice());
     }
 
     @Test
@@ -61,7 +75,7 @@ class AthleteTest {
     void trainAthlete() {
         Athlete athlete = new Athlete("Test", 1, 1, 1);
         athlete.trainAthlete();
-        assertEquals(11,athlete.getOffence());
-        assertEquals(11, athlete.getDefence());
+        assertEquals(26, athlete.getOffence());
+        assertEquals(26, athlete.getDefence());
     }
 }
