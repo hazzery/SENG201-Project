@@ -19,7 +19,7 @@ public class ClubScreen extends GameScreenPanel {
         private PurchasablesShelf itemsShelf;
 
     /**
-     * Initialize the contents of the frame.
+     * Initialise the contents of the frame.
      */
     @Override
     protected void initialize() {

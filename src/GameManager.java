@@ -279,13 +279,4 @@ public class GameManager {
         gameMechanics.playGame(currentWeek, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
         WindowManager.showMatchScreen();
     }
-
-    /**
-     * Game over method to be called when the game is over.
-     * This method will open the game over screen.
-     *
-     */
-    public static void gameOver() {
-        WindowManager.showGameOverScreen();
-    }
 }
