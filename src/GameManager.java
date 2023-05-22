@@ -1,5 +1,8 @@
 import java.util.Arrays;
 import java.util.stream.Stream;
+
+import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +19,7 @@ public class GameManager {
     public static PlayerTeam team;
 
     private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
+    public static boolean gameHasBeenPlayed = false;
 
     private static int bankBalance = 0;
     private static int currentWeek = 1;
@@ -117,23 +121,51 @@ public class GameManager {
      */
     public static void nextWeek() {
         addFunds((int) (300 - 100 * isGameHard()));
+        //TODO UPDATE FUNDS ON GUI
+        if (gameHasBeenPlayed ==  false){byeWeek();} 
         currentWeek++;
     }
 
     /**
      * Tells all athletes to train for the week, instead of playing a game
      */
+    //TODO TEST THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static void byeWeek(){
-        if (toTrain){
-            //TODO Add code which allows a Athlete to be trained
-            int j = 0; //This default trains the first athlete in active list, however this should be changed to allow the user to select which athlete to train
-            team.getActive(j).trainAthlete();
-        } else {
-            for (int i = 0; i < Team.TEAM_SIZE; i++) {
-                team.getActive(i).byeWeek();
-            }
-        }
-        randomEvent.randomEvent();
+        // int result = JOptionPane.showOptionDialog(null,
+        //         "Bye Week",
+        //         "Would you like to recover all your athletes? or train one?",
+        //         JOptionPane.DEFAULT_OPTION,
+        //         JOptionPane.WARNING_MESSAGE,
+        //         null,
+        //         new String[]{"Train", "Recover all"},
+        //         null);
+
+        // // Check which button was clicked and perform corresponding action
+        // switch (result) {
+        //     case 0:
+        //         toTrain = true;
+        //         JOptionPane.getRootFrame().dispose();
+        //         break;
+        //     case 1:
+        //         JOptionPane.getRootFrame().dispose();
+        //         break;	
+        // }
+
+        // if (toTrain){
+        //     Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
+        //     "Select an athlete to train", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
+        //     null, GameManager.team.getActives(), "Choose athlete");
+        //     athlete.trainAthlete();
+        //     //TODO ADD RELOAD CODE
+
+        // } else {
+        //     for (int i = 0; i < Team.TEAM_SIZE; i++) {
+        //         team.getActive(i).byeWeek();
+        //     }
+        // }
+        // RandomEvent randomEvent1 = new RandomEvent();
+        // randomEvent1.randomEvent();
+        return;
     }
 
     /**

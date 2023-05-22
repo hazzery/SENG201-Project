@@ -28,8 +28,6 @@ public class GameMechanics {
     private static int oppIndex = 0;
     private static int currentRound;
 
-    private static int attackType;
-
     private static boolean isGameOver;
     private static boolean didAthletesWin;
 
@@ -71,7 +69,7 @@ public class GameMechanics {
 
         // Check which button was clicked and perform corresponding action
         switch (result) {
-            case 0 ->  WindowManager.showGameScreen(); 
+            case 0 -> WindowManager.showGameScreen(); //TODO Have a look 
             case 1 -> JOptionPane.getRootFrame().dispose();
         }
     }
@@ -227,7 +225,8 @@ public class GameMechanics {
             }
         }
 
-       //Need some sort of gamemechanics reset
+       
+        GameManager.gameHasBeenPlayed = true;
         WindowManager.showGameScreen();
     }
 
@@ -255,6 +254,7 @@ public class GameMechanics {
         
         if (damage >= 0){  
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
+            if (oppositionAthletes.get(oppIndex).current_health < 0){ oppositionAthletes.get(oppIndex).current_health = 0; }
             System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + turnActionStatments.getAttackName() + " so " + damage + " damage was delt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
         } else {
@@ -276,6 +276,7 @@ public class GameMechanics {
         }
         if (damage >= 0){
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
+            if (athleteList.get(athIndex).current_health < 0){ athleteList.get(athIndex).current_health = 0; }
             System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             teamGameOutput(" " + turnActionStatments.getAttackName() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was delt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
 

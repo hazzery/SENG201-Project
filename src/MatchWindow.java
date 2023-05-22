@@ -33,25 +33,6 @@ public class MatchWindow extends JPanel {
 		private JButton healButton;
 		private JButton exitMatchButton;
 
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-	// 	GameManager.initializeAthletes();
-	// 	GameManager.initializeItems();
-	// 	WindowManager.initializeMainWindow();
-	// 	GameManager.setConfiguration("DanielsTeam", 12, false);
-	// 	GameManager.startGame(GameManager.athletes, 10000);
-
-    //  OppositionTeam oppositionTeam = new OppositionTeam();
-	// 	GameManager.oppositionTeam = oppositionTeam;
-    //  Athlete[] oppositionAthletes = oppositionTeam.getAthletes();
-	// 	GameMechanics.playGame(1, GameManager.athletes, oppositionAthletes);
-
-	// 	WindowManager.showMatchScreen();
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -113,7 +94,6 @@ public class MatchWindow extends JPanel {
 		footerPanel.setLayout(new GridLayout(1, 4, 0, 0));
 		this.add(footerPanel, BorderLayout.SOUTH);
 
-        //BUTTONS
 		lightAttackButton = new JButton("Light Attack");
 		lightAttackButton.addActionListener(this::lightAttack);
 		footerPanel.add(lightAttackButton);
@@ -139,24 +119,20 @@ public class MatchWindow extends JPanel {
 	private void exitMatch(ActionEvent actionEvent) {
 		System.out.println("Exit Game");
 		turnAction(3);
-		
 	}
 
 	private void heal(ActionEvent actionEvent) {
 		System.out.println("Heal");
 		turnAction(2);
-		
 	}
 
 	private void heavyAttack(ActionEvent actionEvent) {
 		System.out.println("Heavy Attack");
 		turnAction(1);
-
 	}
 
 	private void lightAttack(ActionEvent actionEvent) {
 		System.out.println("Light Attack");
 		turnAction(0);
-		
 	}
 }
