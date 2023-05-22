@@ -119,14 +119,15 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
+        if (currentWeek > seasonLength)
+            WindowManager.showGameOverScreen();
+
         addFunds((int) (300 - 100 * isGameHard()));
         //TODO UPDATE FUNDS ON GUI
         if (!gameHasBeenPlayed)
             byeWeek();
         gameHasBeenPlayed =  false;
         currentWeek++;
-        if (currentWeek > seasonLength)
-            WindowManager.showGameOverScreen();
     }
 
     /**
@@ -142,22 +143,22 @@ public class GameManager {
                  new String[]{"Train", "Recover all"},
                  null);
 
-         // Check which button was clicked and perform corresponding action
-         switch (result) {
-             case 0:
-                 Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
-                         "Select an athlete to train", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
-                         null, GameManager.team.getActives(), "Choose athlete");
-                 athlete.trainAthlete();
-                 JOptionPane.getRootFrame().dispose();
-                 break;
-             case 1:
-                 for (int i = 0; i < Team.TEAM_SIZE; i++) {
-                     team.getActive(i).byeWeek();
-                 }
-                 JOptionPane.getRootFrame().dispose();
-                 break;
-         }
+         // Check which button was clicked and perform the corresponding action
+        switch (result) {
+            case 0 -> {
+                Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
+                        "Select an athlete to train", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
+                        null, GameManager.team.getActives(), "Choose athlete");
+                athlete.trainAthlete();
+                JOptionPane.getRootFrame().dispose();
+            }
+            case 1 -> {
+                for (int i = 0; i < Team.TEAM_SIZE; i++) {
+                    team.getActive(i).byeWeek();
+                }
+                JOptionPane.getRootFrame().dispose();
+            }
+        }
         RandomEvent rando = new RandomEvent();
         rando.randomEvent();
         WindowManager.reloadGameScreen();
@@ -284,9 +285,5 @@ public class GameManager {
         GameManager.oppositionTeam = opposition;
         gameMechanics.playGame(currentWeek, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
         WindowManager.showMatchScreen();
-    }
-
-    public static void gameOver() {
-        WindowManager.showGameOverScreen();
     }
 }

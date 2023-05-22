@@ -252,7 +252,7 @@ public class Athlete implements Purchasable {
     /**
      * Improves the athlete's offence and defense values by 25
      */
-    public void trainAthlete(){
+    public void trainAthlete() {
         this.offence += 25;
         this.defence += 25;
         System.out.println("Trained: " + this.name );

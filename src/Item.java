@@ -33,7 +33,7 @@ public class Item implements Purchasable {
         if (nameScannerIsInitialised) return;
 
         try {
-            itemNames = new Stack<String>();
+            itemNames = new Stack<>();
             File itemNameFile = new File("Resources/ItemNames.txt");
             Scanner nameScanner = new Scanner(itemNameFile);
             while (nameScanner.hasNextLine()) {
