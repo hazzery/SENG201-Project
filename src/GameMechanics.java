@@ -337,9 +337,9 @@ public class GameMechanics {
      */
     public static double getOppDiff(){
         int oppositionDiff = 0;
-        for (int i = 0; i < oppositionAthletes.size(); i++){
-            oppositionDiff += oppositionAthletes.get(i).getOffence() + oppositionAthletes.get(i).getDefence();
-        }
+        for (Athlete oppositionAthlete : oppositionAthletes)
+            oppositionDiff += oppositionAthlete.getOffence() + oppositionAthlete.getDefence();
+
         return oppositionDiff / (oppositionAthletes.size() * 2);
     }
 
