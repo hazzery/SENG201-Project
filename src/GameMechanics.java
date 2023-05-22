@@ -33,9 +33,9 @@ public class GameMechanics {
 
     public void playGame(int currentRound, ArrayList<Athlete> athleteList, Athlete[] oppositionAthletes){
         System.out.println("PLAY GAME");
-        this.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
-        this.athleteList = athleteList; 
-        this.currentRound = currentRound; 
+        GameMechanics.oppositionAthletes = new ArrayList<>(Arrays.asList(oppositionAthletes));
+        GameMechanics.athleteList = athleteList;
+        GameMechanics.currentRound = currentRound;
         isGameOver = false;
         athIndex = 0;
         oppIndex = 0;
