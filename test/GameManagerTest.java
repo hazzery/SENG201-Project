@@ -12,8 +12,8 @@ class GameManagerTest {
     void startGame() {
         GameManager.setConfiguration("test", 10, false);
         GameManager.startGame(new ArrayList<>(Arrays.asList(new Athlete(), new Athlete(),
-                        new Athlete(), new Athlete(), new Athlete(), new Athlete())),10000);
-        assertEquals(10000, GameManager.getBankBalance());
+                        new Athlete(), new Athlete(), new Athlete(), new Athlete())),0);
+        assertEquals(0, GameManager.getBankBalance());
         assertEquals(5, GameManager.team.getActives().length);
         assertEquals(1, GameManager.team.getReserves().length);
     }
