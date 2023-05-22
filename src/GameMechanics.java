@@ -22,12 +22,14 @@ public class GameMechanics {
     public static ArrayList<Athlete> oppositionAthletes;
     public static ArrayList<Athlete> athleteList;
 
-    private static int athIndex = 0;
-    private static int oppIndex = 0;
-    private static int currentRound;
+    public static int athIndex = 0;
+    public static int oppIndex = 0;
+    public static int currentRound;
 
-    private static boolean isGameOver;
-    private static boolean didAthletesWin;
+    public static boolean isGameOver;
+    public static boolean didAthletesWin;
+
+    public static int chance = ThreadLocalRandom.current().nextInt(0,10);
 
     /**
      * The class constructor configures critical elements for the class to run correctly
@@ -46,9 +48,9 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link MatchWindow} class when the user clicks on a game action button. 
+     * This method is called by the {@link MatchWindow} class when the user clicks on a game action button.
      * Then calls the {@link GameMechanics#playTurn(int)} with given attackType
-     * 
+     *
      * @param index the result of the GUI call in {@link MatchWindow}
      */
     public static void guiButtonPress(int index){
@@ -93,11 +95,11 @@ public class GameMechanics {
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
             System.out.println("Athlete " + athIndex + " attacks " + oppIndex + "");
             if (attackType == 0){
-                double damage = attackLight(athIndex, oppIndex);
+                double damage = attackLight(chance, athIndex, oppIndex);
                 updateOpposition(damage * GameManager.isGameHard());
                 checkHealth();
             } else if (attackType == 1){
-                double damage = attackHeavy(athIndex, oppIndex);
+                double damage = attackHeavy(chance, athIndex, oppIndex);
                 updateOpposition(damage * GameManager.isGameHard());
                 checkHealth();
             } else if (attackType == 2){
@@ -125,11 +127,11 @@ public class GameMechanics {
             
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
-                double damage = attackLight(oppIndex, athIndex);
+                double damage = attackLight(chance, oppIndex, athIndex);
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
             } else if (oppositionAttack < 40){
-                double damage = attackHeavy(oppIndex, athIndex);
+                double damage = attackHeavy(chance, oppIndex, athIndex);
                 updateAthlete(damage * GameManager.isGameHard());
                 checkHealth();
             } else {
@@ -304,13 +306,12 @@ public class GameMechanics {
      * @param j the index of the attacked Athlete object in a narraylist
      * @return the damage that the attack will give
      */
-    public static double attackLight(int i, int j){
+    public static double attackLight(int chance, int i, int j){
         System.out.println("Light Attack");
-        int chance = ThreadLocalRandom.current().nextInt(0, 10);
         if (chance >= 1){
             double factor1 = 100 / (5* (100 - athleteList.get(i).getStamina() + 1));
             double factor2 = (athleteList.get(i).getOffence()/oppositionAthletes.get(j).getDefence() + 1) + 1;
-            return (factor1 * factor2 + ThreadLocalRandom.current().nextInt(15, 25));
+            return (factor1 * factor2 + chance + 15);
         } else {
             return 0;
         }
@@ -323,11 +324,10 @@ public class GameMechanics {
      * @param j the index of the attacked Athlete object in an arraylist
      * @return the damage that the attack will give
      */
-    public static double attackHeavy(int i, int j){
+    public static double attackHeavy(int chance, int i, int j){
         System.out.println("Heavy Attack");
-         int chance = ThreadLocalRandom.current().nextInt(0, 10);
          if (chance > 6){
-             return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + oppositionAthletes.get(i).getStamina()) / 10) ;
+             return 5 * chance + 20 + ((athleteList.get(i).getOffence() + oppositionAthletes.get(i).getStamina()) / 10) ;
          } else {
              return 0;
          }
@@ -356,16 +356,28 @@ public class GameMechanics {
         return oppositionDiff / (oppositionAthletes.size() * 2);
     }
 
+    /**
+     * Updates {@link MatchWindow#teamOutput} with what String is required
+     * @param string the String that is being used to update the GUI
+     */
     public static void teamGameOutput(String string){
         MatchWindow.teamOutput.setText(string);
         MatchWindow.teamOutput.revalidate();
     }
 
+    /**
+     * Updates {@link MatchWindow#oppositionOutput} with what String is required
+     * @param string the String that is being used to update the GUI
+     */
     public static void oppGameOutput(String string){
         MatchWindow.oppositionOutput.setText(string);
         MatchWindow.oppositionOutput.revalidate();
     }
 
+    /**
+     * Updates {@link MatchWindow#gameOutput} with what String is required
+     * @param string the String that is being used to update the GUI
+     */
     public static void gameOutput(String string){
         MatchWindow.gameOutput.setText(string);
         MatchWindow.gameOutput.revalidate();
