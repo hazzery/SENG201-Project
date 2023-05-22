@@ -80,4 +80,10 @@ public class GameMechanicsTest {
         assertEquals(-1 * heal, GameMechanics.heal(i));
     }
 
+    @Test
+    void endGameConditionTest(){
+        boolean deadAthletes = true;
+        boolean deadOpposition = false;
+
+    }
 }

@@ -201,10 +201,7 @@ public class GameMechanics {
         if (didAthletesWin){
             System.out.println("You earned $" + afterMatchReward() + " for winning");
             JOptionPane.showMessageDialog(null, "You earned $" + afterMatchReward() + " for winning, Your balence is now: " + GameManager.getBankBalance());
-            // afterMatchReward(); // commented out to prevent a duel call
             System.out.println("Your balence is now: " + GameManager.getBankBalance());
-            
-
 
         } else {
             System.out.println("Try Again next time xoxo");
@@ -215,7 +212,6 @@ public class GameMechanics {
             if (athleteList.get(i).current_health <= 0){
                 athleteList.get(i).stamina -= (int) Math.ceil(0.5 * GameManager.isGameHard() * getOppDiff());
                 if (athleteList.get(i).stamina <= 0){
-
                     athleteList.get(i).stamina = 0;
                     athleteList.get(i).current_health = 0;
                     athleteList.get(i).isInjured = true;
@@ -233,8 +229,6 @@ public class GameMechanics {
                 } 
             }
         }
-
-       
         GameManager.gameHasBeenPlayed = true;
         WindowManager.showGameScreen();
     }
@@ -258,10 +252,8 @@ public class GameMechanics {
      * @param damage the amount of damage that has been dealt to the opposition.
      */
     public static void updateOpposition(double damage){
-        if (damage == 0){
+        if (damage == 0)
             oppGameOutput("Your attack on opposition " + oppositionAthletes.get(oppIndex).getName()  + " missed");
-        }
-        
         if (damage >= 0){  
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             if (oppositionAthletes.get(oppIndex).current_health < 0){ oppositionAthletes.get(oppIndex).current_health = 0; }
@@ -282,9 +274,8 @@ public class GameMechanics {
      * @param damage is the value that the opposition has dealt to the player.
      */
     public static void updateAthlete(double damage){
-        if (damage == 0){
+        if (damage == 0)
             teamGameOutput("The attack on your athlete " + athleteList.get(athIndex).getName()  + " missed");
-        }
         if (damage >= 0){
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             if (athleteList.get(athIndex).current_health < 0){ athleteList.get(athIndex).current_health = 0; }
