@@ -116,7 +116,8 @@ public class GameManager {
             WindowManager.showGameOverScreen();
 
         addFunds((int) (300 - 100 * isGameHard()));
-        //TODO UPDATE FUNDS ON GUI
+        if (WindowManager.gameScreen != null)
+            WindowManager.gameScreen.updateTeamInfo();
         if (!gameHasBeenPlayed)
             byeWeek();
         gameHasBeenPlayed =  false;
@@ -127,14 +128,10 @@ public class GameManager {
      * Tells all athletes to train for the week, instead of playing a game
      */
     public static void byeWeek(){
-         int result = JOptionPane.showOptionDialog(null,
-                 "Bye Week",
+         int result = JOptionPane.showOptionDialog(null, "Bye Week",
                  "Would you like to recover all your athletes? or train one?",
-                 JOptionPane.DEFAULT_OPTION,
-                 JOptionPane.WARNING_MESSAGE,
-                 null,
-                 new String[]{"Train", "Recover all"},
-                 null);
+                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                 null, new String[]{"Train", "Recover all"}, null);
 
          // Check which button was clicked and perform the corresponding action
         switch (result) {
@@ -219,9 +216,8 @@ public class GameManager {
             throw new IllegalStateException("Insufficient money to make purchase");
 
         bankBalance -= purchasable.getContractPrice();
-        if (WindowManager.gameScreen != null) {
+        if (WindowManager.gameScreen != null)
             WindowManager.gameScreen.updateTeamInfo();
-        }
 
         if (purchasable instanceof Athlete athlete)
             team.addAthlete(athlete, !activateNewAthlete);

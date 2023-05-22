@@ -5,7 +5,7 @@ import javax.swing.*;
 
 
 /**
- * Match Window, the window that displays the match and allows the user to play the match
+ * Match Window, the screen that displays the match and allows the user to play the match
  *
  * @author Daniel Smith
  * @author Harrison Parkes

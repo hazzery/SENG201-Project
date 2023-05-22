@@ -11,6 +11,7 @@ class UtilitiesTest {
         assertThrows(IllegalArgumentException.class, () -> Utilities.validateName("Symbols?", false));
         assertThrows(IllegalArgumentException.class, () -> Utilities.validateName("Space not cool", false));
         assertThrows(IllegalArgumentException.class, () -> Utilities.validateName("Space is cool", false));
+        assertThrows(IllegalArgumentException.class, () -> Utilities.validateName("Space 15 cool", true));
 
         assertDoesNotThrow(() -> Utilities.validateName("ValidName", false));
         assertDoesNotThrow(() -> Utilities.validateName("ValidName", true));
