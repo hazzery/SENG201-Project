@@ -1,5 +1,7 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,76 +90,32 @@ public class GameMechanicsTest {
     }
 
 
-    private List<Athlete> athleteList;
-    private List<Athlete> oppositionAthletes;
+    private ArrayList<Athlete> athleteList;
+    private ArrayList<Athlete> oppositionAthletes;
 
-    @Before
     public void setup() {
         // Initialize athleteList and oppositionAthletes
         athleteList = new ArrayList<>();
         oppositionAthletes = new ArrayList<>();
         // Add some dummy athletes to the lists for testing
-        athleteList.add(new Athlete("Athlete 1", 0));
-        athleteList.add(new Athlete("Athlete 2", -10));
-        oppositionAthletes.add(new Athlete("Opposition 1", 50));
-        oppositionAthletes.add(new Athlete("Opposition 2", 0));
-    }
-
-    @Test
-    public void testEndGameConditionAllAthletesDead() {
-        // Arrange
-        // Create a mock instance of the class under test
-        MyClass myClass = new MyClass(athleteList, oppositionAthletes);
-        boolean expectedGameOver = true;
-        boolean expectedDidAthletesWin = false;
-
-        // Act
-        myClass.endGameCondition();
-
-        // Assert
-        Assert.assertEquals(expectedGameOver, myClass.isGameOver);
-        Assert.assertEquals(expectedDidAthletesWin, myClass.didAthletesWin);
-        // Verify the expected output is generated
-        // Here, you might need to provide the implementation of `endOfGame` and verify its behavior
-        // Assert.assertEquals(expectedOutput, systemOutRule.getLog());
-    }
-
-    @Test
-    public void testEndGameConditionAllOppositionDead() {
-        // Arrange
-        // Create a mock instance of the class under test
-        MyClass myClass = new MyClass(athleteList, oppositionAthletes);
-        boolean expectedGameOver = true;
-        boolean expectedDidAthletesWin = true;
-
-        // Act
-        myClass.endGameCondition();
-
-        // Assert
-        Assert.assertEquals(expectedGameOver, myClass.isGameOver);
-        Assert.assertEquals(expectedDidAthletesWin, myClass.didAthletesWin);
-        // Verify the expected output is generated
-        // Here, you might need to provide the implementation of `endOfGame` and verify its behavior
-        // Assert.assertEquals(expectedOutput, systemOutRule.getLog());
+        athleteList.add(new Athlete("Test1", 1, 1, 1));
+        athleteList.add(new Athlete("Test2", 1, 1, 1));
+        oppositionAthletes.add(new Athlete("Test3", 1, 1, 1));
+        oppositionAthletes.add(new Athlete("Test", 1, 1, 1));
+        GameMechanics.oppositionAthletes = oppositionAthletes;
+        GameMechanics.athleteList = athleteList;
     }
 
     @Test
     public void testEndGameConditionNeitherDead() {
-        // Arrange
-        // Create a mock instance of the class under test
-        MyClass myClass = new MyClass(athleteList, oppositionAthletes);
+        setup();
+        GameMechanics gameMechanics = new GameMechanics();
         boolean expectedGameOver = false;
         boolean expectedDidAthletesWin = false;
+        GameMechanics.endGameCondition();
 
-        // Act
-        myClass.endGameCondition();
-
-        // Assert
-        Assert.assertEquals(expectedGameOver, myClass.isGameOver);
-        Assert.assertEquals(expectedDidAthletesWin, myClass.didAthletesWin);
-        // Verify that no output is generated
-        // Here, you might need to provide the implementation of `endOfGame` and verify its behavior
-        // Assert.assertEquals("", systemOutRule.getLog());
+        assertEquals(expectedGameOver, gameMechanics.isGameOver);
+        assertEquals(expectedDidAthletesWin, gameMechanics.didAthletesWin);
     }
 }
-}
+

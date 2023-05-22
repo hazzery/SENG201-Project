@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Daniel Smith
  */
 public class RandomEvent {
-    public int chance;
 
     public GameManager gameManager;
     public Athlete athlete;
@@ -16,8 +15,9 @@ public class RandomEvent {
         randomEvent();
     }
 
+    public int chance = ThreadLocalRandom.current().nextInt(0, 15);
     public void randomEvent() {
-        int chance = ThreadLocalRandom.current().nextInt(0, 15);
+
         if (chance < 10) {
             randomStatIncrease();
         } else if (chance >= 10 && chance <= 13) {
@@ -29,10 +29,11 @@ public class RandomEvent {
         }
     }
 
+    public int athleteIndex = ThreadLocalRandom.current().nextInt(0, GameManager.team.numActive());
+    public int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
+    public int statIncrease = ThreadLocalRandom.current().nextInt(10, 25);
     public void randomStatIncrease() {
-        int athleteIndex = ThreadLocalRandom.current().nextInt(0, GameManager.team.numActive());
-        int statIndex = ThreadLocalRandom.current().nextInt(0, 3);
-        int statIncrease = ThreadLocalRandom.current().nextInt(10, 25);
+
         if (statIndex == 0) {
             GameManager.team.getActive(athleteIndex).stamina += statIncrease + 10;
         } else if (statIndex == 1) {
