@@ -125,6 +125,8 @@ public class GameManager {
             byeWeek();
         gameHasBeenPlayed =  false;
         currentWeek++;
+        if (currentWeek > seasonLength)
+            WindowManager.showGameOverScreen();
     }
 
     /**
@@ -283,5 +285,9 @@ public class GameManager {
         GameManager.oppositionTeam = opposition;
         gameMechanics.playGame(currentWeek, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
         WindowManager.showMatchScreen();
+    }
+
+    public static void gameOver() {
+        WindowManager.showGameOverScreen();
     }
 }
