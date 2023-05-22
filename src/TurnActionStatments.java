@@ -10,6 +10,14 @@ import java.io.File;
  * @author Daniel Smith
  */
 public class TurnActionStatments{
+
+    public TurnActionStatments(){
+        initAttackNameReader();
+        initDefeatNameReader();
+        initHealNameReader();
+    }
+
+
     static private boolean attackScannerIsInitialised = false;
     static private Scanner attackScanner;
     static private Stack<String> attackNames;
@@ -34,7 +42,6 @@ public class TurnActionStatments{
     }
 
     public String getAttackName() {
-        initAttackNameReader();
         return attackNames.pop();
     }
 
@@ -61,7 +68,6 @@ public class TurnActionStatments{
     }
 
     public String getDefeatName() {
-        initDefeatNameReader();
         return defeatNames.pop();
     }
 
@@ -89,7 +95,6 @@ public class TurnActionStatments{
     }
 
     public String getHealName() {
-        initHealNameReader();
         return healNames.pop();
     }
 }

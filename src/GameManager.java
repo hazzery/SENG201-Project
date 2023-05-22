@@ -18,7 +18,6 @@ public class GameManager {
 
     public static PlayerTeam team;
 
-    private static boolean toTrain = false; //TODO SET to true if an athlete is to be trained
     public static boolean gameHasBeenPlayed = false;
 
     private static int bankBalance = 0;
@@ -122,7 +121,9 @@ public class GameManager {
     public static void nextWeek() {
         addFunds((int) (300 - 100 * isGameHard()));
         //TODO UPDATE FUNDS ON GUI
-        if (gameHasBeenPlayed ==  false){byeWeek();} 
+        if (!gameHasBeenPlayed)
+            byeWeek();
+        gameHasBeenPlayed =  false;
         currentWeek++;
     }
 
@@ -131,41 +132,34 @@ public class GameManager {
      */
     //TODO TEST THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static void byeWeek(){
-        // int result = JOptionPane.showOptionDialog(null,
-        //         "Bye Week",
-        //         "Would you like to recover all your athletes? or train one?",
-        //         JOptionPane.DEFAULT_OPTION,
-        //         JOptionPane.WARNING_MESSAGE,
-        //         null,
-        //         new String[]{"Train", "Recover all"},
-        //         null);
+         int result = JOptionPane.showOptionDialog(null,
+                 "Bye Week",
+                 "Would you like to recover all your athletes? or train one?",
+                 JOptionPane.DEFAULT_OPTION,
+                 JOptionPane.WARNING_MESSAGE,
+                 null,
+                 new String[]{"Train", "Recover all"},
+                 null);
 
-        // // Check which button was clicked and perform corresponding action
-        // switch (result) {
-        //     case 0:
-        //         toTrain = true;
-        //         JOptionPane.getRootFrame().dispose();
-        //         break;
-        //     case 1:
-        //         JOptionPane.getRootFrame().dispose();
-        //         break;	
-        // }
-
-        // if (toTrain){
-        //     Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
-        //     "Select an athlete to train", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
-        //     null, GameManager.team.getActives(), "Choose athlete");
-        //     athlete.trainAthlete();
-        //     //TODO ADD RELOAD CODE
-
-        // } else {
-        //     for (int i = 0; i < Team.TEAM_SIZE; i++) {
-        //         team.getActive(i).byeWeek();
-        //     }
-        // }
-        // RandomEvent randomEvent1 = new RandomEvent();
-        // randomEvent1.randomEvent();
-        return;
+         // Check which button was clicked and perform corresponding action
+         switch (result) {
+             case 0:
+                 Athlete athlete = (Athlete) JOptionPane.showInputDialog(null,
+                         "Select an athlete to train", "Swap Athlete", JOptionPane.PLAIN_MESSAGE,
+                         null, GameManager.team.getActives(), "Choose athlete");
+                 athlete.trainAthlete();
+                 JOptionPane.getRootFrame().dispose();
+                 break;
+             case 1:
+                 for (int i = 0; i < Team.TEAM_SIZE; i++) {
+                     team.getActive(i).byeWeek();
+                 }
+                 JOptionPane.getRootFrame().dispose();
+                 break;
+         }
+        RandomEvent rando = new RandomEvent();
+        rando.randomEvent();
+        WindowManager.reloadGameScreen();
     }
 
     /**

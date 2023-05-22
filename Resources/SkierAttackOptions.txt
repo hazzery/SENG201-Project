@@ -37,7 +37,7 @@ Ski on a giant hamster wheel for a never-ending downhill ride
 Unleash a squadron of trained squirrels to steal the other skier's poles
 Slide down the hill on a giant inflatable waterslide for a slippery advantage
 Attach a small wind turbine to the skis to generate extra speed
-Transform into a snowball and roll downhill to gain momentum
+was transform into a snowball and rolled uncontrollably off a cliff
 Strap on rocket-powered skis and blast off ahead
 Unleash a flock of trained penguins to distract the other skier
 Attach a parachute to catch a gust of wind and fly past
@@ -77,4 +77,4 @@ Ski on a giant hamster wheel for a never-ending downhill ride
 Unleash a squadron of trained squirrels to steal the other skier's poles
 Slide down the hill on a giant inflatable waterslide for a slippery advantage
 Attach a small wind turbine to the skis to generate extra speed
-Transform into a snowball and roll downhill to gain momentum
+was transform into a snowball and rolled uncontrollably off a cliff

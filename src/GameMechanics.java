@@ -75,7 +75,7 @@ public class GameMechanics {
     }
 
     /**
-     * This method is called by the {@link cmdInit} and {@link playGame} method when the user clicks on the start game action button.
+     * This method is called by the  {@link GameMechanics#playGame(int, ArrayList, Athlete[])} method when the user clicks on the start game action button.
      * by taing the parameter attackType it the calls the appropriate attack method.
      *
      * @param attackType
@@ -99,7 +99,7 @@ public class GameMechanics {
             }
         } else {
             // System.out.println("Opposition " + oppIndex + " is dead");
-            oppIndex++;
+//            oppIndex++;
             playTurn(attackType);
         }
         System.out.println("END OF ATTACK ATH " + athIndex + " " + oppIndex + "");
@@ -132,7 +132,7 @@ public class GameMechanics {
             }
         } else {
             // System.out.println("Athlete " + athIndex + " is dead");
-            athIndex++;
+//            athIndex++;
             oppositionPlayTurn();
         }
         System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
