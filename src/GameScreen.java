@@ -173,6 +173,12 @@ public class GameScreen extends JPanel {
         FooterPanel.add(nextWeekButton);
     }
 
+    public void reload() {
+        clubScreen.reload();
+        marketScreen.reload();
+        stadiumScreen.reload();
+    }
+
     public static void main(String[] args) {
         GameManager.initializeAthletes();
         GameManager.initializeItems();

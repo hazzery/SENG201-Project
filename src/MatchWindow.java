@@ -42,7 +42,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	public void turnAction(int index){
-		gameMechanics.guiButtonPress(index);
+		GameMechanics.guiButtonPress(index);
 		update();
 	}
 
@@ -112,8 +112,8 @@ public class MatchWindow extends JPanel {
 	}
 
 	private void update(){
-		playerTeamPanel.reload(gameMechanics.athleteList);
-		oppositionTeamPanel.reload(gameMechanics.oppositionAthletes);
+		playerTeamPanel.reload(GameMechanics.athleteList);
+		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
 	}
 
 	private void exitMatch(ActionEvent actionEvent) {

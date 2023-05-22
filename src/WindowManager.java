@@ -84,4 +84,8 @@ public class WindowManager {
         matchScreen = new MatchWindow();
     	setScreen(matchScreen);
     }
+
+    public static void reloadGameScreen() {
+        gameScreen.reload();
+    }
 }
