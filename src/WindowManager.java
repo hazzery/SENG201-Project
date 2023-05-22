@@ -16,6 +16,7 @@ public class WindowManager {
     private static TeamSelectScreen teamSelectScreen;
     static GameScreen gameScreen;
     private static MatchWindow matchScreen;
+    private static GameOverScreen gameOverScreen;
 
     /**
      * Initialises the main window
@@ -83,6 +84,14 @@ public class WindowManager {
     public static void showMatchScreen() {
         matchScreen = new MatchWindow();
     	setScreen(matchScreen);
+    }
+
+    /**
+     * Changes the current screen from the game screen to the game over screen
+     */
+    public static void showGameOverScreen() {
+        gameOverScreen = new GameOverScreen();
+        setScreen(gameOverScreen);
     }
 
     /**
