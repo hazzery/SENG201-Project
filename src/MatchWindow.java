@@ -5,9 +5,10 @@ import javax.swing.*;
 
 
 /**
- * DANIEL THIS ONE IS ON YOU TOO XOXOX
+ * Match Window, the window that displays the match and allows the user to play the match
  *
  * @author Daniel Smith
+ * @author Harrison Parkes
  */
 public class MatchWindow extends JPanel {
 	MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
@@ -41,6 +42,13 @@ public class MatchWindow extends JPanel {
 		setVisible(true);
 	}
 
+
+	/**
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn
+	 *
+	 * @param index the index parameter is used to determine which button was pressed
+	 *
+	 */
 	public void turnAction(int index){
 		GameMechanics.guiButtonPress(index);
 		update();
@@ -111,26 +119,47 @@ public class MatchWindow extends JPanel {
 		footerPanel.add(exitMatchButton);
 	}
 
+
+	/**
+	 * Updates the {@link PurchasablesShelf} panels
+	 */
 	private void update(){
 		playerTeamPanel.reload(GameMechanics.athleteList);
 		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
 	}
+
+	/**
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 3 representing the exit condition
+	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
+	 */
 
 	private void exitMatch(ActionEvent actionEvent) {
 		System.out.println("Exit Game");
 		turnAction(3);
 	}
 
+	/**
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 2 representing the heal condition
+	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
+	 */
 	private void heal(ActionEvent actionEvent) {
 		System.out.println("Heal");
 		turnAction(2);
 	}
 
+	/**
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 1 representing the heavy attack condition
+	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
+	 */
 	private void heavyAttack(ActionEvent actionEvent) {
 		System.out.println("Heavy Attack");
 		turnAction(1);
 	}
 
+	/**
+	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 0 representing the light attack condition
+	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
+	 */
 	private void lightAttack(ActionEvent actionEvent) {
 		System.out.println("Light Attack");
 		turnAction(0);

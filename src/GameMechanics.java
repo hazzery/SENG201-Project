@@ -18,17 +18,13 @@ public class GameMechanics {
     public static StadiumScreen stadiumScreen;
     public static MatchWindow matchWindow;
     public static TurnActionStatments turnActionStatments = new TurnActionStatments();
-
     public static ArrayList<Athlete> oppositionAthletes;
     public static ArrayList<Athlete> athleteList;
-
     public static int athIndex = 0;
     public static int oppIndex = 0;
     public static int currentRound;
-
     public static boolean isGameOver;
     public static boolean didAthletesWin;
-
     public static int chance = ThreadLocalRandom.current().nextInt(0,10);
 
     /**

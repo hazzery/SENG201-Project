@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * GameOverScreen is the display panel that shows the user their final score and inform them the game is over
+ * 
+ * @Author Harrison Parkes
+ */
 public class GameOverScreen extends JPanel {
     private final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
@@ -12,6 +18,9 @@ public class GameOverScreen extends JPanel {
         private JButton playAgainButton;
         private JButton exitButton;
 
+    /**
+     * Initialize the contents of the Game Over Screen.
+    */
     public GameOverScreen() {
         this.setLayout(new BorderLayout(0, 0));
 

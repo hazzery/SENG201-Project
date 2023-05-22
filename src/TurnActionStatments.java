@@ -5,12 +5,17 @@ import java.io.File;
 
 
 /**
- * DANIEL I HAVE ZERO CLUE WHAT THIS IS
+ * Turn action statments is a class that holds all the statments that are used when a turn action is performed
+ * This is to allow for easy presentation of the statments
  *
  * @author Daniel Smith
  */
 public class TurnActionStatments{
 
+    /**
+     * Instantiates a new Turn action statments and allows the statments to be read from the files
+     * 
+     */
     public TurnActionStatments(){
         initAttackNameReader();
         initDefeatNameReader();
@@ -41,6 +46,10 @@ public class TurnActionStatments{
         }
     }
 
+    /**
+     * Gets the attack statment.
+     * @return the attack statment 
+     */
     public String getAttackName() {
         return attackNames.pop();
     }
@@ -67,15 +76,20 @@ public class TurnActionStatments{
         }
     }
 
+    /**
+     * Gets the defeat statment.
+     * @return the defeat statment 
+     */
     public String getDefeatName() {
         return defeatNames.pop();
     }
 
+    
     static private boolean healScannerIsInitialised = false;
     static private Scanner healScanner;
     static private Stack<String> healNames;
 
-
+    
     private void initHealNameReader() {
         if (healScannerIsInitialised) return;
 
@@ -94,6 +108,10 @@ public class TurnActionStatments{
         }
     }
 
+    /**
+     * Gets the heal statment.
+     * @return the heal statment
+     */
     public String getHealName() {
         return healNames.pop();
     }
