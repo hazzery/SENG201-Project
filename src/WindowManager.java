@@ -85,6 +85,9 @@ public class WindowManager {
     	setScreen(matchScreen);
     }
 
+    /**
+     * Updates all the content on the game screen to reflect new changes in the game's state
+     */
     public static void reloadGameScreen() {
         gameScreen.reload();
     }

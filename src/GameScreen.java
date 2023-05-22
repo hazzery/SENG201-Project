@@ -173,6 +173,9 @@ public class GameScreen extends JPanel {
         FooterPanel.add(nextWeekButton);
     }
 
+    /**
+     * Refreshes all the shelves to show updated content
+     */
     public void reload() {
         clubScreen.reload();
         marketScreen.reload();
