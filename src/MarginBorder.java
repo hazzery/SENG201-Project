@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * MarginBorder is a simplified {@link CompoundBorder} that consists of a {@link LineBorder} and an {@link EmptyBorder}
+ * 
+ * @author Harrison Parkes
  */
 public class MarginBorder extends CompoundBorder {
 

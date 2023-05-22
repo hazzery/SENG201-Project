@@ -4,6 +4,8 @@
  * As the number of active athletes is fixed to 5, performing this action would exceed this action.
  * This exception allows for the {@link MarketScreen} to account for this and prompt the user to
  * pick an active athlete to place as a reserve to create room for the new athlete
+ * 
+ * @author Harrison Parkes
  */
 public class MustSwapReserveException extends RuntimeException {
 

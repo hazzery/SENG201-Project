@@ -15,23 +15,16 @@ import java.util.ArrayList;
 public class GameManager {
     private static int seasonLength;
     private static boolean hardMode;
-
     public static PlayerTeam team;
-
     public static boolean gameHasBeenPlayed = false;
-
     private static int bankBalance = 0;
     private static int currentWeek = 1;
-
     public static OppositionTeam oppositionTeam;
     public static RandomEvent randomEvent;
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
     private static final ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
-
-
-    //THESE NUMBERS MUST BE CHANGED BASED ON DIFFICULTY AND PROGRESSION IN SEASON
     public static int minimumStatValue;
     public static int maximumStatValue;
 
@@ -286,6 +279,11 @@ public class GameManager {
         WindowManager.showMatchScreen();
     }
 
+    /**
+     * Gameover method to be called when the game is over.
+     * This method will open the game over screen.
+     * 
+     */
     public static void gameOver() {
         WindowManager.showGameOverScreen();
     }

@@ -24,7 +24,9 @@ public abstract class GameScreenPanel extends JPanel {
     protected final GameScreen parent;
     private final GameScreen.Screen screenType;
 
-
+    /**
+     * Initialize the contents of the frame.
+     */
     protected void initialize() {
         this.setLayout(new BorderLayout(0, 0));
         this.setBorder(marginBorder);
@@ -59,6 +61,11 @@ public abstract class GameScreenPanel extends JPanel {
 
     }
 
+    /**
+     * Creates and initializes the Game Screen Panel with the given screen type and parent GameScreen
+     * @param screenType The type of screen that this panel is
+     * @param gameScreen The {@link GameScreen} that is the parent of this panel
+     */
     public GameScreenPanel(GameScreen.Screen screenType, GameScreen gameScreen) {
         this.screenType = screenType;
         this.parent = gameScreen;
