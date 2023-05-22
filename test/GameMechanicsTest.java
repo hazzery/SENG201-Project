@@ -76,7 +76,6 @@ public class GameMechanicsTest {
     @Test
     void healTest(){
         int i = 0;
-        int j = 0;
         double heal = (GameMechanics.athleteList.get(i).getStamina()/5) + (GameMechanics.athleteList.get(i).getDefence()/10);
         assertEquals(-1 * heal, GameMechanics.heal(i));
     }
