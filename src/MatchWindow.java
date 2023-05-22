@@ -71,7 +71,7 @@ public class MatchWindow extends JPanel {
 
 		gameOutputPanel = new JPanel();
 		gameOutputPanel.setBorder(marginBorder);
-		gameOutputPanel.setLayout(new BoxLayout(gameOutputPanel, BoxLayout.Y_AXIS));
+		gameOutputPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		mainPanel.add(gameOutputPanel);
 
 		ouputLabel = new JLabel("Game Output:");
