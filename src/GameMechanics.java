@@ -166,6 +166,7 @@ public class GameMechanics {
     /**
      * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods once the athletes or opposition turn has been completed.
      * This method checks that the game is not over by checking if either teams of athletes are completely defeated if true the {@link GameMechanics#endOfGame()} method is called.
+     * This method updates {@link GameMechanics#didAthletesWin}
      */
     public static void endGameCondition(){
         boolean deadAthletes = athleteList.stream().allMatch(obj -> obj.getCurrentHealth() <= 0);
@@ -191,7 +192,7 @@ public class GameMechanics {
      * This method is called by the {@link GameMechanics#endGameCondition()} method once the game is over.
      * This method with update the players athletes so that they are returned with full health but a reduced amount of stamina,
      * and will reward the player with a reward based on the difficulty of the game which is determined by the {@link GameMechanics#afterMatchReward()} method.
-     * This method will update {@link GameMechanics#athleteList}
+     * This method checks the {@link GameMechanics#didAthletesWin} boolean and to determine if the player won and then will update the {@link Athlete} objects in {@link GameMechanics#athleteList}
      */
     public static void endOfGame(){
         System.out.println();
@@ -238,7 +239,7 @@ public class GameMechanics {
 
 
     /**
-     * This method is called by the {@link endOfGame} method once the game is over, to provide the player with a reward based on the difficulty of the game.
+     * This method is called by the {@link GameMechanics#endOfGame()} method once the game is over, to provide the player with a reward based on the difficulty of the game.
      * @return the amount of money the player has earned based on the difficulty of the game and the round the player is on.
      */
     public static double afterMatchReward(){
@@ -250,8 +251,9 @@ public class GameMechanics {
     
 
     /**
-     * This method is called by the {@link playTurn} method once an attack has been completed to update the values of the Opposition.
-     * @param damage the amount of damage that has been delt to the opposition.
+     * This method is called by the {@link GameMechanics#playTurn(int)} method once an attack has been completed to update the values of the Opposition.
+     * This method updates {@link Athlete} objects in {@link GameMechanics#oppositionAthletes}
+     * @param damage the amount of damage that has been dealt to the opposition.
      */
     public static void updateOpposition(double damage){
         if (damage == 0){
@@ -273,8 +275,9 @@ public class GameMechanics {
     }
     
     /**
-     * This method is called by the {@link oppositionPlayTurn} method once an attack has been completed to update the values of the Athlete.
-     * @param damage is the value that the opposition has delt to the player.
+     * This method is called by the {@link GameMechanics#oppositionPlayTurn()} method once an attack has been completed to update the values of the Athlete.
+     * This mehtod will update the {@link Athlete} objects in {@link GameMechanics#athleteList}.
+     * @param damage is the value that the opposition has dealt to the player.
      */
     public static void updateAthlete(double damage){
         if (damage == 0){
@@ -296,40 +299,44 @@ public class GameMechanics {
     }
     
     /**
-     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of damage delt to the recipent.
-     * @param damage is the damage delt to the recipent.
+     * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of damage dealt to the recipient through a light attack.
+     * @param i the index of the attacker Athlete object in an arraylist
+     * @param j the index of the attacked Athlete object in a narraylist
+     * @return the damage that the attack will give
      */
     public static double attackLight(int i, int j){
         System.out.println("Light Attack");
         int chance = ThreadLocalRandom.current().nextInt(0, 10);
         if (chance >= 1){
             double factor1 = 100 / (5* (100 - athleteList.get(i).getStamina() + 1));
-            double factor2 = (athleteList.get(i).getOffence()/athleteList.get(j).getDefence() + 1) + 1;
+            double factor2 = (athleteList.get(i).getOffence()/oppositionAthletes.get(j).getDefence() + 1) + 1;
             return (factor1 * factor2 + ThreadLocalRandom.current().nextInt(15, 25));
         } else {
             return 0;
         }
         
     }
-   
+
     /**
-     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of damage delt to the recipent.
-     * @param damage is the damage delt to the recipent.
+     * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of damage dealt to the recipient through a heavy attack.
+     * @param i the index of the attacker Athlete object in an arraylist
+     * @param j the index of the attacked Athlete object in an arraylist
+     * @return the damage that the attack will give
      */
     public static double attackHeavy(int i, int j){
         System.out.println("Heavy Attack");
-        return 100;
-        // int chance = ThreadLocalRandom.current().nextInt(0, 10);
-        // if (chance > 6){
-        //     return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + athleteList.get(i).getStamina()) / 10) ;
-        // } else {
-        //     return 0;
-        // }
-    }   
+         int chance = ThreadLocalRandom.current().nextInt(0, 10);
+         if (chance > 6){
+             return ThreadLocalRandom.current().nextInt(30, 60) + ((athleteList.get(i).getOffence() + oppositionAthletes.get(i).getStamina()) / 10) ;
+         } else {
+             return 0;
+         }
+    }
 
     /**
-     * This method is called by the {@link playTurn} and {@link oppositionPlayTurn} methods to determine the amount of health delt to the recipent.
-     * @param damage is the health delt to the recipent.
+     * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of health to be received.
+     * @param i the index of the healee Athlete object in an arraylist
+     * @return the amount of health that the healee will give
      */
     public static double heal(int i){
         System.out.println("Heal Attack");
