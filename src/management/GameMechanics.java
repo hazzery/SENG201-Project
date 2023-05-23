@@ -97,7 +97,6 @@ public class GameMechanics {
      */
     public static void playTurn(int attackType){
         if (athIndex == 5 || oppIndex ==5){return;}
-       
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() > 0){
             System.out.println("Athlete " + athIndex + " attacks " + oppIndex + "");
             if (attackType == 0){
@@ -113,10 +112,8 @@ public class GameMechanics {
                 updateOpposition(damage);
             }
         } else {
-//            oppIndex++;
             playTurn(attackType);
         }
-        System.out.println("END OF ATTACK ATH " + athIndex + " " + oppIndex + "");
         endGameCondition();
         oppositionPlayTurn();
     }
@@ -129,8 +126,6 @@ public class GameMechanics {
         if (isGameOver){return;}
         if (athIndex == 5 || oppIndex ==5){return;}
         if (athleteList.get(athIndex).getCurrentHealth() > 0){
-            System.out.println("Opposition " + oppIndex + attackText.next() + athIndex + "");
-            
             int oppositionAttack = ThreadLocalRandom.current().nextInt(0, 50);
             if (oppositionAttack < 35){
                 double damage = attackLight(chance, oppIndex, athIndex);
@@ -145,10 +140,8 @@ public class GameMechanics {
                 updateAthlete(damage * GameManager.isGameHard());
             }
         } else {
-//          athIndex++;
             oppositionPlayTurn();
         }
-        System.out.println("END OF ATTACK OPP " + athIndex + " " + oppIndex + "");
         endGameCondition();
     }
 
@@ -159,12 +152,10 @@ public class GameMechanics {
      */
     public static void checkHealth(){
         if (athleteList.get(athIndex).getCurrentHealth() <= 0){
-            System.out.println("Athlete " + athIndex + " is dead");
             gameOutput("Athlete " + athleteList.get(athIndex).getName() + " was defeated as " + defeatText.next());
             athIndex++;
         }
         if (oppositionAthletes.get(oppIndex).getCurrentHealth() <= 0){
-            System.out.println("Opposition " + oppIndex + " is dead");
             gameOutput("Opposition " + oppositionAthletes.get(oppIndex).getName() + " was defeated as " + defeatText.next());
             oppIndex++;
         }
@@ -205,13 +196,10 @@ public class GameMechanics {
     public static void endOfGame(){
         System.out.println();
         if (didAthletesWin){
-            System.out.println("You earned $" + afterMatchReward() + " for winning");
             JOptionPane.showMessageDialog(null, "You earned $" + afterMatchReward() + " for winning, Your balance is now: " + GameManager.getBankBalance());
-            System.out.println("Your balance is now: " + GameManager.getBankBalance());
 
         } else {
-            System.out.println("Try Again next time xoxo");
-            JOptionPane.showMessageDialog(null, "Try Again next time xoxo");
+            JOptionPane.showMessageDialog(null, "Try Again next time!!");
         }
 
         for (int i = 0; i < athleteList.size(); i++){
@@ -263,11 +251,9 @@ public class GameMechanics {
         if (damage >= 0){  
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
             if (oppositionAthletes.get(oppIndex).current_health < 0){ oppositionAthletes.get(oppIndex).current_health = 0; }
-            System.out.println("Opposition " + oppIndex + " takes " + damage + " damage" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             oppGameOutput("The Opposition Athlete " + oppositionAthletes.get(oppIndex).getName() + " " + attackText.next() + " so " + damage + " damage was dealt" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
         } else {
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
-            System.out.println("Athlete " + athIndex + " heals " + damage + " health" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             teamGameOutput("Your Athlete " + athleteList.get(athIndex).getName() + " " + healText.next() + " so " + damage + " damage was reversed" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         }
@@ -285,12 +271,10 @@ public class GameMechanics {
         if (damage >= 0){
             athleteList.get(athIndex).current_health = (int) (athleteList.get(athIndex).getCurrentHealth() - damage);
             if (athleteList.get(athIndex).current_health < 0){ athleteList.get(athIndex).current_health = 0; }
-            System.out.println("Athlete " + athIndex + " takes " + damage + " damage" + ", Health: " + athleteList.get(athIndex).getCurrentHealth() + "");
             teamGameOutput(" " + attackText.next() + "so your Athlete: " + athleteList.get(athIndex).getName() + " was dealt " + damage + ", Health is now: " + athleteList.get(athIndex).getCurrentHealth() + "");
 
         } else {
             oppositionAthletes.get(oppIndex).current_health = (int) (oppositionAthletes.get(oppIndex).getCurrentHealth() - damage);
-            System.out.println("Opposition " + oppIndex + " heals " + damage + " health" + ", Health: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
             oppGameOutput(" " + healText.next() + " so the Opposition Athlete: " + oppositionAthletes.get(oppIndex).getName() +  " had "+ damage +" damage was reversed" + ", Health is now: " + oppositionAthletes.get(oppIndex).getCurrentHealth() + "");
 
         }
@@ -306,7 +290,6 @@ public class GameMechanics {
      * @return the damage that the attack will give
      */
     public static double attackLight(int chance, int i, int j){
-        System.out.println("Light Attack");
         if (chance >= 1){
             double factor1 = 100 / (5* (100 - athleteList.get(i).getStamina() + 1));
             double factor2 = (athleteList.get(i).getOffence()/oppositionAthletes.get(j).getDefence() + 1) + 1;
@@ -326,9 +309,8 @@ public class GameMechanics {
      * @return the damage that the attack will give
      */
     public static double attackHeavy(int chance, int i, int j){
-        System.out.println("Heavy Attack");
          if (chance > 6){
-             return 5 * chance + 20 + ((athleteList.get(i).getOffence() + oppositionAthletes.get(i).getStamina()) / 10) ;
+             return 5 * chance + 20 + ((athleteList.get(i).getOffence() + oppositionAthletes.get(j).getDefence()) / 10) ;
          } else {
              return 0;
          }
@@ -340,7 +322,6 @@ public class GameMechanics {
      * @return the amount of health that the athlete will receive
      */
     public static double heal(int i){
-        System.out.println("Heal Attack");
         double heal = (athleteList.get(i).getStamina()/5) + (athleteList.get(i).getDefence()/10);
         return -1*heal;
     }
