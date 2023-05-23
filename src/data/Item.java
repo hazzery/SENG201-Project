@@ -27,6 +27,7 @@ public class Item implements Purchasable {
     /**
 	 * Creates an item with the given stats
 	 *
+     * @param name The name of the item
      * @param statType The stat in which consuming this item improves
      * @param improvementAmount The amount in which consuming this item improves the stat
 	 */

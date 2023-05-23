@@ -92,6 +92,9 @@ public class TeamPanel extends JPanel {
         return team;
     }
 
+    /**
+     * Reload the team panel to reflect any changes made to the team
+     */
     public void reload() {
         offenceLabel.setText("Offence: " + String.format("%.1f", team.getAverageOffence()));
         defenceLabel.setText("Defence: " + String.format("%.1f", team.getAverageDefence()));

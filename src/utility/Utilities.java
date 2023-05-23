@@ -10,6 +10,7 @@ public class Utilities {
      * Checks to see if the provided string meets the criteria for a valid name
      * Valid names must be between 3 and 15 characters long and contain only letters and numbers
      * @param name the name to validate
+     * @param allowSpaces {@code true} to allow spaces in the name, {@code false} to not allow spaces
      * @throws IllegalArgumentException if the name is invalid
      */
     public static void validateName(String name, boolean allowSpaces) throws IllegalArgumentException{

@@ -66,5 +66,8 @@ public abstract class GameScreenPanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Should reload all the content onn the panel  to reflect any changes that have been made
+     */
     public abstract void reload();
 }

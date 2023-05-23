@@ -299,6 +299,8 @@ public class GameMechanics {
     
     /**
      * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of damage dealt to the recipient through a light attack.
+     *
+     * @param chance the chance that the attack will be successful
      * @param i the index of the attacker Athlete object in an arraylist
      * @param j the index of the attacked Athlete object in an arraylist
      * @return the damage that the attack will give
@@ -317,6 +319,8 @@ public class GameMechanics {
 
     /**
      * This method is called by the {@link GameMechanics#playTurn(int)} and {@link GameMechanics#oppositionPlayTurn()} methods to determine the amount of damage dealt to the recipient through a heavy attack.
+     *
+     * @param chance the chance of the attack hitting
      * @param i the index of the attacker Athlete object in an arraylist
      * @param j the index of the attacked Athlete object in an arraylist
      * @return the damage that the attack will give

@@ -1,11 +1,6 @@
 package data;
-import java.io.FileNotFoundException;
 import management.GameManager;
-import java.util.Scanner;
-import java.util.Stack;
-import java.io.File;
-
-
+import utility.NameFileReader;
 
 
 /**
@@ -16,16 +11,14 @@ import java.io.File;
  * @author Harrison Parkes
  */
 public class OppositionTeam extends Team {
-
-    private static boolean nameScannerIsInitialised = false;
-    private static Stack<String> oppositionNames;
+    private static final NameFileReader nameReader = new NameFileReader("Resources/OppositionNames.txt");
 
     /**
      * Instantiates a new opposition with random {@link Athlete}s and a name from the list of opposition names
      */
     public OppositionTeam() {
         this("Unnamed team");
-        this.name = oppositionNames.pop();
+        this.name = nameReader.next();
     }
 
     /**
@@ -34,7 +27,6 @@ public class OppositionTeam extends Team {
      */
     public OppositionTeam(String name) {
         super(name);
-        this.initOppositionNameReader();
         for (int i = 0; i < TEAM_SIZE; i++) {
             Athlete athlete = new Athlete();
 
@@ -63,29 +55,6 @@ public class OppositionTeam extends Team {
     @Override
     public Athlete[] getAthletes() {
         return actives.toArray(new Athlete[0]);
-    }
-
-    /**
-     * Runs a scanner to read the opposition names from the opposition team names file
-     * and stores them in a stack
-     */
-    private void initOppositionNameReader() {
-        if (nameScannerIsInitialised) return;
-
-        oppositionNames = new Stack<>();
-        try {
-            File myObj = new File("Resources/OppositionNames.txt");
-            Scanner nameScanner = new Scanner(myObj);
-
-            while (nameScanner.hasNextLine())
-                oppositionNames.push(nameScanner.nextLine());
-
-            nameScanner.close();
-            nameScannerIsInitialised = true;
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     /**

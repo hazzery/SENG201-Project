@@ -184,6 +184,10 @@ public class GameScreen extends JPanel {
         stadiumScreen.reload();
     }
 
+    /**
+     * Launch the application straight into the GameScreen
+     * Skips the team configuration screen
+     */
     public static void main(String[] args) {
         GameManager.initializeAthletes();
         GameManager.initializeItems();

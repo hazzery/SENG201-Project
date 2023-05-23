@@ -105,9 +105,18 @@ public class GameManager {
         return seasonLength;
     }
 
+    /**
+     * Gets all the items in the player's inventory
+     * @return An array of all the items in the player's inventory
+     */
     public static Item[] getItems() {
         return items.toArray(new Item[0]);
     }
+
+    /**
+     * Returns a stream of all the user's items
+     * @return a stream of all the user's items
+     */
     public static Stream<Item> itemStream() {
         return items.stream();
     }
@@ -116,9 +125,10 @@ public class GameManager {
      * Increments the current week by one
      */
     public static void nextWeek() {
-        if (currentWeek > seasonLength)
+        if (currentWeek >= seasonLength) {
             WindowManager.showGameOverScreen();
-
+            return;
+        }
         addFunds((int) (300 - 100 * isGameHard()));
         if (WindowManager.gameScreen != null)
             WindowManager.gameScreen.updateTeamInfo();

@@ -22,6 +22,11 @@ public class PurchasablesShelf extends JPanel {
 
     MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
+    /**
+     * Initialise a new "shelf" to display a group of {@link Purchasable}s
+     * @param purchasables All purchasables to show on the shelf
+     * @param shelfName A name for the "shelf" to display next to the {@link PurchasablePanel}s
+     */
     public PurchasablesShelf(Purchasable[] purchasables, String shelfName) {
         this(purchasables, shelfName, null, null);
     }

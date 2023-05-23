@@ -1,13 +1,24 @@
 package utility;
-
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Stack;
 import java.io.File;
 
+
+/**
+ * NameFileReader is a class that reads names from a file
+ * These files are used to generate names for {@link data.Item}, {@link data.Athlete}, and {@link data.Team} objects
+ * As well as {@link management.GameMechanics} attack/defeat/heal messages
+ *
+ * @author Harrison Parkes
+ */
 public class NameFileReader {
     private final Stack<String> names;
 
+    /**
+     * Initialise a new NameFileReader
+     * @param fileName The name of the file to read names from
+     */
     public NameFileReader(String fileName) {
         names = new Stack<>();
         try {
@@ -23,6 +34,10 @@ public class NameFileReader {
         }
     }
 
+    /**
+     * Get the next name from the file
+     * @return A name from the file
+     */
     public String next() {
         return names.pop().trim();
     }
