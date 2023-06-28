@@ -15,17 +15,21 @@ import java.util.Map;
 public class Athlete implements Purchasable {
     private final String name;
     private String nickName;
-    public int stamina;
-    public int offence;
-    public int defence;
-    public int current_health;
-    public boolean isInjured = false;
+    private int stamina;
+    private int offence;
+    private int defence;
+    private int current_health;
+    private boolean isInjured = false;
 
     static private NameFileReader nameReader = new NameFileReader("Resources/AthleteNames.txt");
 
     ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
 
-    /**
+        public boolean getInjury() {
+                return this.isInjured;
+        }
+
+        /**
 	 * Represents the stats of an athlete
 	 */
     public enum StatType {
@@ -72,6 +76,15 @@ public class Athlete implements Purchasable {
     @Override
     public String getName() {
         return this.nickName;
+    }
+
+    public int getStat(StatType stat) {
+        return switch (stat) {
+            case STAMINA -> this.stamina;
+            case OFFENCE -> this.offence;
+            case DEFENCE -> this.defence;
+            case CURRENT_HEALTH -> this.current_health;
+        };
     }
 
     /**
@@ -165,36 +178,34 @@ public class Athlete implements Purchasable {
     }
 
     /**
+     * Improves the specified stat by the specified amount
+     *
+     * @param statType The stat type to improve
+     * @param improvementAmount The amount to improve the stat by
+     *
+     * @throws IllegalStateException if the statType is not one of the above
+     */
+    public void improveStat(StatType statType, int improvementAmount) {
+        switch (statType) {
+            case STAMINA -> this.stamina += improvementAmount;
+            case OFFENCE -> this.offence += improvementAmount;
+            case DEFENCE -> this.defence += improvementAmount;
+            case CURRENT_HEALTH -> this.current_health += improvementAmount;
+
+            default -> throw new IllegalStateException("Unexpected value: " + statType);
+        }
+
+        for (PurchasablePanel panel : purchasablePanels)
+            panel.update(statType.toString(), String.valueOf(getStat(statType)));
+    }
+
+    /**
      * Applies an item to the athlete,
      * increasing the athlete's stats by the amount specified by the item
      * @param item The item to apply to the athlete
      */
     public void applyItem(Item item) {
-        String newStatValue;
-
-        switch (item.getStatType()) {
-            case STAMINA -> {
-                this.stamina += item.getImprovementAmount();
-                newStatValue = String.valueOf(this.stamina);
-            }
-            case OFFENCE ->  {
-                this.offence += item.getImprovementAmount();
-                newStatValue = String.valueOf(this.offence);
-            }
-            case DEFENCE ->  {
-                this.defence += item.getImprovementAmount();
-                newStatValue = String.valueOf(this.defence);
-            }
-            case CURRENT_HEALTH ->  {
-                this.current_health += item.getImprovementAmount();
-                newStatValue = String.valueOf(this.current_health);
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + item.getStatType());
-        }
-
-        for (PurchasablePanel panel : purchasablePanels) {
-            panel.update(item.getStatType().name().toLowerCase(), newStatValue);
-        }
+        improveStat(item.getStatType(), item.getImprovementAmount());
     }
 
     /**
@@ -229,5 +240,14 @@ public class Athlete implements Purchasable {
         this.offence += 25;
         this.defence += 25;
         System.out.println("Trained: " + this.name );
+    }
+
+    /**
+     * Injures the athlete, setting their health to 0
+     */
+    public void injure() {
+        this.isInjured = true;
+        this.current_health = 0;
+        this.stamina = 0;
     }
 }

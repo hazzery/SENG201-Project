@@ -100,13 +100,12 @@ class AthleteTest {
     @Test
     void byeWeek() {
         Athlete athlete = new Athlete("Test", 80, 1, 1);
-        athlete.isInjured = true;
-        athlete.current_health = 0;
+        athlete.injure();
         athlete.byeWeek();
 
         assertEquals(100, athlete.getStamina());
-        assertEquals(100, athlete.current_health);
-        assertFalse(athlete.isInjured);
+        assertEquals(100, athlete.getCurrentHealth());
+        assertFalse(athlete.getInjury());
 }
 
     @Test
