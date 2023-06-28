@@ -89,7 +89,7 @@ public class Athlete implements Purchasable {
 
     /**
      * Gets a dictionary mapping each of the athletes stat value names to their value
-     * @return A map of each of the athletes stat value names and its  value
+     * @return A map of each athlete stat value name and its value
      */
     @Override
     public Map<String, String> getStats() {
@@ -234,7 +234,7 @@ public class Athlete implements Purchasable {
     }
 
     /**
-     * Improves the athlete's offence and defense values by 25
+     * Improves the athlete's offence and defence values by 25
      */
     public void trainAthlete() {
         this.offence += 25;
