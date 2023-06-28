@@ -21,7 +21,7 @@ public class Athlete implements Purchasable {
     private int current_health;
     private boolean isInjured = false;
 
-    static private NameFileReader nameReader = new NameFileReader("Resources/AthleteNames.txt");
+    static private final NameFileReader nameReader = new NameFileReader("Resources/AthleteNames.txt");
 
     ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
 

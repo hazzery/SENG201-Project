@@ -13,7 +13,7 @@ public class Item implements Purchasable {
     private final String name;
     private final Athlete.StatType statType;
     private final int improvementAmount;
-    private static NameFileReader nameReader = new NameFileReader("Resources/ItemNames.txt");
+    private static final NameFileReader nameReader = new NameFileReader("Resources/ItemNames.txt");
 
     /**
      * Creates am item with randomised stats
