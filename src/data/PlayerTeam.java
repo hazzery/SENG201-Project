@@ -1,9 +1,9 @@
 package data;
-import java.util.stream.Stream;
 
-import gui.DisplayPanel;
 import management.GameManager;
+
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 
 

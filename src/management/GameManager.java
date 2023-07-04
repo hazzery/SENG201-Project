@@ -1,13 +1,10 @@
 package management;
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import javax.swing.JOptionPane;
 
 import data.*;
-import utility.MustSwapReserveException;
-
 import java.util.ArrayList;
+import java.util.stream.Stream;
+import javax.swing.JOptionPane;
+import utility.MustSwapReserveException;
 
 /**
  * GameManager is a static utility class in charge of the game state.

@@ -4,8 +4,7 @@ import gui.DisplayPanel;
 import java.util.Map;
 import java.util.Arrays;
 import java.util.ArrayList;
-import gui.TeamPanel;
-
+import java.util.stream.Collectors;
 
 /**
  * Team is the abstract base class behind {@link PlayerTeam} and {@link OppositionTeam}.
