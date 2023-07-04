@@ -79,7 +79,7 @@ public class Item implements Purchasable {
 
     /**
      * Gets a dictionary mapping the athlete stat type which it boosts, to the amount it increases the stat
-     * @return A map which is used to display information on a {@link PurchasablePanel}
+     * @return A map which is used to display information on a {@link DisplayPanel}
      */
     @Override
     public Map<String, String> getStats() {

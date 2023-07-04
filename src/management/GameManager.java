@@ -33,7 +33,7 @@ public class GameManager {
     public static int maximumStatValue;
 
     /**
-     * Fills the athletes array with {@code NUM_ALL_ATHLETES} random athletes
+     * Fills the athlete array with {@code NUM_ALL_ATHLETES} random athletes
      */
     public static void initializeAthletes() {
         for (int i = 0; i < NUM_ALL_ATHLETES; i++)
@@ -41,7 +41,7 @@ public class GameManager {
     }
 
     /**
-     * Fills the items array with {@code NUM_ALL_ITEMS} random items
+     * Fills the item array with {@code NUM_ALL_ITEMS} random items
      */
     public static void initializeItems() {
         for (int i = 0; i < NUM_ALL_ITEMS; i++)

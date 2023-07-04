@@ -28,7 +28,7 @@ public class ClubScreen extends GameScreenPanel {
     protected void initialize() {
         super.initialize();
 
-        // Indentation of components below shows hierarchy of elements on the screen
+        // Indentation of the components below shows hierarchy of elements on the screen
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(marginBorder);
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
