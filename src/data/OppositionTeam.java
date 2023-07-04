@@ -32,8 +32,10 @@ public class OppositionTeam extends Team {
             Athlete athlete = new Athlete();
 
             //Crude State increase based on difficulty
-            athlete.offence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
-            athlete.defence += 10 + GameManager.currentWeek() * GameManager.isGameHard();
+            athlete.improveStat(Athlete.StatType.OFFENCE, (int)
+                            (10 + GameManager.currentWeek() * GameManager.isGameHard()));
+            athlete.improveStat(Athlete.StatType.DEFENCE, (int)
+                            (10 + GameManager.currentWeek() * GameManager.isGameHard()));
             //Daniel this almost made me cry why did you make all the variables public
 
             actives.add(athlete);
