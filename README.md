@@ -12,9 +12,9 @@ Eclipse is the most difficult IDE to import this project into. The following ste
 2. Open Eclipse
 3. Select `File` -> `Import...`
    1. `General` -> `Projects from Folder or Archive`
-5. Click `Next`
-6. Click `Directory` and select the folder containing the extracted files
-7. Click `Finish`
+4. Click `Next`
+5. Click `Directory` and select the folder containing the extracted files
+6. Click `Finish`
 
 ## Building the project
 
