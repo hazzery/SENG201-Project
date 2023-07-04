@@ -14,7 +14,7 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class StadiumScreen extends GameScreenPanel {
-    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
     private TeamPanel playerTeam;
     private OppositionTeam[] opponents;

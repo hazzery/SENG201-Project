@@ -15,7 +15,7 @@ import data.Item;
  * @author Harrison Parkes
  */
 public class ClubScreen extends GameScreenPanel {
-    MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
+    final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
     private PurchasablesShelf activesShelf;
     private PurchasablesShelf reservesShelf;

@@ -27,7 +27,7 @@ public class GameManager {
     public static RandomEvent randomEvent;
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
-    public static ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
+    public static final ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
     private static final ArrayList<Item> items = new ArrayList<>(NUM_ALL_ITEMS);
     public static int minimumStatValue;
     public static int maximumStatValue;

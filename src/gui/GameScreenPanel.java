@@ -12,7 +12,7 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public abstract class GameScreenPanel extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
     protected JPanel contentPanel;
     protected final GameScreen parent;
     private final GameScreen.Screen screenType;

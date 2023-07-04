@@ -15,7 +15,7 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class GameScreen extends JPanel {
-    MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
+    final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
 
     private JPanel teamInfoPanel;
