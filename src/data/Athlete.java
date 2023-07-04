@@ -1,7 +1,7 @@
 package data;
 import java.util.concurrent.ThreadLocalRandom;
 import utility.NameFileReader;
-import gui.PurchasablePanel;
+import gui.DisplayPanel;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class Athlete implements Purchasable {
 
     static private final NameFileReader nameReader = new NameFileReader("Resources/AthleteNames.txt");
 
-    ArrayList<PurchasablePanel> purchasablePanels = new ArrayList<>();
+    final ArrayList<DisplayPanel> displayPanels = new ArrayList<>();
 
         public boolean getInjury() {
                 return this.isInjured;
@@ -195,7 +195,7 @@ public class Athlete implements Purchasable {
             default -> throw new IllegalStateException("Unexpected value: " + statType);
         }
 
-        for (PurchasablePanel panel : purchasablePanels)
+        for (DisplayPanel panel : displayPanels)
             panel.update(statType.toString(), String.valueOf(getStat(statType)));
     }
 
@@ -212,8 +212,8 @@ public class Athlete implements Purchasable {
      * Registers a purchasable panel as a listener for when the athlete's stats change
      * @param panel The panel to register as a listener
      */
-    public void registerPanel(PurchasablePanel panel) {
-        purchasablePanels.add(panel);
+    public void registerPanel(DisplayPanel panel) {
+        displayPanels.add(panel);
     }
 
     /**

@@ -1,19 +1,24 @@
 package data;
+import gui.DisplayPanel;
+
+import java.util.Map;
+import java.util.Arrays;
 import java.util.ArrayList;
 import gui.TeamPanel;
 
 
 /**
- * Team is the abstract base class behind {@link PlayerTeam} and {@link OppositionTeam}
- * It provides a common interface for use with {@link TeamPanel}
+ * Team is the abstract base class behind {@link PlayerTeam} and {@link OppositionTeam}.
  *
  * @author Harrison Parkes
  */
-public abstract class Team {
+public abstract class Team implements Displayable{
     public static final int TEAM_SIZE = 5;
 
     protected String name;
     protected final ArrayList<Athlete> actives;
+
+    private final ArrayList<DisplayPanel> displayPanels = new ArrayList<>();
 
     /**
      * Instantiates a new team with the provided name
@@ -30,6 +35,7 @@ public abstract class Team {
 	 *
 	 * @return The team's name
 	 */
+    @Override
     public String getName() {
         return this.name;
     }
@@ -83,5 +89,22 @@ public abstract class Team {
      */
     public double getDifficulty() {
         return (this.getAverageOffence() + this.getAverageDefence()) / 2;
+    }
+
+    protected double averageStat(Athlete.StatType stat) {
+        return this.actives.stream().mapToInt(athlete -> athlete.getStat(stat)).average().orElse(0);
+    }
+
+    @Override
+    public Map<String, String> getStats() {
+        return Arrays.stream(Athlete.StatType.values())
+                        .collect(Collectors.toMap(
+                                        String::valueOf,
+                                        value -> String.valueOf(averageStat(value))));
+    }
+
+    @Override
+    public void registerPanel(DisplayPanel panel) {
+        displayPanels.add(panel);
     }
 }

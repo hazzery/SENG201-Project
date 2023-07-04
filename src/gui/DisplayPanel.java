@@ -1,39 +1,39 @@
 package gui;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+
+import data.Displayable;
 import data.Purchasable;
 import java.util.Map;
 import javax.swing.*;
-import data.Athlete;
 import java.awt.*;
 
 
 /**
- * PurchasablePanel is a display panel used to provide a visual representation of a {@link Purchasable} object
+ * PurchasablePanel is a display panel used to provide a visual representation of a {@link data.Displayable} object
  *
  * @author Harrison Parkes
  */
-public class PurchasablePanel extends JPanel {
+public class DisplayPanel extends JPanel {
     private final HashMap<String, JLabel> statLabels;
-    private final Purchasable purchasable;
+    private final Displayable displayable;
 
     private boolean hasButton = false;
 
     /**
-     * Initialise a new panel to provide a visual representation of a {@link Purchasable}
-     * @param purchasable The {@link Purchasable} to represent
+     * Initialise a new panel to provide a visual representation of a {@link Displayable}
+     * @param displayable The {@link Displayable} to represent
      */
-    public PurchasablePanel(Purchasable purchasable) {
-        this.purchasable = purchasable;
+    public DisplayPanel(Displayable displayable) {
+        this.displayable = displayable;
 
-        if (purchasable instanceof Athlete athlete)
-            athlete.registerPanel(this);
+        displayable.registerPanel(this);
 
         this.setLayout(new GridLayout(0, 1, 0, 0));
         MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
         this.setBorder(marginBorder);
 
-        JLabel nameLabel = new JLabel(purchasable.getName());
+        JLabel nameLabel = new JLabel(displayable.getName());
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         nameLabel.setOpaque(true);
         nameLabel.setBackground(Color.LIGHT_GRAY);
@@ -41,7 +41,7 @@ public class PurchasablePanel extends JPanel {
 
         statLabels = new HashMap<>();
 
-        for (Map.Entry<String, String> entry : purchasable.getStats().entrySet()) {
+        for (Map.Entry<String, String> entry : displayable.getStats().entrySet()) {
             statLabels.put(entry.getKey(), new JLabel(entry.getValue() + ' ' + entry.getKey()));
             statLabels.get(entry.getKey()).setHorizontalAlignment(SwingConstants.CENTER);
             this.add(statLabels.get(entry.getKey()));
@@ -81,8 +81,8 @@ public class PurchasablePanel extends JPanel {
      * Gets the {@link Purchasable} that this panel represents.
      * @return the {@link Purchasable} that this panel represents
      */
-    public Purchasable getPurchasable() {
-        return purchasable;
+    public Displayable getDisplayable() {
+        return displayable;
     }
 
     /**
@@ -100,6 +100,6 @@ public class PurchasablePanel extends JPanel {
      */
     @Override
     public String toString() {
-        return "PurchasablePanel {" + purchasable + "}  ";
+        return "PurchasablePanel {" + displayable + "}  ";
     }
 }

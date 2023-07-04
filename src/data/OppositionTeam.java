@@ -1,4 +1,5 @@
 package data;
+import gui.DisplayPanel;
 import management.GameManager;
 import utility.NameFileReader;
 

@@ -1,6 +1,5 @@
 package data;
-import gui.PurchasablePanel;
-import java.util.Map;
+import gui.DisplayPanel;
 
 
 /**
@@ -12,33 +11,21 @@ import java.util.Map;
  *     <li>An initial purchase price, and</li>
  *     <li>A resale price</li>
  * </ul>
- * This allows the object to be represented on a {@link PurchasablePanel} so it can be displayed on the GUI
+ * This allows the object to be represented on a {@link DisplayPanel} so it can be displayed on the GUI
  *
  * @author Harrison Parkes
  */
-public interface Purchasable {
+public interface Purchasable extends Displayable {
 
-    /**
-     * Purchasable objects must have a name so the user knows what they are purchasing
-     * @return A name for the object
-     */
-    String getName();
+        /**
+         * Gets the price the object should cost when purchased at the market
+         * @return The price the object should initially cost
+         */
+        int getContractPrice();
 
-    /**
-     * A map describing the characteristics of the object
-     * @return A map from characteristic to its value
-     */
-    Map<String, String> getStats();
-
-    /**
-     * Gets the price the object should cost when purchased at the market
-     * @return The price the object should initially cost
-     */
-    int getContractPrice();
-
-    /**
-     * Gets the value the user can get back when selling the object back to the market
-     * @return The resale price of the object
-     */
-    int getSellBackPrice();
+        /**
+         * Gets the value the user can get back when selling the object back to the market
+         * @return The resale price of the object
+         */
+        int getSellBackPrice();
 }

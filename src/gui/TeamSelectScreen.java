@@ -115,8 +115,8 @@ public class TeamSelectScreen extends JPanel {
      * @param event An {@link ActionEvent} containing information about which button called the handler
      */
     private void selectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayPanel panel = (DisplayPanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         if (bankBalance < athlete.getContractPrice()) {
             JOptionPane.showMessageDialog(this, "You cannot afford this athlete");
@@ -155,8 +155,8 @@ public class TeamSelectScreen extends JPanel {
      * @param event The action event that triggered this method
      */
     private void unselectAthlete(ActionEvent event) {
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Athlete athlete = (Athlete) panel.getPurchasable();
+        DisplayPanel panel = (DisplayPanel) ((JButton) event.getSource()).getParent();
+        Athlete athlete = (Athlete) panel.getDisplayable();
 
         bankBalance += athlete.getContractPrice();
         bankBalanceLabel.setText("You Have: $" + bankBalance);

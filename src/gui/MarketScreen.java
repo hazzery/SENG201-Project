@@ -59,8 +59,8 @@ public class MarketScreen extends GameScreenPanel {
     private void purchase(ActionEvent event)  {
         System.out.println("purchase");
 
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Purchasable purchasable = panel.getPurchasable();
+        DisplayPanel panel = (DisplayPanel) ((JButton) event.getSource()).getParent();
+        Purchasable purchasable = (Purchasable) panel.getDisplayable();
 
         boolean shouldReserve = false;
         if (purchasable instanceof Athlete athlete) {
@@ -102,8 +102,8 @@ public class MarketScreen extends GameScreenPanel {
      */
     private void sell(ActionEvent event) {
         System.out.println("sell");
-        PurchasablePanel panel = (PurchasablePanel) ((JButton) event.getSource()).getParent();
-        Purchasable purchasable = panel.getPurchasable();
+        DisplayPanel panel = (DisplayPanel) ((JButton) event.getSource()).getParent();
+        Purchasable purchasable = (Purchasable) panel.getDisplayable();
 
         try {
             GameManager.sell(purchasable);

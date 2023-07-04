@@ -1,7 +1,7 @@
 package data;
 import java.util.concurrent.ThreadLocalRandom;
 import utility.NameFileReader;
-import gui.PurchasablePanel;
+import gui.DisplayPanel;
 import java.util.*;
 
 
@@ -14,6 +14,7 @@ public class Item implements Purchasable {
     private final Athlete.StatType statType;
     private final int improvementAmount;
     private static final NameFileReader nameReader = new NameFileReader("Resources/ItemNames.txt");
+    private final ArrayList<DisplayPanel> displayPanels = new ArrayList<>();
 
     /**
      * Creates am item with randomised stats
@@ -83,6 +84,11 @@ public class Item implements Purchasable {
     @Override
     public Map<String, String> getStats() {
         return Map.of(statType.name(), String.valueOf(improvementAmount));
+    }
+
+    @Override
+    public void registerPanel(DisplayPanel panel) {
+        displayPanels.add(panel);
     }
 
     /**
