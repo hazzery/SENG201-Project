@@ -1,6 +1,10 @@
 package gui;
+import data.Displayable;
 import data.OppositionTeam;
+import data.Purchasable;
+import data.Team;
 import management.GameManager;
+import utility.HTMLString;
 
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -16,7 +20,7 @@ import java.awt.*;
 public class StadiumScreen extends GameScreenPanel {
     final MarginBorder marginBorder = new MarginBorder(0, Color.BLACK, 5);
 
-    private TeamPanel playerTeam;
+    private DisplayPanel playerTeam;
     private OppositionTeam[] opponents;
 
     /**
@@ -35,20 +39,24 @@ public class StadiumScreen extends GameScreenPanel {
         playerTeamPanel.setBorder(marginBorder);
         contentPanel.add(playerTeamPanel);
 
-        playerTeam = new TeamPanel(GameManager.team);
+        playerTeam = new DisplayPanel(GameManager.team);
         playerTeamPanel.add(playerTeam);
 
-        JPanel oppositionTeamPanel = new JPanel();
-        oppositionTeamPanel.setLayout(new GridLayout(1, 0, 0, 0));
-        oppositionTeamPanel.setBorder(marginBorder);
-        contentPanel.add(oppositionTeamPanel);
+        DisplayablesShelf oppositions = new DisplayablesShelf(opponents, "Oppositions",
+                StadiumScreen::chooseButtonText, this::selectOpponent);
+        contentPanel.add(oppositions);
 
-        TeamPanel[] oppositionTeams = new TeamPanel[opponents.length];
-        for (int i = 0; i < oppositionTeams.length; i++) {
-            oppositionTeams[i] = new TeamPanel(opponents[i]);
-            oppositionTeamPanel.add(oppositionTeams[i]);
-            oppositionTeams[i].addButton("Choose", this::selectOpponent);
-        }
+//        JPanel oppositionTeamPanel = new JPanel();
+//        oppositionTeamPanel.setLayout(new GridLayout(1, 0, 0, 0));
+//        oppositionTeamPanel.setBorder(marginBorder);
+//        contentPanel.add(oppositionTeamPanel);
+//
+//        TeamPanel[] oppositionTeams = new TeamPanel[opponents.length];
+//        for (int i = 0; i < oppositionTeams.length; i++) {
+//            oppositionTeams[i] = new TeamPanel(opponents[i]);
+//            oppositionTeamPanel.add(oppositionTeams[i]);
+//            oppositionTeams[i].addButton("Choose", this::selectOpponent);
+//        }
     }
 
     /**
@@ -65,8 +73,8 @@ public class StadiumScreen extends GameScreenPanel {
      * @param event {@link ActionEvent} containing information about which button was clicked
      */
     private void selectOpponent(ActionEvent event) {
-        TeamPanel panel = (TeamPanel) ((JButton)event.getSource()).getParent();
-        OppositionTeam team = (OppositionTeam) panel.getTeam();
+        DisplayPanel panel = (DisplayPanel) ((JButton)event.getSource()).getParent();
+        OppositionTeam team = (OppositionTeam) panel.getDisplayable();
         GameManager.playMatch(team);
     }
 
@@ -82,6 +90,19 @@ public class StadiumScreen extends GameScreenPanel {
      */
     @Override
     public void reload() {
-        playerTeam.reload();
+//        playerTeam.reload();
+    }
+
+    /**
+     * Function that creates the button text for button
+     * Uses the provided athlete to get its resale price
+     * @param displayable Any purchasable object
+     * @return The string to put on the button
+     */
+    public static String chooseButtonText(Displayable displayable) {
+        if (displayable instanceof Team team)
+            return "Reward: $" + (int) team.getDifficulty() * 10 * GameManager.isGameHard() * (0.15 * GameManager.currentWeek());
+        else
+            throw new RuntimeException("Must call with Purchasable object!");
     }
 }

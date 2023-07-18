@@ -8,7 +8,6 @@ import java.io.File;
 /**
  * NameFileReader is a class that reads names from a file
  * These files are used to generate names for {@link data.Item}, {@link data.Athlete}, and {@link data.Team} objects
- * As well as {@link management.GameMechanics} attack/defeat/heal messages
  *
  * @author Harrison Parkes
  */

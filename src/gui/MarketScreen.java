@@ -188,20 +188,28 @@ public class MarketScreen extends GameScreenPanel {
     /**
      * Function that creates the button text for a purchase athlete button
      * Uses the provided athlete to get its price
-     * @param purchasable Any purchasable object
+     * @param displayable Any purchasable object
      * @return The string to put on the button
+     * @throws RuntimeException if `displayable` is not Purchasable
      */
-    public static String purchaseButtonText(Purchasable purchasable) {
-        return HTMLString.multiLine("Purchase", "$" + purchasable.getContractPrice());
+    public static String purchaseButtonText(Displayable displayable) throws RuntimeException {
+        if (displayable instanceof Purchasable purchasable)
+            return HTMLString.multiLine("Purchase", "$" + purchasable.getContractPrice());
+        else
+            throw new RuntimeException("Must call with Purchasable object!");
     }
 
     /**
      * Function that creates the button text for a sell athlete button
      * Uses the provided athlete to get its resale price
-     * @param purchasable Any purchasable object
+     * @param displayable Any purchasable object
      * @return The string to put on the button
+     * @throws RuntimeException if `displayable` is not Purchasable
      */
-    public static String sellButtonText(Purchasable purchasable) {
-        return HTMLString.multiLine("Sell", "$" + purchasable.getSellBackPrice());
+    public static String sellButtonText(Displayable displayable) throws RuntimeException{
+        if (displayable instanceof Purchasable purchasable)
+            return HTMLString.multiLine("Sell", "$" + purchasable.getSellBackPrice());
+        else
+            throw new RuntimeException("Must call with Purchasable object!");
     }
 }

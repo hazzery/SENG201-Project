@@ -1,5 +1,6 @@
 package gui;
 import data.Athlete;
+import data.Displayable;
 import data.Purchasable;
 import data.Team;
 import management.GameManager;
@@ -25,8 +26,8 @@ public class TeamSelectScreen extends JPanel {
     private int bankBalance = 10000;
 
     private JLabel bankBalanceLabel;
-    private PurchasablesShelf selectableAthletesShelf;
-            private PurchasablesShelf selectedAthletesShelf;
+    private DisplayablesShelf selectableAthletesShelf;
+            private DisplayablesShelf selectedAthletesShelf;
 
     /**
      * Instantiates a new TeamSelectScreen
@@ -65,12 +66,12 @@ public class TeamSelectScreen extends JPanel {
         buttonsWrapperPanel.setLayout(new BoxLayout(buttonsWrapperPanel, BoxLayout.Y_AXIS));
         athleteSelectionPanel.add(buttonsWrapperPanel, BorderLayout.CENTER);
 
-        selectableAthletesShelf = new PurchasablesShelf(athletePool, "Available", this::selectButtonText, this::selectAthlete);
+        selectableAthletesShelf = new DisplayablesShelf(athletePool, "Available", this::selectButtonText, this::selectAthlete);
         buttonsWrapperPanel.add(selectableAthletesShelf);
 
         buttonsWrapperPanel.add(new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(0, 10000)));
 
-        selectedAthletesShelf = new PurchasablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
+        selectedAthletesShelf = new DisplayablesShelf(selectedAthletes.toArray(new Athlete[0]), "Selected", this::unselectButtonText, this::unselectAthlete);
         buttonsWrapperPanel.add(selectedAthletesShelf);
 
         JPanel footerPanel = new JPanel();
@@ -93,21 +94,29 @@ public class TeamSelectScreen extends JPanel {
     /**
      * Function that creates the button text for a select athlete button
      * Uses the provided athlete to get its price
-     * @param purchasable Any purchasable object
+     * @param displayable Any purchasable object
      * @return The string to put on the button
+     * @throws RuntimeException if `displayable` is not Purchasable
      */
-    private String selectButtonText (Purchasable purchasable) {
-        return HTMLString.multiLine("Select", "$" + purchasable.getContractPrice());
+    private String selectButtonText (Displayable displayable) {
+        if (displayable instanceof Purchasable purchasable)
+            return HTMLString.multiLine("Select", "$" + purchasable.getContractPrice());
+        else
+            throw new RuntimeException("Must call with Purchasable object!");
     }
 
     /**
      * Function that creates the button text for an unselect athlete button
      * Uses the provided athlete to get its price
-     * @param purchasable Any purchasable object
+     * @param displayable Any purchasable object
      * @return The string to put on the button
+     * @throws RuntimeException if `displayable` is not Purchasable
      */
-    private String unselectButtonText (Purchasable purchasable) {
-        return HTMLString.multiLine("Unselect", "+ $" + purchasable.getContractPrice());
+    private String unselectButtonText(Displayable displayable) throws RuntimeException {
+        if (displayable instanceof Purchasable purchasable)
+            return HTMLString.multiLine("Unselect", "+ $" + purchasable.getContractPrice());
+        else
+            throw new RuntimeException("Must call with Purchasable object!");
     }
 
     /**
