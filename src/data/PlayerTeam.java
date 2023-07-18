@@ -33,6 +33,7 @@ public class PlayerTeam extends Team {
      *
      * @return The total number of athletes in this team
      */
+    @Override
     public int size() {
         return this.actives.size() + this.reserves.size();
     }
