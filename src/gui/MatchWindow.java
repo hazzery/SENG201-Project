@@ -1,6 +1,5 @@
 package gui;
 import management.GameManager;
-import management.GameMechanics;
 
 import java.awt.event.ActionEvent;
 import java.awt.*;
@@ -16,7 +15,6 @@ import javax.swing.*;
  */
 public class MatchWindow extends JPanel {
 	final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
-	GameMechanics gameMechanics = new GameMechanics();
 
 	public String OppText;
 	public String TeamText;
@@ -38,13 +36,12 @@ public class MatchWindow extends JPanel {
 
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn
+	 * Calls the GameMechanics#playTurn(int) method to play the turn
 	 *
 	 * @param index the index parameter is used to determine which button was pressed
 	 *
 	 */
 	public void turnAction(int index){
-		GameMechanics.guiButtonPress(index);
 		update();
 	}
 
@@ -118,12 +115,12 @@ public class MatchWindow extends JPanel {
 	 * Updates the {@link DisplayablesShelf} panels
 	 */
 	private void update(){
-		playerTeamPanel.reload(GameMechanics.athleteList);
-		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
+//		playerTeamPanel.reload(GameMechanics.athleteList);
+//		oppositionTeamPanel.reload(GameMechanics.oppositionAthletes);
 	}
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 3 representing the exit condition
+	 * Calls the GameMechanics#playTurn(int) method to play the turn with the parameter 3 representing the exit condition
 	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
 	 */
 
@@ -133,7 +130,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 2, meaning heal
+	 * Calls the GameMechanics#playTurn(int) method to play the turn with the parameter 2, meaning heal
 	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
 	 */
 	private void heal(ActionEvent actionEvent) {
@@ -142,7 +139,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 1 representing the heavy attack condition
+	 * Calls the GameMechanics#playTurn(int) method to play the turn with the parameter 1 representing the heavy attack condition
 	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
 	 */
 	private void heavyAttack(ActionEvent actionEvent) {
@@ -151,7 +148,7 @@ public class MatchWindow extends JPanel {
 	}
 
 	/**
-	 * Calls the {@link GameMechanics#playTurn(int)} method to play the turn with the parameter 0 representing the light attack condition
+	 * Calls the GameMechanics#playTurn(int) method to play the turn with the parameter 0 representing the light attack condition
 	 * @param actionEvent the actionEvent parameter is used to determine which button was pressed
 	 */
 	private void lightAttack(ActionEvent actionEvent) {

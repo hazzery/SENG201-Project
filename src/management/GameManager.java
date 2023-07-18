@@ -21,7 +21,6 @@ public class GameManager {
     private static int bankBalance = 0;
     private static int currentWeek = 1;
     public static OppositionTeam oppositionTeam;
-    public static RandomEvent randomEvent;
     public static final int NUM_ALL_ATHLETES = 10;
     private static final int NUM_ALL_ITEMS = 10;
     public static final ArrayList<Athlete> athletes = new ArrayList<>(NUM_ALL_ATHLETES);
@@ -160,8 +159,6 @@ public class GameManager {
                 JOptionPane.getRootFrame().dispose();
             }
         }
-        RandomEvent rando = new RandomEvent();
-        rando.randomEvent();
         WindowManager.reloadGameScreen();
     }
 
@@ -281,9 +278,7 @@ public class GameManager {
      * @param opposition The opposing team the user selected
      */
     public static void playMatch(OppositionTeam opposition) {
-        GameMechanics gameMechanics = new GameMechanics();
         GameManager.oppositionTeam = opposition;
-        gameMechanics.playGame(currentWeek, new ArrayList<>(Arrays.asList(team.getActives())), opposition.getAthletes());
         WindowManager.showMatchScreen();
     }
 }
