@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * @author Harrison Parkes
  */
-public abstract class Team implements Displayable{
+public abstract class Team implements Displayable {
     public static final int TEAM_SIZE = 5;
 
     protected String name;
