@@ -17,9 +17,9 @@ import data.Item;
 public class ClubScreen extends GameScreenPanel {
     final MarginBorder marginBorder = new MarginBorder(1, Color.BLACK, 5);
 
-    private PurchasablesShelf activesShelf;
-    private PurchasablesShelf reservesShelf;
-    private PurchasablesShelf itemsShelf;
+    private DisplayablesShelf activesShelf;
+    private DisplayablesShelf reservesShelf;
+    private DisplayablesShelf itemsShelf;
 
     /**
      * Initialise the contents of the frame.
@@ -34,13 +34,13 @@ public class ClubScreen extends GameScreenPanel {
         mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
         this.add(mainPanel, BorderLayout.CENTER);
 
-        activesShelf = new PurchasablesShelf(GameManager.team.getActives(), "Activated", p->"Reserve", this::reserveAthlete);
+        activesShelf = new DisplayablesShelf(GameManager.team.getActives(), "Activated", p->"Reserve", this::reserveAthlete);
         mainPanel.add(activesShelf);
 
-        reservesShelf = new PurchasablesShelf(GameManager.team.getReserves(), "Reserved", p->"Activate", this::activateAthlete);
+        reservesShelf = new DisplayablesShelf(GameManager.team.getReserves(), "Reserved", p->"Activate", this::activateAthlete);
         mainPanel.add(reservesShelf);
 
-        itemsShelf = new PurchasablesShelf(GameManager.getItems(), "Inventory", p->"Use", this::selectAthleteForItem);
+        itemsShelf = new DisplayablesShelf(GameManager.getItems(), "Inventory", p->"Use", this::selectAthleteForItem);
         mainPanel.add(itemsShelf);
     }
 

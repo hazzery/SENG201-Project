@@ -17,9 +17,9 @@ import java.awt.*;
  * @author Harrison Parkes
  */
 public class MarketScreen extends GameScreenPanel {
-    private PurchasablesShelf athletesShelf;
-    private PurchasablesShelf itemsShelf;
-    private PurchasablesShelf teamShelf;
+    private DisplayablesShelf athletesShelf;
+    private DisplayablesShelf itemsShelf;
+    private DisplayablesShelf teamShelf;
 
     private Athlete[] weeklyAthletePool;
     private Item[] weeklyItemPool;
@@ -34,13 +34,13 @@ public class MarketScreen extends GameScreenPanel {
 
         updateWeeklyPool();
 
-        athletesShelf = new PurchasablesShelf(weeklyAthletePool, "Athletes ", MarketScreen::purchaseButtonText, this::purchase);
+        athletesShelf = new DisplayablesShelf(weeklyAthletePool, "Athletes ", MarketScreen::purchaseButtonText, this::purchase);
         contentPanel.add(athletesShelf);
 
-        itemsShelf = new PurchasablesShelf(weeklyItemPool, "Items    ", MarketScreen::purchaseButtonText, this::purchase);
+        itemsShelf = new DisplayablesShelf(weeklyItemPool, "Items    ", MarketScreen::purchaseButtonText, this::purchase);
         contentPanel.add(itemsShelf);
 
-        teamShelf = new PurchasablesShelf(GameManager.team.athletesAndItems(), "Inventory", MarketScreen::sellButtonText, this::sell);
+        teamShelf = new DisplayablesShelf(GameManager.team.athletesAndItems(), "Inventory", MarketScreen::sellButtonText, this::sell);
         contentPanel.add(teamShelf);
     }
 

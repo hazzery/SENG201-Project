@@ -30,7 +30,7 @@ public class GameOverScreen extends JPanel {
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPanel.add(gameOverLabel);
 
-        PurchasablesShelf playerTeamPanel = new PurchasablesShelf(GameManager.team.getActives(), "Your Team");
+        DisplayablesShelf playerTeamPanel = new DisplayablesShelf(GameManager.team.getActives(), "Your Team");
         playerTeamPanel.setBorder(marginBorder);
         contentPanel.add(playerTeamPanel);
 

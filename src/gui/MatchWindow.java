@@ -22,11 +22,11 @@ public class MatchWindow extends JPanel {
 	public String TeamText;
 	public String gameText;
 
-	private PurchasablesShelf playerTeamPanel;
+	private DisplayablesShelf playerTeamPanel;
 	public static JLabel gameOutput;
 			public static JLabel teamOutput;
 			public static JLabel oppositionOutput;
-		private PurchasablesShelf oppositionTeamPanel;
+		private DisplayablesShelf oppositionTeamPanel;
 
 	/**
 	 * Create the application.
@@ -68,7 +68,7 @@ public class MatchWindow extends JPanel {
 		mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		this.add(mainPanel, BorderLayout.CENTER);
 
-		playerTeamPanel = new PurchasablesShelf(GameManager.team.getActives(), "Your Team");
+		playerTeamPanel = new DisplayablesShelf(GameManager.team.getActives(), "Your Team");
 		mainPanel.add(playerTeamPanel);
 
 		JPanel gameOutputPanel = new JPanel();
@@ -88,7 +88,7 @@ public class MatchWindow extends JPanel {
 		oppositionOutput = new JLabel(OppText);
 		gameOutputPanel.add(oppositionOutput);
 
-		oppositionTeamPanel = new PurchasablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
+		oppositionTeamPanel = new DisplayablesShelf(GameManager.oppositionTeam.getAthletes(), "Opposition Team");
 		mainPanel.add(oppositionTeamPanel);
 
 		JPanel footerPanel = new JPanel();
@@ -115,7 +115,7 @@ public class MatchWindow extends JPanel {
 
 
 	/**
-	 * Updates the {@link PurchasablesShelf} panels
+	 * Updates the {@link DisplayablesShelf} panels
 	 */
 	private void update(){
 		playerTeamPanel.reload(GameMechanics.athleteList);

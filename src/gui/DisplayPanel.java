@@ -86,12 +86,12 @@ public class DisplayPanel extends JPanel {
     }
 
     /**
-     * Gets the {@link PurchasablesShelf} that this panel is a part of.
-     * @return the {@link PurchasablesShelf} that this panel sits within
+     * Gets the {@link DisplayablesShelf} that this panel is a part of.
+     * @return the DisplayablesShelf that this panel sits within
      */
-    public PurchasablesShelf getShelf() {
+    public DisplayablesShelf getShelf() {
         // PurchasablePanel -> JPanel -> JScrollPane -> JPanel -> PurchasablesShelf
-        return (PurchasablesShelf) this.getParent().getParent().getParent().getParent();
+        return (DisplayablesShelf) this.getParent().getParent().getParent().getParent();
     }
 
     /**
